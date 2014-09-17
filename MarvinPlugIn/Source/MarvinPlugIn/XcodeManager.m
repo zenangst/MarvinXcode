@@ -210,7 +210,6 @@
 
 - (void)selectionDidChange:(NSNotification *)notification {
     self.textView = (NSTextView *)notification.object;
-    NSLog(@"self.textView: %@", self.textView);
 }
 
 
