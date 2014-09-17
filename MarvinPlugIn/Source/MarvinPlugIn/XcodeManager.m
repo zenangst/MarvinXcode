@@ -10,22 +10,6 @@
 
 @implementation XcodeManager
 
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(selectionDidChange:)
-                                                     name:NSTextViewDidChangeSelectionNotification
-                                                   object:nil];
-    }
-    return self;
-}
-
 #pragma mark - Getters
 
 - (id)currentEditor
@@ -215,13 +199,5 @@
     
     [textStorage replaceCharactersInRange:range withString:string withUndoManager:[document undoManager]];
 }
-
-#pragma mark - Observers
-
-- (void)selectionDidChange:(NSNotification *)notification {
-    self.textView = (NSTextView *)notification.object;
-}
-
-
 
 @end
