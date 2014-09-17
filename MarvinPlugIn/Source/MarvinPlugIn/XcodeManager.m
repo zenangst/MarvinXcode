@@ -39,7 +39,8 @@
     return nil;
 }
 
-- (IDESourceCodeDocument *)currentSourceCodeDocument {
+- (IDESourceCodeDocument *)currentSourceCodeDocument
+{
     if ([[self currentEditor] isKindOfClass:NSClassFromString(@"IDESourceCodeEditor")]) {
         IDESourceCodeEditor *editor = [self currentEditor];
         return editor.sourceCodeDocument;

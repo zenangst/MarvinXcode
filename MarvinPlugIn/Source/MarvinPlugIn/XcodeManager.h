@@ -13,6 +13,9 @@
 @property (nonatomic, strong) NSTextView *textView;
 @property (nonatomic) NSRange selectedRange;
 
+- (id)currentEditor;
+- (IDESourceCodeDocument *)currentSourceCodeDocument;
+
 - (NSString *)contents;
 - (NSUInteger)documentLength;
 - (NSRange)currentWordRange;

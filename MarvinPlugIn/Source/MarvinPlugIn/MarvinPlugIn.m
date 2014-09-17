@@ -154,20 +154,33 @@
     return _xcodeManager;
 }
 
+- (BOOL)validResponder
+{
+    NSResponder *firstResponder = [[NSApp keyWindow] firstResponder];
+    NSString *responderClass = NSStringFromClass(firstResponder.class);
+    return ([responderClass isEqualToString:@"DVTSourceTextView"]);
+}
+
 #pragma mark - Setters
 
 - (void)selectLineContents
 {
+    if (![self validResponder]) return;
+    
     self.xcodeManager.selectedRange = self.xcodeManager.lineContentsRange;
 }
 
 - (void)selectWord {
+    if (![self validResponder]) return;
+    
     NSRange range = self.xcodeManager.currentWordRange;
     self.xcodeManager.selectedRange = range;
 }
 
 - (void)selectWordAbove
 {
+    if (![self validResponder]) return;
+    
     NSCharacterSet *validSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789ABCDEFGHIJKOLMNOPQRSTUVWXYZÅÄÆÖØabcdefghijkolmnopqrstuvwxyzåäæöø_"];
     NSRange currentRange = [self.xcodeManager selectedRange];
     unichar characterAtCursorStart = [[self.xcodeManager contents] characterAtIndex:currentRange.location];
@@ -199,6 +212,8 @@
 
 - (void)selectWordBelow
 {
+    if (![self validResponder]) return;
+    
     CGEventRef event = CGEventCreateKeyboardEvent(NULL, 125, true);
     CGEventSetFlags(event, 0);
     CGEventPost(kCGHIDEventTap, event);
@@ -210,22 +225,30 @@
 
 - (void)selectPreviousWord
 {
+    if (![self validResponder]) return;
+
     self.xcodeManager.selectedRange = self.xcodeManager.previousWordRange;
     self.xcodeManager.selectedRange = self.xcodeManager.currentWordRange;
 }
 
 - (void)selectNextWord
 {
+    if (![self validResponder]) return;
+    
     [self selectWord];
 }
 
 - (void)deleteLine
 {
+    if (![self validResponder]) return;
+    
     [self.xcodeManager replaceCharactersInRange:self.xcodeManager.lineContentsRange withString:@""];
 }
 
 - (void)duplicateLine
 {
+    if (![self validResponder]) return;
+    
     NSRange range = [self.xcodeManager lineRange];
     NSString *string = [self.xcodeManager contentsOfRange:range];
     NSRange duplicateRange = NSMakeRange(range.location+range.length, 0);
@@ -236,6 +259,8 @@
 
 - (void)joinLine
 {
+    if (![self validResponder]) return;
+    
     [self.xcodeManager replaceCharactersInRange:self.xcodeManager.joinRange withString:@""];
 }
 
