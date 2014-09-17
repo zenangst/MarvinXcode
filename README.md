@@ -11,7 +11,6 @@
 * Relaunch Xcode.
 
 To uninstall, just remove the plugin from `~/Library/Application Support/Developer/Shared/Xcode/Plug-ins` and restart Xcode.
-```
 
 ## Contribute
 
