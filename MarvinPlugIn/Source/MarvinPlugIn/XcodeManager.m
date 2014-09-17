@@ -63,6 +63,23 @@
     return nil;
 }
 
+- (IDESourceCodeDocument *)currentSourceCodeDocument {
+    if ([[self currentEditor] isKindOfClass:NSClassFromString(@"IDESourceCodeEditor")]) {
+        IDESourceCodeEditor *editor = [self currentEditor];
+        return editor.sourceCodeDocument;
+    }
+    
+    if ([[self currentEditor] isKindOfClass:NSClassFromString(@"IDESourceCodeComparisonEditor")]) {
+        IDESourceCodeComparisonEditor *editor = [self currentEditor];
+        if ([[editor primaryDocument] isKindOfClass:NSClassFromString(@"IDESourceCodeDocument")]) {
+            IDESourceCodeDocument *document = (IDESourceCodeDocument *)editor.primaryDocument;
+            return document;
+        }
+    }
+    
+    return nil;
+}
+
 - (NSString *)contents
 {
     return [self.textView string];
@@ -168,8 +185,6 @@
     
     NSUInteger length = ([[self contents] rangeOfCharacterFromSet:validSet options:NSCaseInsensitiveSearch range:NSMakeRange(joinRange.location,[self contents].length-joinRange.location)].location);
     
-    
-    
     return NSMakeRange(joinRange.location, length - joinRange.location);
 }
 
@@ -203,7 +218,10 @@
 
 - (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)string
 {
-    [self.textView replaceCharactersInRange:range withString:string];
+    IDESourceCodeDocument *document = [self currentSourceCodeDocument];
+    DVTSourceTextStorage *textStorage = [document textStorage];
+    
+    [textStorage replaceCharactersInRange:range withString:string withUndoManager:[document undoManager]];
 }
 
 #pragma mark - Observers
