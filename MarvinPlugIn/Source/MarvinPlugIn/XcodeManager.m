@@ -28,15 +28,6 @@
 
 #pragma mark - Getters
 
-- (NSTextView *)textView
-{
-    if (!_textView) {
-        _textView = [self currentTextView];
-    }
-    
-    return _textView;
-}
-
 - (id)currentEditor
 {
     NSWindowController *currentWindowController = [[NSApp keyWindow] windowController];
@@ -49,7 +40,8 @@
     return nil;
 }
 
-- (NSTextView *)currentTextView {
+- (NSTextView *)textView
+{
     if ([[self currentEditor] isKindOfClass:NSClassFromString(@"IDESourceCodeEditor")]) {
         IDESourceCodeEditor *editor = [self currentEditor];
         return editor.textView;
