@@ -3,7 +3,8 @@
 //  MarvinPlugIn
 //
 //  Created by Christoffer Winterkvist on 17/09/14.
-//  Copyright (c) 2014 Octalord Information Inc. All rights reserved.
+//  Based on implementations by Benoît Bourdon
+//  Copyright (c) 2014 zenangst. All rights reserved.
 //
 
 #import "XcodeManager.h"
