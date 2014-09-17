@@ -1,0 +1,305 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6F44E9F617DD324B0064F1B7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F44E9F517DD324B0064F1B7 /* Cocoa.framework */; };
+		BD5EBC6519C9F93200F2C8CD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BD5EBC6119C9F93200F2C8CD /* InfoPlist.strings */; };
+		BD5EBC6A19C9F94700F2C8CD /* MarvinPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = BD5EBC6919C9F94700F2C8CD /* MarvinPlugIn.m */; };
+		BD9A8A3119CA09AD00321368 /* XcodeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BD9A8A3019CA09AD00321368 /* XcodeManager.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		6F44E9F217DD324B0064F1B7 /* MarvinPlugIn.xcplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MarvinPlugIn.xcplugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		6F44E9F517DD324B0064F1B7 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		6F44E9F817DD324B0064F1B7 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		6F44E9F917DD324B0064F1B7 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		6F44E9FA17DD324B0064F1B7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		BD5351FA19CA1159006D3B78 /* XcodePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XcodePrivate.h; sourceTree = "<group>"; };
+		BD5EBC6219C9F93200F2C8CD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		BD5EBC6319C9F93200F2C8CD /* MarvinPlugIn-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MarvinPlugIn-Info.plist"; sourceTree = "<group>"; };
+		BD5EBC6419C9F93200F2C8CD /* MarvinPlugIn-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MarvinPlugIn-Prefix.pch"; sourceTree = "<group>"; };
+		BD5EBC6819C9F94700F2C8CD /* MarvinPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarvinPlugIn.h; sourceTree = "<group>"; };
+		BD5EBC6919C9F94700F2C8CD /* MarvinPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarvinPlugIn.m; sourceTree = "<group>"; };
+		BD9A8A2F19CA09AD00321368 /* XcodeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XcodeManager.h; sourceTree = "<group>"; };
+		BD9A8A3019CA09AD00321368 /* XcodeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XcodeManager.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6F44E9EF17DD324B0064F1B7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6F44E9F617DD324B0064F1B7 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6F44E9E917DD324B0064F1B7 = {
+			isa = PBXGroup;
+			children = (
+				BD5EBC6019C9F93200F2C8CD /* Supporting Files */,
+				BD5EBC5B19C9F91400F2C8CD /* Source */,
+				6F44E9F417DD324B0064F1B7 /* Frameworks */,
+				6F44E9F317DD324B0064F1B7 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6F44E9F317DD324B0064F1B7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6F44E9F217DD324B0064F1B7 /* MarvinPlugIn.xcplugin */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6F44E9F417DD324B0064F1B7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6F44E9F517DD324B0064F1B7 /* Cocoa.framework */,
+				6F44E9F717DD324B0064F1B7 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6F44E9F717DD324B0064F1B7 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6F44E9F817DD324B0064F1B7 /* AppKit.framework */,
+				6F44E9F917DD324B0064F1B7 /* CoreData.framework */,
+				6F44E9FA17DD324B0064F1B7 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		BD5EBC5B19C9F91400F2C8CD /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				BD5EBC6719C9F94700F2C8CD /* MarvinPlugIn */,
+			);
+			name = Source;
+			path = MarvinPlugIn/Source;
+			sourceTree = "<group>";
+		};
+		BD5EBC6019C9F93200F2C8CD /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				BD5EBC6119C9F93200F2C8CD /* InfoPlist.strings */,
+				BD5EBC6319C9F93200F2C8CD /* MarvinPlugIn-Info.plist */,
+				BD5EBC6419C9F93200F2C8CD /* MarvinPlugIn-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			path = "MarvinPlugIn/Supporting Files";
+			sourceTree = "<group>";
+		};
+		BD5EBC6719C9F94700F2C8CD /* MarvinPlugIn */ = {
+			isa = PBXGroup;
+			children = (
+				BD5EBC6819C9F94700F2C8CD /* MarvinPlugIn.h */,
+				BD5EBC6919C9F94700F2C8CD /* MarvinPlugIn.m */,
+				BD9A8A2F19CA09AD00321368 /* XcodeManager.h */,
+				BD9A8A3019CA09AD00321368 /* XcodeManager.m */,
+				BD5351FA19CA1159006D3B78 /* XcodePrivate.h */,
+			);
+			path = MarvinPlugIn;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6F44E9F117DD324B0064F1B7 /* MarvinPlugIn */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6F44EA0417DD324B0064F1B7 /* Build configuration list for PBXNativeTarget "MarvinPlugIn" */;
+			buildPhases = (
+				6F44E9EE17DD324B0064F1B7 /* Sources */,
+				6F44E9EF17DD324B0064F1B7 /* Frameworks */,
+				6F44E9F017DD324B0064F1B7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MarvinPlugIn;
+			productName = XcodePlusDeleteLines;
+			productReference = 6F44E9F217DD324B0064F1B7 /* MarvinPlugIn.xcplugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6F44E9EA17DD324B0064F1B7 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = "Octalord Information Inc.";
+			};
+			buildConfigurationList = 6F44E9ED17DD324B0064F1B7 /* Build configuration list for PBXProject "MarvinPlugIn" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 6F44E9E917DD324B0064F1B7;
+			productRefGroup = 6F44E9F317DD324B0064F1B7 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6F44E9F117DD324B0064F1B7 /* MarvinPlugIn */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6F44E9F017DD324B0064F1B7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BD5EBC6519C9F93200F2C8CD /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6F44E9EE17DD324B0064F1B7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BD5EBC6A19C9F94700F2C8CD /* MarvinPlugIn.m in Sources */,
+				BD9A8A3119CA09AD00321368 /* XcodeManager.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		BD5EBC6119C9F93200F2C8CD /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BD5EBC6219C9F93200F2C8CD /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		6F44EA0217DD324B0064F1B7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		6F44EA0317DD324B0064F1B7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		6F44EA0517DD324B0064F1B7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEPLOYMENT_LOCATION = YES;
+				DSTROOT = "${HOME}";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MarvinPlugIn/Supporting Files/MarvinPlugIn-Prefix.pch";
+				INFOPLIST_FILE = "MarvinPlugIn/Supporting Files/MarvinPlugIn-Info.plist";
+				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
+				PRODUCT_NAME = MarvinPlugIn;
+				WRAPPER_EXTENSION = xcplugin;
+			};
+			name = Debug;
+		};
+		6F44EA0617DD324B0064F1B7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEPLOYMENT_LOCATION = YES;
+				DSTROOT = "${HOME}";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MarvinPlugIn/Supporting Files/MarvinPlugIn-Prefix.pch";
+				INFOPLIST_FILE = "MarvinPlugIn/Supporting Files/MarvinPlugIn-Info.plist";
+				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
+				PRODUCT_NAME = MarvinPlugIn;
+				WRAPPER_EXTENSION = xcplugin;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6F44E9ED17DD324B0064F1B7 /* Build configuration list for PBXProject "MarvinPlugIn" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6F44EA0217DD324B0064F1B7 /* Debug */,
+				6F44EA0317DD324B0064F1B7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6F44EA0417DD324B0064F1B7 /* Build configuration list for PBXNativeTarget "MarvinPlugIn" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6F44EA0517DD324B0064F1B7 /* Debug */,
+				6F44EA0617DD324B0064F1B7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 6F44E9EA17DD324B0064F1B7 /* Project object */;
+}

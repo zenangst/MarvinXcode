@@ -1,0 +1,9 @@
+//
+// Prefix header for all source files of the 'MarvinPlugIns' target in the 'MarvinPlugIns' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif
+
+#import "XcodePrivate.h"
