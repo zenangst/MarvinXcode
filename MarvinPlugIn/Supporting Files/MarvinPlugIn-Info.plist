@@ -34,7 +34,7 @@
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2014 zenangst. All rights reserved.</string>
 	<key>NSPrincipalClass</key>
-	<string>MarvinPlugIn</string>
+	<string>MarvinPlugin</string>
 	<key>XC4Compatible</key>
 	<true/>
 	<key>XCGCReady</key>

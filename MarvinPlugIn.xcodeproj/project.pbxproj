@@ -9,12 +9,12 @@
 /* Begin PBXBuildFile section */
 		6F44E9F617DD324B0064F1B7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F44E9F517DD324B0064F1B7 /* Cocoa.framework */; };
 		BD5EBC6519C9F93200F2C8CD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BD5EBC6119C9F93200F2C8CD /* InfoPlist.strings */; };
-		BD5EBC6A19C9F94700F2C8CD /* MarvinPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = BD5EBC6919C9F94700F2C8CD /* MarvinPlugIn.m */; };
+		BD5EBC6A19C9F94700F2C8CD /* MarvinPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = BD5EBC6919C9F94700F2C8CD /* MarvinPlugin.m */; };
 		BD9A8A3119CA09AD00321368 /* XcodeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BD9A8A3019CA09AD00321368 /* XcodeManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		6F44E9F217DD324B0064F1B7 /* MarvinPlugIn.xcplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MarvinPlugIn.xcplugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		6F44E9F217DD324B0064F1B7 /* MarvinPlugin.xcplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MarvinPlugin.xcplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F44E9F517DD324B0064F1B7 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		6F44E9F817DD324B0064F1B7 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		6F44E9F917DD324B0064F1B7 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -23,8 +23,8 @@
 		BD5EBC6219C9F93200F2C8CD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BD5EBC6319C9F93200F2C8CD /* MarvinPlugIn-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MarvinPlugIn-Info.plist"; sourceTree = "<group>"; };
 		BD5EBC6419C9F93200F2C8CD /* MarvinPlugIn-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MarvinPlugIn-Prefix.pch"; sourceTree = "<group>"; };
-		BD5EBC6819C9F94700F2C8CD /* MarvinPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarvinPlugIn.h; sourceTree = "<group>"; };
-		BD5EBC6919C9F94700F2C8CD /* MarvinPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarvinPlugIn.m; sourceTree = "<group>"; };
+		BD5EBC6819C9F94700F2C8CD /* MarvinPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarvinPlugin.h; sourceTree = "<group>"; };
+		BD5EBC6919C9F94700F2C8CD /* MarvinPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarvinPlugin.m; sourceTree = "<group>"; };
 		BD9A8A2F19CA09AD00321368 /* XcodeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XcodeManager.h; sourceTree = "<group>"; };
 		BD9A8A3019CA09AD00321368 /* XcodeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XcodeManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -54,7 +54,7 @@
 		6F44E9F317DD324B0064F1B7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6F44E9F217DD324B0064F1B7 /* MarvinPlugIn.xcplugin */,
+				6F44E9F217DD324B0064F1B7 /* MarvinPlugin.xcplugin */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -81,7 +81,7 @@
 		BD5EBC5B19C9F91400F2C8CD /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				BD5EBC6719C9F94700F2C8CD /* MarvinPlugIn */,
+				BD5EBC6719C9F94700F2C8CD /* MarvinPlugin */,
 			);
 			name = Source;
 			path = MarvinPlugIn/Source;
@@ -98,24 +98,25 @@
 			path = "MarvinPlugIn/Supporting Files";
 			sourceTree = "<group>";
 		};
-		BD5EBC6719C9F94700F2C8CD /* MarvinPlugIn */ = {
+		BD5EBC6719C9F94700F2C8CD /* MarvinPlugin */ = {
 			isa = PBXGroup;
 			children = (
-				BD5EBC6819C9F94700F2C8CD /* MarvinPlugIn.h */,
-				BD5EBC6919C9F94700F2C8CD /* MarvinPlugIn.m */,
+				BD5EBC6819C9F94700F2C8CD /* MarvinPlugin.h */,
+				BD5EBC6919C9F94700F2C8CD /* MarvinPlugin.m */,
 				BD9A8A2F19CA09AD00321368 /* XcodeManager.h */,
 				BD9A8A3019CA09AD00321368 /* XcodeManager.m */,
 				BD5351FA19CA1159006D3B78 /* XcodePrivate.h */,
 			);
+			name = MarvinPlugin;
 			path = MarvinPlugIn;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		6F44E9F117DD324B0064F1B7 /* MarvinPlugIn */ = {
+		6F44E9F117DD324B0064F1B7 /* MarvinPlugin */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 6F44EA0417DD324B0064F1B7 /* Build configuration list for PBXNativeTarget "MarvinPlugIn" */;
+			buildConfigurationList = 6F44EA0417DD324B0064F1B7 /* Build configuration list for PBXNativeTarget "MarvinPlugin" */;
 			buildPhases = (
 				6F44E9EE17DD324B0064F1B7 /* Sources */,
 				6F44E9EF17DD324B0064F1B7 /* Frameworks */,
@@ -125,9 +126,9 @@
 			);
 			dependencies = (
 			);
-			name = MarvinPlugIn;
+			name = MarvinPlugin;
 			productName = XcodePlusDeleteLines;
-			productReference = 6F44E9F217DD324B0064F1B7 /* MarvinPlugIn.xcplugin */;
+			productReference = 6F44E9F217DD324B0064F1B7 /* MarvinPlugin.xcplugin */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -139,7 +140,7 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Octalord Information Inc.";
 			};
-			buildConfigurationList = 6F44E9ED17DD324B0064F1B7 /* Build configuration list for PBXProject "MarvinPlugIn" */;
+			buildConfigurationList = 6F44E9ED17DD324B0064F1B7 /* Build configuration list for PBXProject "MarvinPlugin" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -151,7 +152,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				6F44E9F117DD324B0064F1B7 /* MarvinPlugIn */,
+				6F44E9F117DD324B0064F1B7 /* MarvinPlugin */,
 			);
 		};
 /* End PBXProject section */
@@ -172,7 +173,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BD5EBC6A19C9F94700F2C8CD /* MarvinPlugIn.m in Sources */,
+				BD5EBC6A19C9F94700F2C8CD /* MarvinPlugin.m in Sources */,
 				BD9A8A3119CA09AD00321368 /* XcodeManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -257,7 +258,7 @@
 				GCC_PREFIX_HEADER = "MarvinPlugIn/Supporting Files/MarvinPlugIn-Prefix.pch";
 				INFOPLIST_FILE = "MarvinPlugIn/Supporting Files/MarvinPlugIn-Info.plist";
 				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
-				PRODUCT_NAME = MarvinPlugIn;
+				PRODUCT_NAME = MarvinPlugin;
 				WRAPPER_EXTENSION = xcplugin;
 			};
 			name = Debug;
@@ -273,7 +274,7 @@
 				GCC_PREFIX_HEADER = "MarvinPlugIn/Supporting Files/MarvinPlugIn-Prefix.pch";
 				INFOPLIST_FILE = "MarvinPlugIn/Supporting Files/MarvinPlugIn-Info.plist";
 				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
-				PRODUCT_NAME = MarvinPlugIn;
+				PRODUCT_NAME = MarvinPlugin;
 				WRAPPER_EXTENSION = xcplugin;
 			};
 			name = Release;
@@ -281,7 +282,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		6F44E9ED17DD324B0064F1B7 /* Build configuration list for PBXProject "MarvinPlugIn" */ = {
+		6F44E9ED17DD324B0064F1B7 /* Build configuration list for PBXProject "MarvinPlugin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6F44EA0217DD324B0064F1B7 /* Debug */,
@@ -290,7 +291,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6F44EA0417DD324B0064F1B7 /* Build configuration list for PBXNativeTarget "MarvinPlugIn" */ = {
+		6F44EA0417DD324B0064F1B7 /* Build configuration list for PBXNativeTarget "MarvinPlugin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6F44EA0517DD324B0064F1B7 /* Debug */,

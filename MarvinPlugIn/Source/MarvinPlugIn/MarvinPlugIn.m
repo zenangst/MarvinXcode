@@ -1,15 +1,15 @@
 //
-// MarvinPlugIn.m
+// MarvinPlugin.m
 // Marvin for Xcode
 //
 // Created by Christoffer Winterkvist on 17/10/14.
 // Copyright (c) 2014 zenangst The MIT License.
 //
 
-#import "MarvinPlugIn.h"
+#import "MarvinPlugin.h"
 #import "XcodeManager.h"
 
-@interface MarvinPlugIn ()
+@interface MarvinPlugin ()
 
 @property (nonatomic, strong) XcodeManager *xcodeManager;
 
@@ -17,7 +17,7 @@
 
 #import <AppKit/AppKit.h>
 
-@implementation MarvinPlugIn
+@implementation MarvinPlugin
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];

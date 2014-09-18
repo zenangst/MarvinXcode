@@ -1,6 +1,6 @@
 //
 //  XcodeManager.m
-//  MarvinPlugIn
+//  MarvinPlugin
 //
 //  Created by Christoffer Winterkvist on 17/09/14.
 //  Based on implementations by Benoît Bourdon

@@ -1,5 +1,5 @@
 //
-// Prefix header for all source files of the 'MarvinPlugIns' target in the 'MarvinPlugIns' project
+// Prefix header for all source files of the 'MarvinPlugins' target in the 'MarvinPlugins' project
 //
 
 #ifdef __OBJC__
