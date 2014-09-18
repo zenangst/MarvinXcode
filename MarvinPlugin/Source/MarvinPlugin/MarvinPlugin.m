@@ -134,6 +134,30 @@
             menuItem;
         })];
         
+        [marvinMenu addItem:({
+            NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Move To EOL and Insert Terminator"
+                                                              action:@selector(moveToEOLAndInsertTerminator)
+                                                       keyEquivalent:@""];
+            menuItem.target = self;
+            menuItem;
+        })];
+        
+        [marvinMenu addItem:({
+            NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Move To EOL and Insert Terminator + LF"
+                                                              action:@selector(moveToEOLAndInsertTerminatorPlusLF)
+                                                       keyEquivalent:@""];
+            menuItem.target = self;
+            menuItem;
+        })];
+        
+        [marvinMenu addItem:({
+            NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Move To EOL and Insert LF"
+                                                              action:@selector(moveToEOLAndInsertLF)
+                                                       keyEquivalent:@""];
+            menuItem.target = self;
+            menuItem;
+        })];
+        
         NSMenuItem *marvinMenuItem = [[NSMenuItem alloc] initWithTitle:@"Marvin"
                                                                 action:nil
                                                          keyEquivalent:@""];
@@ -262,6 +286,45 @@
     if (![self validResponder]) return;
     
     [self.xcodeManager replaceCharactersInRange:self.xcodeManager.joinRange withString:@""];
+}
+
+- (void)moveToEOLAndInsertLF
+{
+    NSRange endOfLineRange = [self.xcodeManager lineContentsRange];
+    NSRange lineRange = [self.xcodeManager lineRange];
+    unsigned long endOfLine = (unsigned long)endOfLineRange.location+(unsigned long)endOfLineRange.length;
+    
+    NSString *spacing = [[self.xcodeManager contents] substringWithRange:NSMakeRange(lineRange.location, endOfLineRange.location - lineRange.location)];
+    
+    unichar lastCharacterInLine = [[self.xcodeManager contents] characterAtIndex:endOfLineRange.location+endOfLineRange.length-1];
+    int ascii = lastCharacterInLine;
+    
+    NSMutableString *additionalSpacing = [NSMutableString string];
+    if (ascii == 123) {
+        for (int x = 0; x < 0; x++) {
+            [additionalSpacing appendString:@" "];
+        }
+    }
+    
+    [self.xcodeManager replaceCharactersInRange:NSMakeRange(endOfLine,0) withString:[NSString stringWithFormat:@"\n%@%@", spacing, [additionalSpacing copy]]];
+    [self.xcodeManager setSelectedRange:NSMakeRange(endOfLine+1+spacing.length+additionalSpacing.length, 0)];
+}
+
+- (void)moveToEOLAndInsertTerminator
+{
+    NSRange endOfLineRange = [self.xcodeManager lineContentsRange];
+    unsigned long endOfLine = (unsigned long)endOfLineRange.location+(unsigned long)endOfLineRange.length;
+    unichar characterAtEndOfLine = [[self.xcodeManager contents] characterAtIndex:endOfLine-1];
+    
+    if ((int)characterAtEndOfLine != 59) {
+        [self.xcodeManager replaceCharactersInRange:NSMakeRange(endOfLine,0) withString:@";"];
+    }
+}
+
+- (void)moveToEOLAndInsertTerminatorPlusLF
+{
+    [self moveToEOLAndInsertTerminator];
+    [self moveToEOLAndInsertLF];
 }
 
 @end
