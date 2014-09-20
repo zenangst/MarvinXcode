@@ -25,9 +25,7 @@
 
 + (void)pluginDidLoad:(NSBundle *)plugin {
     static id shared = nil;
-    
     static dispatch_once_t onceToken;
-    
     dispatch_once(&onceToken, ^{ shared = [[self alloc] init]; });
 }
 
@@ -158,7 +156,8 @@
             menuItem;
         })];
         
-        NSMenuItem *marvinMenuItem = [[NSMenuItem alloc] initWithTitle:@"Marvin"
+        NSString *versionString = [[NSBundle bundleForClass:[self class]] objectForInfoDictionaryKey:@"CFBundleVersion"];
+        NSMenuItem *marvinMenuItem = [[NSMenuItem alloc] initWithTitle:[NSString stringWithFormat:@"Marvin (%@)", versionString]
                                                                 action:nil
                                                          keyEquivalent:@""];
         marvinMenuItem.submenu = marvinMenu;
