@@ -25,9 +25,7 @@
 
 + (void)pluginDidLoad:(NSBundle *)plugin {
     static id shared = nil;
-    
     static dispatch_once_t onceToken;
-    
     dispatch_once(&onceToken, ^{ shared = [[self alloc] init]; });
 }
 
@@ -134,7 +132,32 @@
             menuItem;
         })];
         
-        NSMenuItem *marvinMenuItem = [[NSMenuItem alloc] initWithTitle:@"Marvin"
+        [marvinMenu addItem:({
+            NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Move To EOL and Insert Terminator"
+                                                              action:@selector(moveToEOLAndInsertTerminator)
+                                                       keyEquivalent:@""];
+            menuItem.target = self;
+            menuItem;
+        })];
+        
+        [marvinMenu addItem:({
+            NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Move To EOL and Insert Terminator + LF"
+                                                              action:@selector(moveToEOLAndInsertTerminatorPlusLF)
+                                                       keyEquivalent:@""];
+            menuItem.target = self;
+            menuItem;
+        })];
+        
+        [marvinMenu addItem:({
+            NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Move To EOL and Insert LF"
+                                                              action:@selector(moveToEOLAndInsertLF)
+                                                       keyEquivalent:@""];
+            menuItem.target = self;
+            menuItem;
+        })];
+        
+        NSString *versionString = [[NSBundle bundleForClass:[self class]] objectForInfoDictionaryKey:@"CFBundleVersion"];
+        NSMenuItem *marvinMenuItem = [[NSMenuItem alloc] initWithTitle:[NSString stringWithFormat:@"Marvin (%@)", versionString]
                                                                 action:nil
                                                          keyEquivalent:@""];
         marvinMenuItem.submenu = marvinMenu;
@@ -242,7 +265,7 @@
 {
     if (![self validResponder]) return;
     
-    [self.xcodeManager replaceCharactersInRange:self.xcodeManager.lineContentsRange withString:@""];
+    [self.xcodeManager replaceCharactersInRange:self.xcodeManager.lineRange withString:@""];
 }
 
 - (void)duplicateLine
@@ -262,6 +285,46 @@
     if (![self validResponder]) return;
     
     [self.xcodeManager replaceCharactersInRange:self.xcodeManager.joinRange withString:@""];
+}
+
+- (void)moveToEOLAndInsertLF
+{
+    NSRange endOfLineRange = [self.xcodeManager lineContentsRange];
+    NSRange lineRange = [self.xcodeManager lineRange];
+    unsigned long endOfLine = (unsigned long)endOfLineRange.location+(unsigned long)endOfLineRange.length;
+    
+    NSString *spacing = [[self.xcodeManager contents] substringWithRange:NSMakeRange(lineRange.location, endOfLineRange.location - lineRange.location)];
+    
+    unichar lastCharacterInLine = [[self.xcodeManager contents] characterAtIndex:endOfLineRange.location+endOfLineRange.length-1];
+    int ascii = lastCharacterInLine;
+    
+    NSMutableString *additionalSpacing = [NSMutableString string];
+    if (ascii == 123) {
+        for (int x = 0; x < 0; x++) {
+            [additionalSpacing appendString:@" "];
+        }
+    }
+    
+    [self.xcodeManager replaceCharactersInRange:NSMakeRange(endOfLine,0) withString:[NSString stringWithFormat:@"\n%@%@", spacing, [additionalSpacing copy]]];
+    [self.xcodeManager setSelectedRange:NSMakeRange(endOfLine+1+spacing.length+additionalSpacing.length, 0)];
+}
+
+- (void)moveToEOLAndInsertTerminator
+{
+    NSRange endOfLineRange = [self.xcodeManager lineContentsRange];
+    endOfLineRange.location = endOfLineRange.location + endOfLineRange.length;
+    endOfLineRange.length = 0;
+    unichar characterAtEndOfLine = [[self.xcodeManager contents] characterAtIndex:endOfLineRange.location-2];
+    
+    if ((int)characterAtEndOfLine != 59) {
+        [self.xcodeManager replaceCharactersInRange:NSMakeRange(endOfLineRange.location-1,0) withString:@";"];
+    }
+}
+
+- (void)moveToEOLAndInsertTerminatorPlusLF
+{
+    [self moveToEOLAndInsertTerminator];
+    [self moveToEOLAndInsertLF];
 }
 
 @end
