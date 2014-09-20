@@ -313,11 +313,12 @@
 - (void)moveToEOLAndInsertTerminator
 {
     NSRange endOfLineRange = [self.xcodeManager lineContentsRange];
-    unsigned long endOfLine = (unsigned long)endOfLineRange.location+(unsigned long)endOfLineRange.length;
-    unichar characterAtEndOfLine = [[self.xcodeManager contents] characterAtIndex:endOfLine-1];
+    endOfLineRange.location = endOfLineRange.location + endOfLineRange.length;
+    endOfLineRange.length = 0;
+    unichar characterAtEndOfLine = [[self.xcodeManager contents] characterAtIndex:endOfLineRange.location-2];
     
-    if ((int)characterAtEndOfLine != 59) {
-        [self.xcodeManager replaceCharactersInRange:NSMakeRange(endOfLine,0) withString:@";"];
+    if ((int)characterAtEndOfLine != 59) {
+        [self.xcodeManager replaceCharactersInRange:NSMakeRange(endOfLineRange.location-1,0) withString:@";"];
     }
 }
 
