@@ -266,7 +266,7 @@
 {
     if (![self validResponder]) return;
     
-    [self.xcodeManager replaceCharactersInRange:self.xcodeManager.lineContentsRange withString:@""];
+    [self.xcodeManager replaceCharactersInRange:self.xcodeManager.lineRange withString:@""];
 }
 
 - (void)duplicateLine
