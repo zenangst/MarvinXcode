@@ -165,7 +165,9 @@
 {
     NSResponder *firstResponder = [[NSApp keyWindow] firstResponder];
     NSString *responderClass = NSStringFromClass(firstResponder.class);
-    return ([responderClass isEqualToString:@"DVTSourceTextView"]);
+    NSArray *validClasses = @[@"DVTSourceTextView", @"IDEPlaygroundTextView"];
+    
+    return ([validClasses containsObject:responderClass]);
 }
 
 #pragma mark - Setters
