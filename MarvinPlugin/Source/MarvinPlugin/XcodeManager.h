@@ -10,7 +10,6 @@
 
 @interface XcodeManager : NSObject
 
-@property (nonatomic, strong) NSTextView *textView;
 @property (nonatomic) NSRange selectedRange;
 
 - (id)currentEditor;

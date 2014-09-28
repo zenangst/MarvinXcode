@@ -1,8 +1,10 @@
-## Install
+Marvin is a plugin for Xcode, it adds a large collection of text selections, duplication and deletion commands
 
-#### Compiled Version
+![Icon](https://raw.githubusercontent.com/zenangst/MarvinXcode/master/screenshot.png)
 
-* This is on my TODO-list, stay tuned.
+#### Install via Alcatraz
+
+* Install plugin and restart Xcode.
 
 #### Build from Source
 

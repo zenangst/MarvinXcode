@@ -9,6 +9,12 @@
 
 #import "XcodeManager.h"
 
+@interface XcodeManager ()
+
+@property (nonatomic, strong) NSTextView *textView;
+
+@end
+
 @implementation XcodeManager
 
 #pragma mark - Getters
@@ -16,12 +22,14 @@
 - (id)currentEditor
 {
     NSWindowController *currentWindowController = [[NSApp keyWindow] windowController];
+    
     if ([currentWindowController isKindOfClass:NSClassFromString(@"IDEWorkspaceWindowController")]) {
         IDEWorkspaceWindowController *workspaceController = (IDEWorkspaceWindowController *)currentWindowController;
         IDEEditorArea *editorArea = [workspaceController editorArea];
         IDEEditorContext *editorContext = [editorArea lastActiveEditorContext];
         return [editorContext editor];
     }
+    
     return nil;
 }
 
