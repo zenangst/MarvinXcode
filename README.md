@@ -8,7 +8,7 @@ Marvin is a plugin for Xcode, it adds a large collection of text selections, dup
 
 #### Build from Source
 
-* Build the Xcode project. The plug-in will automatically be installed in `~/Library/Application Support/Developer/Shared/Xcode/Plug-ins`. 
+* Build the Xcode project. The plug-in will automatically be installed in `~/Library/Application Support/Developer/Shared/Xcode/Plug-ins`.
 
 * Relaunch Xcode.
 
