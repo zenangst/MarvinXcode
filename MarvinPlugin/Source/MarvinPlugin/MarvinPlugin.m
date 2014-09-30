@@ -53,7 +53,7 @@
 
         [marvinMenu addItem:({
             NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Delete Line"
-                                                              action:@selector(deleteLine)
+                                                              action:@selector(deleteLineAction)
                                                        keyEquivalent:@"k"];
             menuItem.target = self;
             menuItem.keyEquivalentModifierMask = NSControlKeyMask | NSShiftKeyMask;
@@ -62,7 +62,7 @@
 
         [marvinMenu addItem:({
             NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Duplicate Line"
-                                                              action:@selector(duplicateLine)
+                                                              action:@selector(duplicateLineAction)
                                                        keyEquivalent:@"d"];
             menuItem.target = self;
             menuItem.keyEquivalentModifierMask = NSControlKeyMask | NSShiftKeyMask;
@@ -71,7 +71,7 @@
 
         [marvinMenu addItem:({
             NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Join Line"
-                                                              action:@selector(joinLine)
+                                                              action:@selector(joinLineAction)
                                                        keyEquivalent:@"j"];
             menuItem.target = self;
             menuItem.keyEquivalentModifierMask = NSControlKeyMask | NSShiftKeyMask;
@@ -80,7 +80,7 @@
 
         [marvinMenu addItem:({
             NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Move To EOL and Insert LF"
-                                                              action:@selector(moveToEOLAndInsertLF)
+                                                              action:@selector(moveToEOLAndInsertLFAction)
                                                        keyEquivalent:@""];
             menuItem.target = self;
             menuItem;
@@ -88,7 +88,7 @@
         
         [marvinMenu addItem:({
             NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Select Current Word"
-                                                              action:@selector(selectWord)
+                                                              action:@selector(selectWordAction)
                                                        keyEquivalent:@""];
             menuItem.target = self;
             menuItem.keyEquivalentModifierMask = NSControlKeyMask;
@@ -97,7 +97,7 @@
         
         [marvinMenu addItem:({
             NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Select Line Contents"
-                                                              action:@selector(selectLineContents)
+                                                              action:@selector(selectLineContentsAction)
                                                        keyEquivalent:@"l"];
             menuItem.target = self;
             menuItem.keyEquivalentModifierMask = NSCommandKeyMask | NSShiftKeyMask;
@@ -106,7 +106,7 @@
         
         [marvinMenu addItem:({
             NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Select Next Word"
-                                                              action:@selector(selectNextWord)
+                                                              action:@selector(selectNextWordAction)
                                                        keyEquivalent:@"d"];
             menuItem.target = self;
             menuItem.keyEquivalentModifierMask = NSControlKeyMask;
@@ -115,7 +115,7 @@
         
         [marvinMenu addItem:({
             NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Select Previous Word"
-                                                              action:@selector(selectPreviousWord)
+                                                              action:@selector(selectPreviousWordAction)
                                                        keyEquivalent:@"a"];
             menuItem.target = self;
             menuItem.keyEquivalentModifierMask = NSControlKeyMask;
@@ -124,7 +124,7 @@
         
         [marvinMenu addItem:({
             NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Select Word Above"
-                                                              action:@selector(selectWordAbove)
+                                                              action:@selector(selectWordAboveAction)
                                                        keyEquivalent:@"w"];
             menuItem.target = self;
             menuItem.keyEquivalentModifierMask = NSControlKeyMask;
@@ -133,7 +133,7 @@
         
         [marvinMenu addItem:({
             NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Select Word Below"
-                                                              action:@selector(selectWordBelow)
+                                                              action:@selector(selectWordBelowAction)
                                                        keyEquivalent:@"s"];
             menuItem.target = self;
             menuItem.keyEquivalentModifierMask = NSControlKeyMask;
@@ -170,23 +170,23 @@
     return ([validClasses containsObject:responderClass]);
 }
 
-#pragma mark - Setters
+#pragma mark - Actions
 
-- (void)selectLineContents
+- (void)selectLineContentsAction
 {
     if (![self validResponder]) return;
 
     self.xcodeManager.selectedRange = self.xcodeManager.lineContentsRange;
 }
 
-- (void)selectWord {
+- (void)selectWordAction {
     if (![self validResponder]) return;
 
     NSRange range = self.xcodeManager.currentWordRange;
     self.xcodeManager.selectedRange = range;
 }
 
-- (void)selectWordAbove
+- (void)selectWordAboveAction
 {
     if (![self validResponder]) return;
 
@@ -196,9 +196,9 @@
     unichar characterAtCursorEnd = [[self.xcodeManager contents] characterAtIndex:currentRange.location-1];
 
     if (![self.xcodeManager selectedRange].length && [validSet characterIsMember:characterAtCursorStart]) {
-        [self selectWord];
+        [self selectWordAction];
     } else if (![self.xcodeManager selectedRange].length && [validSet characterIsMember:characterAtCursorEnd]) {
-        [self selectPreviousWord];
+        [self selectPreviousWordAction];
     } else {
         CGEventRef event = CGEventCreateKeyboardEvent(NULL, 126, true);
         CGEventSetFlags(event, 0);
@@ -211,15 +211,15 @@
             unichar characterAtCursorStart = [[self.xcodeManager contents] characterAtIndex:currentRange.location];
 
             if ([validSet characterIsMember:characterAtCursorStart]) {
-                [self selectWord];
+                [self selectWordAction];
             } else {
-                [self selectPreviousWord];
+                [self selectPreviousWordAction];
             }
         });
     }
 }
 
-- (void)selectWordBelow
+- (void)selectWordBelowAction
 {
     if (![self validResponder]) return;
 
@@ -228,11 +228,11 @@
     CGEventPost(kCGHIDEventTap, event);
     CFRelease(event);
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.05 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self selectWord];
+        [self selectWordAction];
     });
 }
 
-- (void)selectPreviousWord
+- (void)selectPreviousWordAction
 {
     if (![self validResponder]) return;
 
@@ -240,21 +240,21 @@
     self.xcodeManager.selectedRange = self.xcodeManager.currentWordRange;
 }
 
-- (void)selectNextWord
+- (void)selectNextWordAction
 {
     if (![self validResponder]) return;
 
-    [self selectWord];
+    [self selectWordAction];
 }
 
-- (void)deleteLine
+- (void)deleteLineAction
 {
     if (![self validResponder]) return;
     
     [self.xcodeManager replaceCharactersInRange:self.xcodeManager.lineRange withString:@""];
 }
 
-- (void)duplicateLine
+- (void)duplicateLineAction
 {
     if (![self validResponder]) return;
 
@@ -266,14 +266,14 @@
     [self.xcodeManager setSelectedRange:selectRange];
 }
 
-- (void)joinLine
+- (void)joinLineAction
 {
     if (![self validResponder]) return;
 
     [self.xcodeManager replaceCharactersInRange:self.xcodeManager.joinRange withString:@""];
 }
 
-- (void)moveToEOLAndInsertLF
+- (void)moveToEOLAndInsertLFAction
 {
     NSRange endOfLineRange = [self.xcodeManager lineContentsRange];
     NSRange lineRange = [self.xcodeManager lineRange];
@@ -293,24 +293,6 @@
 
     [self.xcodeManager replaceCharactersInRange:NSMakeRange(endOfLine,0) withString:[NSString stringWithFormat:@"\n%@%@", spacing, [additionalSpacing copy]]];
     [self.xcodeManager setSelectedRange:NSMakeRange(endOfLine+1+spacing.length+additionalSpacing.length, 0)];
-}
-
-- (void)moveToEOLAndInsertTerminator
-{
-    NSRange endOfLineRange = [self.xcodeManager lineContentsRange];
-    endOfLineRange.location = endOfLineRange.location + endOfLineRange.length;
-    endOfLineRange.length = 0;
-    unichar characterAtEndOfLine = [[self.xcodeManager contents] characterAtIndex:endOfLineRange.location-2];
-
-    if ((int)characterAtEndOfLine != 59) {
-        [self.xcodeManager replaceCharactersInRange:NSMakeRange(endOfLineRange.location-1,0) withString:@";"];
-    }
-}
-
-- (void)moveToEOLAndInsertTerminatorPlusLF
-{
-    [self moveToEOLAndInsertTerminator];
-    [self moveToEOLAndInsertLF];
 }
 
 @end
