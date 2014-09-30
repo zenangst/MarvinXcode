@@ -14,7 +14,7 @@
 
 - (id)currentEditor;
 - (IDESourceCodeDocument *)currentSourceCodeDocument;
-
+- (void)save;
 - (NSString *)contents;
 - (NSUInteger)documentLength;
 - (NSRange)currentWordRange;
