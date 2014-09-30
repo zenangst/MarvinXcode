@@ -1,4 +1,4 @@
-Marvin is a plugin for Xcode, it adds a large collection of text selections, duplication and deletion commands.
+####Marvin is a plugin for Xcode, it adds a large collection of text selections, duplication and deletion commands.
 
 It includes the following commands (some might seem obvious but some need a little more detail to describe its function and value).
 
