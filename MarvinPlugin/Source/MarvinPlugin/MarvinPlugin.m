@@ -52,60 +52,6 @@
         [[editMenuItem submenu] addItem:[NSMenuItem separatorItem]];
 
         [marvinMenu addItem:({
-            NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Select Line Contents"
-                                                              action:@selector(selectLineContents)
-                                                       keyEquivalent:@"l"];
-            menuItem.target = self;
-            menuItem.keyEquivalentModifierMask = NSCommandKeyMask | NSShiftKeyMask;
-            menuItem;
-        })];
-
-        [marvinMenu addItem:({
-             NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Select Current Word"
-                                                               action:@selector(selectWord)
-                                                        keyEquivalent:@""];
-             menuItem.target = self;
-             menuItem.keyEquivalentModifierMask = NSControlKeyMask;
-             menuItem;
-        })];
-
-        [marvinMenu addItem:({
-            NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Select Word Above"
-                                                              action:@selector(selectWordAbove)
-                                                       keyEquivalent:@"w"];
-            menuItem.target = self;
-            menuItem.keyEquivalentModifierMask = NSControlKeyMask;
-            menuItem;
-        })];
-
-        [marvinMenu addItem:({
-            NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Select Word Below"
-                                                              action:@selector(selectWordBelow)
-                                                       keyEquivalent:@"s"];
-            menuItem.target = self;
-            menuItem.keyEquivalentModifierMask = NSControlKeyMask;
-            menuItem;
-        })];
-
-        [marvinMenu addItem:({
-            NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Select Previous Word"
-                                                              action:@selector(selectPreviousWord)
-                                                       keyEquivalent:@"a"];
-            menuItem.target = self;
-            menuItem.keyEquivalentModifierMask = NSControlKeyMask;
-            menuItem;
-        })];
-
-        [marvinMenu addItem:({
-            NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Select Next Word"
-                                                              action:@selector(selectNextWord)
-                                                       keyEquivalent:@"d"];
-            menuItem.target = self;
-            menuItem.keyEquivalentModifierMask = NSControlKeyMask;
-            menuItem;
-        })];
-
-        [marvinMenu addItem:({
             NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Delete Line"
                                                               action:@selector(deleteLine)
                                                        keyEquivalent:@"k"];
@@ -137,6 +83,60 @@
                                                               action:@selector(moveToEOLAndInsertLF)
                                                        keyEquivalent:@""];
             menuItem.target = self;
+            menuItem;
+        })];
+        
+        [marvinMenu addItem:({
+            NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Select Current Word"
+                                                              action:@selector(selectWord)
+                                                       keyEquivalent:@""];
+            menuItem.target = self;
+            menuItem.keyEquivalentModifierMask = NSControlKeyMask;
+            menuItem;
+        })];
+        
+        [marvinMenu addItem:({
+            NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Select Line Contents"
+                                                              action:@selector(selectLineContents)
+                                                       keyEquivalent:@"l"];
+            menuItem.target = self;
+            menuItem.keyEquivalentModifierMask = NSCommandKeyMask | NSShiftKeyMask;
+            menuItem;
+        })];
+        
+        [marvinMenu addItem:({
+            NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Select Next Word"
+                                                              action:@selector(selectNextWord)
+                                                       keyEquivalent:@"d"];
+            menuItem.target = self;
+            menuItem.keyEquivalentModifierMask = NSControlKeyMask;
+            menuItem;
+        })];
+        
+        [marvinMenu addItem:({
+            NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Select Previous Word"
+                                                              action:@selector(selectPreviousWord)
+                                                       keyEquivalent:@"a"];
+            menuItem.target = self;
+            menuItem.keyEquivalentModifierMask = NSControlKeyMask;
+            menuItem;
+        })];
+        
+        [marvinMenu addItem:({
+            NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Select Word Above"
+                                                              action:@selector(selectWordAbove)
+                                                       keyEquivalent:@"w"];
+            menuItem.target = self;
+            menuItem.keyEquivalentModifierMask = NSControlKeyMask;
+            menuItem;
+        })];
+        
+        [marvinMenu addItem:({
+            NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Select Word Below"
+                                                              action:@selector(selectWordBelow)
+                                                       keyEquivalent:@"s"];
+            menuItem.target = self;
+            menuItem.keyEquivalentModifierMask = NSControlKeyMask;
             menuItem;
         })];
 
@@ -250,7 +250,7 @@
 - (void)deleteLine
 {
     if (![self validResponder]) return;
-
+    
     [self.xcodeManager replaceCharactersInRange:self.xcodeManager.lineRange withString:@""];
 }
 
