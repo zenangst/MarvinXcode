@@ -66,9 +66,24 @@
     return nil;
 }
 
+- (IDEEditorDocument *)currentDocument
+{
+    NSWindowController *currentWindowController = [[NSApp keyWindow] windowController];
+
+    if ([currentWindowController isKindOfClass:NSClassFromString(@"IDEWorkspaceWindowController")]) {
+        IDEWorkspaceWindowController *workspaceController = (IDEWorkspaceWindowController *)currentWindowController;
+        IDEEditorArea *editorArea = [workspaceController editorArea];
+        return editorArea.primaryEditorDocument;
+    }
+
+    return nil;
+}
+
 - (void)save
 {
-    [[self currentSourceCodeDocument] saveDocument:nil];
+    if ([self currentDocument]) {
+        [[self currentDocument] saveDocument:nil];
+    }
 }
 
 - (NSString *)contents

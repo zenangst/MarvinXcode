@@ -305,15 +305,18 @@
 
 - (void)save
 {
-    [self removeTrailingWhitespace];
-    [self addNewlineAtEOF];
-    [self.xcodeManager save];
+    [self removeTrailingWhitespace:^{
+        [self addNewlineAtEOF];
+        [self.xcodeManager save];
+    }];
 }
 
 #pragma mark - Private methods
 
 - (void)addNewlineAtEOF
 {
+    if (![self validResponder]) return;
+
     NSString *documentText = self.xcodeManager.contents;
     int eof = [documentText characterAtIndex:[documentText length]-1];
     int lastAscii = [documentText characterAtIndex:[documentText length]-2];
@@ -328,9 +331,12 @@
     }
 }
 
-- (void)removeTrailingWhitespace
+- (void)removeTrailingWhitespace:(void (^)())block;
 {
-    if (![self validResponder]) return;
+    if (![self validResponder]) {
+        block();
+        return;
+    }
 
     NSError *error = nil;
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"([ \t]+)\r?\n" options:NSRegularExpressionCaseInsensitive error:&error];
@@ -352,7 +358,10 @@
 
     }];
 
-    if (![ranges count]) return;
+    if (![ranges count]) {
+        block();
+        return;
+    }
 
     NSEnumerator *enumerator = [ranges reverseObjectEnumerator];
 
@@ -362,10 +371,7 @@
             range.length -= 1;
             [self.xcodeManager replaceCharactersInRange:range withString:@""];
         }
-
-//        [self bridge:^{
-//            [[[[[[[self.bridge menuBars] lastObject] menus] objectWithName:@"File"] menuItems] objectWithName:@"Save"] clickAt:nil];
-//        }];
+        block();
     });
 }
 
