@@ -82,7 +82,11 @@
 + (void)releaseEditorDocument:(id)arg1;
 @end
 
-@interface IDESourceCodeDocument : NSDocument
+@interface IDEEditorDocument : NSDocument
+- (void)ide_saveDocument:(id)arg1;
+@end
+
+@interface IDESourceCodeDocument : IDEEditorDocument
 - (DVTSourceTextStorage *)textStorage;
 - (NSUndoManager *)undoManager;
 @end
@@ -103,6 +107,7 @@
 
 @interface IDEEditorArea : NSObject
 - (IDEEditorContext *)lastActiveEditorContext;
+@property(readonly) IDEEditorDocument *primaryEditorDocument;
 @end
 
 @interface IDEWorkspaceWindowController : NSObject
