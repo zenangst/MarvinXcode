@@ -219,11 +219,20 @@
 
 - (void)setSelectedRange:(NSRange)range
 {
+    if (range.location == NSNotFound) return;
+
+    if ((range.location + range.length) > self.contents.length) {
+        range.length = self.contents.length - range.location;
+    }
     self.textView.selectedRange = range;
 }
 
 - (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)string
 {
+    if ((range.location + range.length) > self.contents.length) {
+        range.length = self.contents.length - range.location;
+    }
+
     IDESourceCodeDocument *document = [self currentSourceCodeDocument];
     DVTSourceTextStorage *textStorage = [document textStorage];
 
