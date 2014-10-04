@@ -107,6 +107,8 @@
     NSCharacterSet *spaceSet = [NSCharacterSet characterSetWithCharactersInString:@"#-<>/(){}[],;:. \n`*\"'"];
     NSRange selectedRange = [self selectedRange];
 
+    if (selectedRange.location >= self.contents.length) return selectedRange;
+
     char character;
     if ([self hasSelection]) {
         character = [[self contents] characterAtIndex:selectedRange.location+selectedRange.length];
@@ -150,10 +152,13 @@
 - (NSRange)lineContentsRange
 {
     NSRange selectedRange = [self selectedRange];
+
     NSCharacterSet *newlineSet = [NSCharacterSet characterSetWithCharactersInString:@"\n"];
     NSUInteger startOfLine = ([[self contents] rangeOfCharacterFromSet:newlineSet options:NSBackwardsSearch range:NSMakeRange(0,selectedRange.location)].location);
 
     NSCharacterSet *validSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789ABCDEFGHIJKOLMNOPQRSTUVWXYZÅÄÆÖØabcdefghijkolmnopqrstuvwxyzåäæöø_!\"#€%&/()=?`<>@£$∞§|[]≈±´¡”¥¢‰¶\{}≠¿`~^*+-;"];
+
+    if (startOfLine == NSNotFound) startOfLine = 0;
 
     NSUInteger location = ([[self contents] rangeOfCharacterFromSet:validSet options:NSCaseInsensitiveSearch range:NSMakeRange(startOfLine,[self documentLength]-startOfLine)].location);
 
@@ -219,11 +224,20 @@
 
 - (void)setSelectedRange:(NSRange)range
 {
+    if (range.location == NSNotFound) return;
+
+    if ((range.location + range.length) > self.contents.length) {
+        range.length = self.contents.length - range.location;
+    }
     self.textView.selectedRange = range;
 }
 
 - (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)string
 {
+    if ((range.location + range.length) > self.contents.length) {
+        range.length = self.contents.length - range.location;
+    }
+
     IDESourceCodeDocument *document = [self currentSourceCodeDocument];
     DVTSourceTextStorage *textStorage = [document textStorage];
 
