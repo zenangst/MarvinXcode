@@ -283,7 +283,14 @@
 
 - (void)moveToEOLAndInsertLFAction
 {
+
     NSRange endOfLineRange = [self.xcodeManager lineContentsRange];
+
+    if (endOfLineRange.location == NSNotFound) {
+        endOfLineRange.location = self.xcodeManager.contents.length;
+        endOfLineRange.length = 0;
+    }
+
     NSRange lineRange = [self.xcodeManager lineRange];
     unsigned long endOfLine = (unsigned long)endOfLineRange.location+(unsigned long)endOfLineRange.length;
 
