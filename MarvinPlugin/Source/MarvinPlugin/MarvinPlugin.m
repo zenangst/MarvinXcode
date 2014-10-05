@@ -19,26 +19,26 @@
 
 @implementation MarvinPlugin
 
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 + (void)pluginDidLoad:(NSBundle *)plugin {
     static id shared = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{ shared = [[self alloc] init]; });
 }
 
-- (id)init {
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (instancetype)init {
     self = [super init];
 
-    if (self) {
-        [[NSNotificationCenter defaultCenter]
-         addObserver:self
-         selector:@selector(applicationDidFinishLaunching:)
-         name:NSApplicationDidFinishLaunchingNotification
-         object:nil];
-    }
+    if (!self) return nil;
+    
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(applicationDidFinishLaunching:)
+     name:NSApplicationDidFinishLaunchingNotification
+     object:nil];
 
     return self;
 }
@@ -283,7 +283,14 @@
 
 - (void)moveToEOLAndInsertLFAction
 {
+
     NSRange endOfLineRange = [self.xcodeManager lineContentsRange];
+
+    if (endOfLineRange.location == NSNotFound) {
+        endOfLineRange.location = self.xcodeManager.contents.length;
+        endOfLineRange.length = 0;
+    }
+
     NSRange lineRange = [self.xcodeManager lineRange];
     unsigned long endOfLine = (unsigned long)endOfLineRange.location+(unsigned long)endOfLineRange.length;
 
