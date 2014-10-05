@@ -140,7 +140,7 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Octalord Information Inc.";
 			};
-			buildConfigurationList = 6F44E9ED17DD324B0064F1B7 /* Build configuration list for PBXProject "MarvinPlugin" */;
+			buildConfigurationList = 6F44E9ED17DD324B0064F1B7 /* Build configuration list for PBXProject "MarvinPlugIn" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -282,7 +282,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		6F44E9ED17DD324B0064F1B7 /* Build configuration list for PBXProject "MarvinPlugin" */ = {
+		6F44E9ED17DD324B0064F1B7 /* Build configuration list for PBXProject "MarvinPlugIn" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6F44EA0217DD324B0064F1B7 /* Debug */,
