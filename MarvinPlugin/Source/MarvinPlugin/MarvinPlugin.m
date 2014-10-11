@@ -283,20 +283,24 @@
 
 - (void)moveToEOLAndInsertLFAction
 {
+    NSRange lineContentsRange = self.xcodeManager.lineContentsRange;
+    NSRange lineRange = [self.xcodeManager lineRange];
 
-    NSRange endOfLineRange = [self.xcodeManager lineContentsRange];
+    if (lineContentsRange.location == NSNotFound) {
+        lineContentsRange.location = self.xcodeManager.contents.length;
+        lineContentsRange.length = 0;
 
-    if (endOfLineRange.location == NSNotFound) {
-        endOfLineRange.location = self.xcodeManager.contents.length;
-        endOfLineRange.length = 0;
+        [self.xcodeManager replaceCharactersInRange:lineContentsRange withString:@"\n"];
+        self.xcodeManager.selectedRange = NSMakeRange(lineContentsRange.location+1, 0);
+
+        return;
     }
 
-    NSRange lineRange = [self.xcodeManager lineRange];
-    unsigned long endOfLine = (unsigned long)endOfLineRange.location+(unsigned long)endOfLineRange.length;
+    unsigned long endOfLine = (unsigned long)lineContentsRange.location+(unsigned long)lineContentsRange.length;
 
-    NSString *spacing = [[self.xcodeManager contents] substringWithRange:NSMakeRange(lineRange.location, endOfLineRange.location - lineRange.location)];
+    NSString *spacing = [[self.xcodeManager contents] substringWithRange:NSMakeRange(lineRange.location, lineContentsRange.location - lineRange.location)];
 
-    unichar lastCharacterInLine = [[self.xcodeManager contents] characterAtIndex:endOfLineRange.location+endOfLineRange.length-1];
+    unichar lastCharacterInLine = [[self.xcodeManager contents] characterAtIndex:lineContentsRange.location+lineContentsRange.length-1];
     int ascii = lastCharacterInLine;
 
     NSMutableString *additionalSpacing = [NSMutableString string];
