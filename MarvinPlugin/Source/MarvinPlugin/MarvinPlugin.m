@@ -33,7 +33,7 @@
     self = [super init];
 
     if (!self) return nil;
-    
+
     [[NSNotificationCenter defaultCenter]
      addObserver:self
      selector:@selector(applicationDidFinishLaunching:)
