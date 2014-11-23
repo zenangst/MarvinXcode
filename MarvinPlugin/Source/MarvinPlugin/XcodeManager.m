@@ -179,7 +179,10 @@
 
     NSUInteger length = ([[self contents] rangeOfCharacterFromSet:newlineSet options:NSCaseInsensitiveSearch range:NSMakeRange(selectedRange.location+selectedRange.length,[self contents].length-(selectedRange.location+selectedRange.length))].location);
 
-    return NSMakeRange(location+1, length-location);
+    location = (location == NSNotFound) ? 0 : location + 1;
+    length   = (location == 0) ? length+1   : (length+1) - location;
+
+    return NSMakeRange(location, length);
 }
 
 - (NSString *)contentsOfRange:(NSRange)range
