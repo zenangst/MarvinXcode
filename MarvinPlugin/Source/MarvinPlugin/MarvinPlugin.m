@@ -344,18 +344,9 @@
         sortedLinesArray = [sortedLinesArray sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortOrder]];
         sortedLinesString = [sortedLinesArray componentsJoinedByString:@"\n"];
         [self.xcodeManager replaceCharactersInRange:lineRange withString:sortedLinesString];
-        [self.xcodeManager setSelectedRange:lineRange];
-        NSRange newRange = [self.xcodeManager lineContentsRange];
-        newRange.length -= 2;
-        [self.xcodeManager setSelectedRange:newRange];;
     } else {
         lineRange.location -= 1;
         [self.xcodeManager replaceCharactersInRange:lineRange withString:sortedLinesString];
-        lineRange.location += 2;
-        [self.xcodeManager setSelectedRange:lineRange];
-        NSRange newRange = [self.xcodeManager lineContentsRange];
-        newRange.length -= 2;
-        [self.xcodeManager setSelectedRange:newRange];
     }
 }
 
