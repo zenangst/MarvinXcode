@@ -333,11 +333,20 @@
 - (void)sortLines
 {
     NSRange lineContentsRange = [self.xcodeManager lineRange];
-    lineContentsRange.location -= 1;
+    lineContentsRange.length -= 1;
     NSString *selectedContent = [self.xcodeManager contentsOfRange:lineContentsRange];
     NSArray *lines = [selectedContent componentsSeparatedByString:@"\n"];
     NSArray *sortedLinesArray = [lines sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
     NSString *sortedLinesString = [sortedLinesArray componentsJoinedByString:@"\n"];
+    sortedLinesString = [sortedLinesString substringFromIndex:1];
+    sortedLinesString = [sortedLinesString substringToIndex:sortedLinesString.length-1];
+
+    BOOL shouldSortDescending = ([selectedContent isEqualToString:sortedLinesString]);
+    if (shouldSortDescending) {
+        NSSortDescriptor *sortOrder = [NSSortDescriptor sortDescriptorWithKey:@"self" ascending:NO];
+        sortedLinesArray = [sortedLinesArray sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortOrder]];
+        sortedLinesString = [sortedLinesArray componentsJoinedByString:@"\n"];
+    }
 
     [self.xcodeManager replaceCharactersInRange:lineContentsRange withString:sortedLinesString];
 }
