@@ -15,7 +15,7 @@ It includes the following commands (some might seem obvious but some need a litt
 - Select Previous Word
 - Select Word Above
 - Select Word Below
-- Sort
+- Sort lines
 
 #### Install via Alcatraz
 
