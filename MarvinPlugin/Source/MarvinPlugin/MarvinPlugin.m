@@ -148,6 +148,14 @@
             menuItem;
         })];
 
+        [marvinMenu addItem:({
+            NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Sort Lines"
+                                                              action:@selector(sortLines)
+                                                       keyEquivalent:@""];
+            menuItem.target = self;
+            menuItem;
+        })];
+
         NSString *versionString = [[NSBundle bundleForClass:[self class]] objectForInfoDictionaryKey:@"CFBundleVersion"];
         NSMenuItem *marvinMenuItem = [[NSMenuItem alloc] initWithTitle:[NSString stringWithFormat:@"Marvin (%@)", versionString]
                                                                 action:nil
@@ -320,6 +328,18 @@
         [self addNewlineAtEOF];
         [self.xcodeManager save];
     }];
+}
+
+- (void)sortLines
+{
+    NSRange lineContentsRange = [self.xcodeManager lineRange];
+    lineContentsRange.location -= 1;
+    NSString *selectedContent = [self.xcodeManager contentsOfRange:lineContentsRange];
+    NSArray *lines = [selectedContent componentsSeparatedByString:@"\n"];
+    NSArray *sortedLinesArray = [lines sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+    NSString *sortedLinesString = [sortedLinesArray componentsJoinedByString:@"\n"];
+
+    [self.xcodeManager replaceCharactersInRange:lineContentsRange withString:sortedLinesString];
 }
 
 #pragma mark - Private methods
