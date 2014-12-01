@@ -332,14 +332,22 @@
 
 - (void)sortLines
 {
-    NSRange lineContentsRange = [self.xcodeManager lineRange];
-    lineContentsRange.location -= 1;
-    NSString *selectedContent = [self.xcodeManager contentsOfRange:lineContentsRange];
+    NSRange lineRange = [self.xcodeManager lineRange];
+    NSString *selectedContent = [self.xcodeManager contentsOfRange:lineRange];
     NSArray *lines = [selectedContent componentsSeparatedByString:@"\n"];
     NSArray *sortedLinesArray = [lines sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
     NSString *sortedLinesString = [sortedLinesArray componentsJoinedByString:@"\n"];
 
-    [self.xcodeManager replaceCharactersInRange:lineContentsRange withString:sortedLinesString];
+    BOOL shouldSortDescending = ([[selectedContent substringToIndex:selectedContent.length-1] isEqualToString:[sortedLinesString substringFromIndex:1]]);
+    if (shouldSortDescending) {
+        NSSortDescriptor *sortOrder = [NSSortDescriptor sortDescriptorWithKey:@"self" ascending:NO];
+        sortedLinesArray = [sortedLinesArray sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortOrder]];
+        sortedLinesString = [sortedLinesArray componentsJoinedByString:@"\n"];
+        [self.xcodeManager replaceCharactersInRange:lineRange withString:sortedLinesString];
+    } else {
+        lineRange.location -= 1;
+        [self.xcodeManager replaceCharactersInRange:lineRange withString:sortedLinesString];
+    }
 }
 
 #pragma mark - Private methods
