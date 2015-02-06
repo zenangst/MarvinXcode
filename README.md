@@ -7,7 +7,7 @@ It includes the following commands (some might seem obvious but some need a litt
 - Join Line
 - Move To EOL and Insert LF
 - Proper Save
-  - This command will remove trailing whitespace and add a CR at the end of the document before saving
+  - This command will add a CR at the end of the document before saving
 - Select Current Word
 - Select Line Contents
   - This differs a bit from Select Line as it will exclude whitespace characters until it reaches the first valid character at both the beginning and end of the current line
