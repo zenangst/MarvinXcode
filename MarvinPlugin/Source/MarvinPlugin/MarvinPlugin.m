@@ -357,16 +357,19 @@
     if (![self validResponder]) return;
 
     NSString *documentText = self.xcodeManager.contents;
-    int eof = [documentText characterAtIndex:[documentText length]-1];
-    int lastAscii = [documentText characterAtIndex:[documentText length]-2];
 
-    if (lastAscii != 100 && eof != 10) {
-        NSRange selectedRange = self.xcodeManager.selectedRange;
-        NSRange replaceRange = NSMakeRange(self.xcodeManager.contents.length, 0);
-        NSString *replaceString = [NSString stringWithFormat:@"%c", 10];
+    if (self.xcodeManager.contents.length) {
+        int eof = [documentText characterAtIndex:[documentText length]-1];
+        int lastAscii = [documentText characterAtIndex:[documentText length]-2];
 
-        [self.xcodeManager replaceCharactersInRange:replaceRange withString:replaceString];
-        self.xcodeManager.selectedRange = selectedRange;
+        if (lastAscii != 100 && eof != 10) {
+            NSRange selectedRange = self.xcodeManager.selectedRange;
+            NSRange replaceRange = NSMakeRange(self.xcodeManager.contents.length, 0);
+            NSString *replaceString = [NSString stringWithFormat:@"%c", 10];
+
+            [self.xcodeManager replaceCharactersInRange:replaceRange withString:replaceString];
+            self.xcodeManager.selectedRange = selectedRange;
+        }
     }
 }
 
