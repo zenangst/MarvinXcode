@@ -17,11 +17,11 @@
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.2</string>
+	<string>1.2.2</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1.2</string>
+	<string>1.2.1</string>
 	<key>DVTPlugInCompatibilityUUIDs</key>
 	<array>
 		<string>FEC992CC-CA4A-4CFD-8881-77300FCB848A</string>
@@ -33,7 +33,7 @@
 		<string>C4A681B0-4A26-480E-93EC-1218098B9AA0</string>
 	</array>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2014 zenangst. All rights reserved.</string>
+	<string>Copyright © 2014 Christoffer Winterkvist. All rights reserved.</string>
 	<key>NSPrincipalClass</key>
 	<string>MarvinPlugin</string>
 	<key>XC4Compatible</key>

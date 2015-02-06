@@ -81,8 +81,10 @@
 
 - (void)save
 {
-    if ([self currentDocument]) {
+    if ([[self currentSourceCodeDocument] isEqualTo:[self currentDocument]]) {
         [[self currentDocument] saveDocument:nil];
+    } else {
+        [[self currentSourceCodeDocument] saveDocument:nil];
     }
 }
 
