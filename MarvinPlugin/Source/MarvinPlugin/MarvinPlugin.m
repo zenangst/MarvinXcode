@@ -8,14 +8,13 @@
 
 #import "MarvinPlugin.h"
 #import "XcodeManager.h"
+#import "Document+ZENProperSave.h"
 
 @interface MarvinPlugin ()
 
 @property (nonatomic, strong) XcodeManager *xcodeManager;
 
 @end
-
-#import <AppKit/AppKit.h>
 
 @implementation MarvinPlugin
 
@@ -38,6 +37,12 @@
      addObserver:self
      selector:@selector(applicationDidFinishLaunching:)
      name:NSApplicationDidFinishLaunchingNotification
+     object:nil];
+
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(properSave)
+     name:@"Save properly"
      object:nil];
 
     return self;
@@ -81,14 +86,6 @@
         [marvinMenu addItem:({
             NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Move To EOL and Insert LF"
                                                               action:@selector(moveToEOLAndInsertLFAction)
-                                                       keyEquivalent:@""];
-            menuItem.target = self;
-            menuItem;
-        })];
-
-        [marvinMenu addItem:({
-            NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Proper Save"
-                                                              action:@selector(save)
                                                        keyEquivalent:@""];
             menuItem.target = self;
             menuItem;
@@ -322,7 +319,7 @@
     [self.xcodeManager setSelectedRange:NSMakeRange(endOfLine+1+spacing.length+additionalSpacing.length, 0)];
 }
 
-- (void)save
+- (void)properSave
 {
     [self removeTrailingWhitespace:^{
         [self addNewlineAtEOF];

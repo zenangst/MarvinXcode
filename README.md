@@ -6,8 +6,6 @@ It includes the following commands (some might seem obvious but some need a litt
 - Duplicate Line
 - Join Line
 - Move To EOL and Insert LF
-- Proper Save
-  - This command will add a CR at the end of the document before saving
 - Select Current Word
 - Select Line Contents
   - This differs a bit from Select Line as it will exclude whitespace characters until it reaches the first valid character at both the beginning and end of the current line
@@ -16,6 +14,8 @@ It includes the following commands (some might seem obvious but some need a litt
 - Select Word Above
 - Select Word Below
 - Sort lines
+ 
+As an added bonus, Marvin also magically cleans up whitespace on save.
 
 #### Install via Alcatraz
 
