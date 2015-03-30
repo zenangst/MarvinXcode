@@ -17,6 +17,7 @@
 @property (nonatomic) dispatch_queue_t backgroundQueue;
 @property (nonatomic) NSInteger lastLocation;
 @property (nonatomic) NSInteger lastLength;
+@property (nonatomic) NSRange newChangeMark;
 
 @end
 
@@ -53,6 +54,12 @@
      addObserver:self
      selector:@selector(addChangeMarks:)
      name:@"Add change mark"
+     object:nil];
+
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(insertChangeMark:)
+     name:@"Insert change mark"
      object:nil];
 
     return self;
@@ -462,36 +469,26 @@
 
 - (void)addChangeMarks:(NSNotification *)notification
 {
-    NSTextView *textView = [self.xcodeManager textView];
-    NSColor *color = [NSColor colorWithRed:0.8 green:0.93 blue:0.34 alpha:0.5];
-    NSRange range;
-
     if (notification.object && [notification.object isKindOfClass:[NSDictionary class]]) {
         NSDictionary *dictionary = notification.object;
-        range = NSMakeRange([dictionary[@"location"] integerValue], [dictionary[@"length"] integerValue]);
-    } else if ([textView rangeForUserCompletion].location != NSNotFound) {
-        range = [textView rangeForUserCompletion];
+        NSLog(@"dictionary: %@", dictionary);
+        self.newChangeMark = NSMakeRange([dictionary[@"location"] integerValue], [dictionary[@"length"] integerValue]);
+    } else if (notification.object && [notification.object isKindOfClass:[NSString class]]) {
+        NSString *newString = notification.object;
+        NSLog(@"newString: %@", newString);
+
+
+        self.newChangeMark = NSMakeRange(self.xcodeManager.selectedRange.location - 1, newString.length);
+
     }
+}
+- (void)insertChangeMark:(NSNotification *)notification
+{
+    NSTextView *textView = [self.xcodeManager textView];
+    NSColor *color = [NSColor colorWithRed:0.8 green:0.93 blue:0.34 alpha:0.5];
+    NSRange range = self.newChangeMark;
 
     [textView.layoutManager addTemporaryAttribute:NSBackgroundColorAttributeName value:color forCharacterRange:range];
-
-
-//    NSRange range = self.xcodeManager.selectedRange;
-//    NSString *newString = notification.object;
-//    range.location = range.location - 1;
-//    range.length = [newString length];
-//
-//    if (self.changeMarks[@(range.location)]) {
-//        NSInteger oldValue = [self.changeMarks[@(range.location)] integerValue];
-//        NSInteger newValue = range.length;
-//        if (newValue > oldValue) {
-//            self.changeMarks[@(range.location)] = @(range.length);
-//        }
-//    } else {
-//        self.changeMarks[@(range.location)] = @(range.length);
-//    }
-//
-//    [self reloadChangeMarks];
 }
 
 @end
