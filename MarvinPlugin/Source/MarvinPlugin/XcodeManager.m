@@ -88,6 +88,11 @@
     }
 }
 
+- (void)needsDisplay
+{
+    [self.textView setNeedsDisplay:YES];
+}
+
 - (NSString *)contents
 {
     return [self.textView string];
@@ -218,6 +223,11 @@
 - (BOOL)emptySelection
 {
     return (self.textView.selectedRange.length) ? NO : YES;
+}
+
+- (NSLayoutManager *)layoutManager
+{
+    return self.textView.layoutManager;
 }
 
 #pragma mark - Setters

@@ -8,10 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		6F44E9F617DD324B0064F1B7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F44E9F517DD324B0064F1B7 /* Cocoa.framework */; };
+		BD2401321AC6080600D3BD65 /* NSTextView+ChangeMarks.m in Sources */ = {isa = PBXBuildFile; fileRef = BD2401311AC6080600D3BD65 /* NSTextView+ChangeMarks.m */; };
 		BD5EBC6519C9F93200F2C8CD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BD5EBC6119C9F93200F2C8CD /* InfoPlist.strings */; };
 		BD5EBC6A19C9F94700F2C8CD /* MarvinPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = BD5EBC6919C9F94700F2C8CD /* MarvinPlugin.m */; };
 		BD9A8A3119CA09AD00321368 /* XcodeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BD9A8A3019CA09AD00321368 /* XcodeManager.m */; };
-		BDB698F61AB819B8001FC372 /* Document+ZENProperSave.m in Sources */ = {isa = PBXBuildFile; fileRef = BDB698F51AB819B8001FC372 /* Document+ZENProperSave.m */; };
+		BDB698F61AB819B8001FC372 /* NSDocument+ZENProperSave.m in Sources */ = {isa = PBXBuildFile; fileRef = BDB698F51AB819B8001FC372 /* NSDocument+ZENProperSave.m */; };
+		BDBA8F961AC9DF2200D6F948 /* DVTTextCompletionSession+ChangeMarks.m in Sources */ = {isa = PBXBuildFile; fileRef = BDBA8F951AC9DF2200D6F948 /* DVTTextCompletionSession+ChangeMarks.m */; };
+		BDBA8FA71AC9E04C00D6F948 /* DVTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDBA8FA61AC9E04C00D6F948 /* DVTFoundation.framework */; };
+		BDBA8FA91AC9E06B00D6F948 /* IDEKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDBA8FA81AC9E06B00D6F948 /* IDEKit.framework */; };
+		BDBA8FAB1AC9E08600D6F948 /* DVTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDBA8FAA1AC9E08600D6F948 /* DVTKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +25,8 @@
 		6F44E9F817DD324B0064F1B7 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		6F44E9F917DD324B0064F1B7 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		6F44E9FA17DD324B0064F1B7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		BD2401301AC6080600D3BD65 /* NSTextView+ChangeMarks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTextView+ChangeMarks.h"; sourceTree = "<group>"; };
+		BD2401311AC6080600D3BD65 /* NSTextView+ChangeMarks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTextView+ChangeMarks.m"; sourceTree = "<group>"; };
 		BD5351FA19CA1159006D3B78 /* XcodePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XcodePrivate.h; sourceTree = "<group>"; };
 		BD5EBC6219C9F93200F2C8CD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BD5EBC6319C9F93200F2C8CD /* MarvinPlugIn-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MarvinPlugIn-Info.plist"; sourceTree = "<group>"; };
@@ -28,8 +35,28 @@
 		BD5EBC6919C9F94700F2C8CD /* MarvinPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarvinPlugin.m; sourceTree = "<group>"; };
 		BD9A8A2F19CA09AD00321368 /* XcodeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XcodeManager.h; sourceTree = "<group>"; };
 		BD9A8A3019CA09AD00321368 /* XcodeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XcodeManager.m; sourceTree = "<group>"; };
-		BDB698F41AB819B8001FC372 /* Document+ZENProperSave.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Document+ZENProperSave.h"; path = "MarvinPlugin/Source/MarvinPlugin/Document+ZENProperSave.h"; sourceTree = SOURCE_ROOT; };
-		BDB698F51AB819B8001FC372 /* Document+ZENProperSave.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Document+ZENProperSave.m"; path = "MarvinPlugin/Source/MarvinPlugin/Document+ZENProperSave.m"; sourceTree = SOURCE_ROOT; };
+		BDB698F41AB819B8001FC372 /* NSDocument+ZENProperSave.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDocument+ZENProperSave.h"; path = "MarvinPlugin/Source/MarvinPlugin/NSDocument+ZENProperSave.h"; sourceTree = SOURCE_ROOT; };
+		BDB698F51AB819B8001FC372 /* NSDocument+ZENProperSave.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDocument+ZENProperSave.m"; path = "MarvinPlugin/Source/MarvinPlugin/NSDocument+ZENProperSave.m"; sourceTree = SOURCE_ROOT; };
+		BDBA8F851AC9DEDE00D6F948 /* DVTTextStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DVTTextStorage.h; sourceTree = "<group>"; };
+		BDBA8F861AC9DEDE00D6F948 /* DVTTextStorageDelegate-Protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DVTTextStorageDelegate-Protocol.h"; sourceTree = "<group>"; };
+		BDBA8F871AC9DEDE00D6F948 /* DVTInvalidation-Protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DVTInvalidation-Protocol.h"; sourceTree = "<group>"; };
+		BDBA8F881AC9DEDE00D6F948 /* DVTCompletingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DVTCompletingTextView.h; sourceTree = "<group>"; };
+		BDBA8F891AC9DEDE00D6F948 /* DVTTextCompletionDataSourceDelegate-Protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DVTTextCompletionDataSourceDelegate-Protocol.h"; sourceTree = "<group>"; };
+		BDBA8F8A1AC9DEDE00D6F948 /* DVTTextCompletionInlinePreviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DVTTextCompletionInlinePreviewController.h; sourceTree = "<group>"; };
+		BDBA8F8B1AC9DEDE00D6F948 /* DVTTextCompletionItem-Protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DVTTextCompletionItem-Protocol.h"; sourceTree = "<group>"; };
+		BDBA8F8C1AC9DEDE00D6F948 /* DVTTextCompletionListWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DVTTextCompletionListWindowController.h; sourceTree = "<group>"; };
+		BDBA8F8D1AC9DEDE00D6F948 /* DVTCompletingTextViewDelegate-Protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DVTCompletingTextViewDelegate-Protocol.h"; sourceTree = "<group>"; };
+		BDBA8F8E1AC9DEDE00D6F948 /* DVTCompletingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DVTCompletingTextView.h; sourceTree = "<group>"; };
+		BDBA8F8F1AC9DEDE00D6F948 /* DVTTextCompletionSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DVTTextCompletionSession.h; sourceTree = "<group>"; };
+		BDBA8F901AC9DEDE00D6F948 /* IDEIndexCompletionItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDEIndexCompletionItem.h; sourceTree = "<group>"; };
+		BDBA8F911AC9DEDE00D6F948 /* IDEOpenQuicklyPattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDEOpenQuicklyPattern.h; sourceTree = "<group>"; };
+		BDBA8F921AC9DEDE00D6F948 /* DVTPreferenceSet-Protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DVTPreferenceSet-Protocol.h"; sourceTree = "<group>"; };
+		BDBA8F931AC9DEDE00D6F948 /* DVTFontAndColorTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DVTFontAndColorTheme.h; sourceTree = "<group>"; };
+		BDBA8F941AC9DF2200D6F948 /* DVTTextCompletionSession+ChangeMarks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "DVTTextCompletionSession+ChangeMarks.h"; path = "MarvinPlugin/Source/MarvinPlugin/DVTTextCompletionSession+ChangeMarks.h"; sourceTree = SOURCE_ROOT; };
+		BDBA8F951AC9DF2200D6F948 /* DVTTextCompletionSession+ChangeMarks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "DVTTextCompletionSession+ChangeMarks.m"; path = "MarvinPlugin/Source/MarvinPlugin/DVTTextCompletionSession+ChangeMarks.m"; sourceTree = SOURCE_ROOT; };
+		BDBA8FA61AC9E04C00D6F948 /* DVTFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DVTFoundation.framework; path = ../../../../Applications/Xcode.app/Contents/SharedFrameworks/DVTFoundation.framework; sourceTree = "<group>"; };
+		BDBA8FA81AC9E06B00D6F948 /* IDEKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IDEKit.framework; path = ../../../../Applications/Xcode.app/Contents/Frameworks/IDEKit.framework; sourceTree = "<group>"; };
+		BDBA8FAA1AC9E08600D6F948 /* DVTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DVTKit.framework; path = ../../../../Applications/Xcode.app/Contents/SharedFrameworks/DVTKit.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +65,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				6F44E9F617DD324B0064F1B7 /* Cocoa.framework in Frameworks */,
+				BDBA8FA71AC9E04C00D6F948 /* DVTFoundation.framework in Frameworks */,
+				BDBA8FAB1AC9E08600D6F948 /* DVTKit.framework in Frameworks */,
+				BDBA8FA91AC9E06B00D6F948 /* IDEKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +95,9 @@
 		6F44E9F417DD324B0064F1B7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BDBA8FAA1AC9E08600D6F948 /* DVTKit.framework */,
+				BDBA8FA81AC9E06B00D6F948 /* IDEKit.framework */,
+				BDBA8FA61AC9E04C00D6F948 /* DVTFoundation.framework */,
 				6F44E9F517DD324B0064F1B7 /* Cocoa.framework */,
 				6F44E9F717DD324B0064F1B7 /* Other Frameworks */,
 			);
@@ -104,13 +137,32 @@
 		BD5EBC6719C9F94700F2C8CD /* MarvinPlugin */ = {
 			isa = PBXGroup;
 			children = (
+				BDBA8F851AC9DEDE00D6F948 /* DVTTextStorage.h */,
+				BDBA8F861AC9DEDE00D6F948 /* DVTTextStorageDelegate-Protocol.h */,
+				BDBA8F871AC9DEDE00D6F948 /* DVTInvalidation-Protocol.h */,
+				BDBA8F881AC9DEDE00D6F948 /* DVTCompletingTextView.h */,
+				BDBA8F891AC9DEDE00D6F948 /* DVTTextCompletionDataSourceDelegate-Protocol.h */,
+				BDBA8F8A1AC9DEDE00D6F948 /* DVTTextCompletionInlinePreviewController.h */,
+				BDBA8F8B1AC9DEDE00D6F948 /* DVTTextCompletionItem-Protocol.h */,
+				BDBA8F8C1AC9DEDE00D6F948 /* DVTTextCompletionListWindowController.h */,
+				BDBA8F8D1AC9DEDE00D6F948 /* DVTCompletingTextViewDelegate-Protocol.h */,
+				BDBA8F8E1AC9DEDE00D6F948 /* DVTCompletingTextView.h */,
+				BDBA8F8F1AC9DEDE00D6F948 /* DVTTextCompletionSession.h */,
+				BDBA8F901AC9DEDE00D6F948 /* IDEIndexCompletionItem.h */,
+				BDBA8F911AC9DEDE00D6F948 /* IDEOpenQuicklyPattern.h */,
+				BDBA8F921AC9DEDE00D6F948 /* DVTPreferenceSet-Protocol.h */,
+				BDBA8F931AC9DEDE00D6F948 /* DVTFontAndColorTheme.h */,
+				BD2401301AC6080600D3BD65 /* NSTextView+ChangeMarks.h */,
+				BD2401311AC6080600D3BD65 /* NSTextView+ChangeMarks.m */,
 				BD5EBC6819C9F94700F2C8CD /* MarvinPlugin.h */,
 				BD5EBC6919C9F94700F2C8CD /* MarvinPlugin.m */,
 				BD9A8A2F19CA09AD00321368 /* XcodeManager.h */,
 				BD9A8A3019CA09AD00321368 /* XcodeManager.m */,
 				BD5351FA19CA1159006D3B78 /* XcodePrivate.h */,
-				BDB698F41AB819B8001FC372 /* Document+ZENProperSave.h */,
-				BDB698F51AB819B8001FC372 /* Document+ZENProperSave.m */,
+				BDB698F41AB819B8001FC372 /* NSDocument+ZENProperSave.h */,
+				BDB698F51AB819B8001FC372 /* NSDocument+ZENProperSave.m */,
+				BDBA8F941AC9DF2200D6F948 /* DVTTextCompletionSession+ChangeMarks.h */,
+				BDBA8F951AC9DF2200D6F948 /* DVTTextCompletionSession+ChangeMarks.m */,
 			);
 			name = MarvinPlugin;
 			path = MarvinPlugIn;
@@ -178,9 +230,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BDB698F61AB819B8001FC372 /* Document+ZENProperSave.m in Sources */,
+				BDBA8F961AC9DF2200D6F948 /* DVTTextCompletionSession+ChangeMarks.m in Sources */,
+				BDB698F61AB819B8001FC372 /* NSDocument+ZENProperSave.m in Sources */,
 				BD5EBC6A19C9F94700F2C8CD /* MarvinPlugin.m in Sources */,
 				BD9A8A3119CA09AD00321368 /* XcodeManager.m in Sources */,
+				BD2401321AC6080600D3BD65 /* NSTextView+ChangeMarks.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -260,6 +314,11 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = "${HOME}";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/SharedFrameworks",
+					"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Frameworks",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MarvinPlugIn/Supporting Files/MarvinPlugIn-Prefix.pch";
 				INFOPLIST_FILE = "MarvinPlugIn/Supporting Files/MarvinPlugIn-Info.plist";
@@ -276,6 +335,11 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = "${HOME}";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/SharedFrameworks",
+					"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Frameworks",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MarvinPlugIn/Supporting Files/MarvinPlugIn-Prefix.pch";
 				INFOPLIST_FILE = "MarvinPlugIn/Supporting Files/MarvinPlugIn-Info.plist";

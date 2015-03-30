@@ -8,11 +8,15 @@
 
 #import "MarvinPlugin.h"
 #import "XcodeManager.h"
-#import "Document+ZENProperSave.h"
+#import "NSDocument+ZENProperSave.h"
 
 @interface MarvinPlugin ()
 
 @property (nonatomic, strong) XcodeManager *xcodeManager;
+@property (nonatomic, strong) NSMutableDictionary *changeMarks;
+@property (nonatomic) dispatch_queue_t backgroundQueue;
+@property (nonatomic) NSInteger lastLocation;
+@property (nonatomic) NSInteger lastLength;
 
 @end
 
@@ -43,6 +47,12 @@
      addObserver:self
      selector:@selector(properSave)
      name:@"Save properly"
+     object:nil];
+
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(addChangeMarks:)
+     name:@"Add change mark"
      object:nil];
 
     return self;
@@ -181,6 +191,24 @@
     NSArray *validClasses = @[@"DVTSourceTextView", @"IDEPlaygroundTextView"];
 
     return ([validClasses containsObject:responderClass]);
+}
+
+- (dispatch_queue_t)backgroundQueue
+{
+    if (_backgroundQueue) return _backgroundQueue;
+
+    _backgroundQueue = dispatch_queue_create("backgroundQueue", 0);
+
+    return _backgroundQueue;
+}
+
+- (NSMutableDictionary *)changeMarks
+{
+    if (_changeMarks) return _changeMarks;
+
+    _changeMarks = [NSMutableDictionary new];
+
+    return _changeMarks;
 }
 
 #pragma mark - Actions
@@ -412,6 +440,58 @@
         }
         block();
     });
+}
+
+- (void)reloadChangeMarks
+{
+    dispatch_async(self.backgroundQueue, ^{
+        [self.changeMarks enumerateKeysAndObjectsUsingBlock:^(NSNumber *location, NSNumber *length, BOOL *stop) {
+            NSRange range = NSMakeRange([location integerValue], [length integerValue]);
+            [[self.xcodeManager layoutManager] addTemporaryAttribute:NSBackgroundColorAttributeName
+                                                               value:[NSColor colorWithRed:0.7 green:0.92 blue:0.31 alpha:0.2]
+                                                   forCharacterRange:range];
+        }];
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.xcodeManager needsDisplay];
+        });
+    });
+
+
+}
+
+- (void)addChangeMarks:(NSNotification *)notification
+{
+    NSTextView *textView = [self.xcodeManager textView];
+    NSColor *color = [NSColor colorWithRed:0.8 green:0.93 blue:0.34 alpha:0.5];
+    NSRange range;
+
+    if (notification.object && [notification.object isKindOfClass:[NSDictionary class]]) {
+        NSDictionary *dictionary = notification.object;
+        range = NSMakeRange([dictionary[@"location"] integerValue], [dictionary[@"length"] integerValue]);
+    } else if ([textView rangeForUserCompletion].location != NSNotFound) {
+        range = [textView rangeForUserCompletion];
+    }
+
+    [textView.layoutManager addTemporaryAttribute:NSBackgroundColorAttributeName value:color forCharacterRange:range];
+
+
+//    NSRange range = self.xcodeManager.selectedRange;
+//    NSString *newString = notification.object;
+//    range.location = range.location - 1;
+//    range.length = [newString length];
+//
+//    if (self.changeMarks[@(range.location)]) {
+//        NSInteger oldValue = [self.changeMarks[@(range.location)] integerValue];
+//        NSInteger newValue = range.length;
+//        if (newValue > oldValue) {
+//            self.changeMarks[@(range.location)] = @(range.length);
+//        }
+//    } else {
+//        self.changeMarks[@(range.location)] = @(range.length);
+//    }
+//
+//    [self reloadChangeMarks];
 }
 
 @end

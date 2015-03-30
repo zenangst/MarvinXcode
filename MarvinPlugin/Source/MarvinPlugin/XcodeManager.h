@@ -13,6 +13,7 @@
 @property (nonatomic) NSRange selectedRange;
 
 - (id)currentEditor;
+- (NSTextView *)textView;
 - (IDESourceCodeDocument *)currentSourceCodeDocument;
 - (void)save;
 - (NSString *)contents;
@@ -24,6 +25,8 @@
 - (NSString *)contentsOfRange:(NSRange)range;
 - (NSRange)joinRange;
 - (NSString *)selectedText;
+- (NSLayoutManager *)layoutManager;
+- (void)needsDisplay;
 
 - (void)insertText:(NSString *)string;
 - (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)string;
