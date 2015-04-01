@@ -56,6 +56,12 @@
      name:@"Add change mark"
      object:nil];
 
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(pasteChangeMark:)
+     name:@"Paste change mark"
+     object:nil];
+
     return self;
 }
 
@@ -465,9 +471,19 @@
 - (void)addChangeMarks:(NSNotification *)notification
 {
     if (notification.object && [notification.object isKindOfClass:[NSString class]]) {
+        NSRange range = [self.xcodeManager.textView rangeForUserCompletion];
+        [self insertChangeMark:range];
+    }
+}
+
+- (void)pasteChangeMark:(NSNotification *)notification
+{
+    if (notification.object && [notification.object isKindOfClass:[NSString class]]) {
         NSString *newString = (NSString *)notification.object;
-        NSRange range = NSMakeRange(self.xcodeManager.selectedRange.location - newString.length,
-                                    newString.length);
+        NSInteger length = newString.length;
+        NSInteger location  = self.xcodeManager.selectedRange.location - newString.length;
+        NSRange range = NSMakeRange(location, length);
+
         [self insertChangeMark:range];
     }
 }
