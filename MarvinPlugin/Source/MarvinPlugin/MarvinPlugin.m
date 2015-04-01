@@ -15,9 +15,6 @@
 @property (nonatomic, strong) XcodeManager *xcodeManager;
 @property (nonatomic, strong) NSMutableDictionary *changeMarks;
 @property (nonatomic) dispatch_queue_t backgroundQueue;
-@property (nonatomic) NSInteger lastLocation;
-@property (nonatomic) NSInteger lastLength;
-@property (nonatomic) BOOL shouldInsertChangeMark;
 
 @end
 
@@ -36,8 +33,6 @@
 - (instancetype)init {
     self = [super init];
     if (!self) return nil;
-
-    _shouldInsertChangeMark = NO;
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(applicationDidFinishLaunching:)
@@ -59,7 +54,7 @@
                                                  name:@"Paste change mark"
                                                object:nil];
 
-return self;
+    return self;
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
@@ -470,7 +465,6 @@ return self;
     if (notification.object && [notification.object isKindOfClass:[NSString class]]) {
         NSRange range = [self.xcodeManager.textView rangeForUserCompletion];
 
-        self.shouldInsertChangeMark = YES;
         [self insertChangeMark:range];
     }
 }
@@ -483,21 +477,19 @@ return self;
         NSInteger location  = self.xcodeManager.selectedRange.location - newString.length;
         NSRange range = NSMakeRange(location, length);
 
-        self.shouldInsertChangeMark = YES;
+        NSLog(@"newString: %@", newString);
+
         [self insertChangeMark:range];
     }
 }
 
 - (void)insertChangeMark:(NSRange)range
 {
-    if (self.shouldInsertChangeMark) {
-        NSLayoutManager *layoutManager = [[self.xcodeManager textView] layoutManager];
-        NSColor *color = [NSColor colorWithRed:0.8 green:0.93 blue:0.34 alpha:0.5];
-        [layoutManager addTemporaryAttribute:NSBackgroundColorAttributeName
-                                       value:color
-                           forCharacterRange:range];
-        self.shouldInsertChangeMark = NO;
-    }
+    NSLayoutManager *layoutManager = [[self.xcodeManager textView] layoutManager];
+    NSColor *color = [NSColor colorWithRed:0.8 green:0.93 blue:0.34 alpha:0.5];
+    [layoutManager addTemporaryAttribute:NSBackgroundColorAttributeName
+                                   value:color
+                       forCharacterRange:range];
 }
 
 @end
