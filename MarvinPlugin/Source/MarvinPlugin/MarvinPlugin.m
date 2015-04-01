@@ -477,8 +477,6 @@
         NSInteger location  = self.xcodeManager.selectedRange.location - newString.length;
         NSRange range = NSMakeRange(location, length);
 
-        NSLog(@"newString: %@", newString);
-
         [self insertChangeMark:range];
     }
 }

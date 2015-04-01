@@ -15,12 +15,17 @@
 - (BOOL)zen_handleTextViewShouldChangeTextInRange:(struct _NSRange)arg1 replacementString:(id)arg2
 {
     long long selectedCompletionIndex = [self selectedCompletionIndex];
-    NSArray *allCompletions = [self filteredCompletionsAlpha];
-    IDEIndexCompletionItem *completion = allCompletions[selectedCompletionIndex];
-
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"Add change mark" object:[completion completionText]];
-    });
+    NSArray *filteredCompletions = [self filteredCompletionsAlpha];
+    
+    if (filteredCompletions.count > selectedCompletionIndex) {
+    
+        IDEIndexCompletionItem *completion = filteredCompletions[selectedCompletionIndex];
+    
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"Add change mark" object:[completion completionText]];
+        });
+    
+    }
 
     return [self zen_handleTextViewShouldChangeTextInRange:arg1 replacementString:arg2];
 }
@@ -28,12 +33,17 @@
 - (BOOL)zen_insertCurrentCompletion
 {
     long long selectedCompletionIndex = [self selectedCompletionIndex];
-    NSArray *allCompletions = [self filteredCompletionsAlpha];
-    IDEIndexCompletionItem *completion = allCompletions[selectedCompletionIndex];
+    NSArray *filteredCompletions = [self filteredCompletionsAlpha];
 
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"Add change mark" object:[completion completionText]];
-    });
+    if (filteredCompletions.count > selectedCompletionIndex) {
+    
+        IDEIndexCompletionItem *completion = filteredCompletions[selectedCompletionIndex];
+    
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"Add change mark" object:[completion completionText]];
+        });
+    
+    }
 
     return [self zen_insertCurrentCompletion];
 }
