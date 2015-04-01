@@ -16,7 +16,7 @@
     NSPasteboard *generalPasteboard  = [NSPasteboard generalPasteboard];
     NSString *pastedString = [generalPasteboard  stringForType:NSPasteboardTypeString];
 
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [[NSNotificationCenter defaultCenter] postNotificationName:@"Paste change mark" object:pastedString];
     });
 

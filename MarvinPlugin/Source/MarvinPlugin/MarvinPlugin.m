@@ -17,7 +17,7 @@
 @property (nonatomic) dispatch_queue_t backgroundQueue;
 @property (nonatomic) NSInteger lastLocation;
 @property (nonatomic) NSInteger lastLength;
-@property (nonatomic) NSRange newChangeMark;
+@property (nonatomic) BOOL shouldInsertChangeMark;
 
 @end
 
@@ -35,34 +35,31 @@
 
 - (instancetype)init {
     self = [super init];
-
     if (!self) return nil;
 
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self
-     selector:@selector(applicationDidFinishLaunching:)
-     name:NSApplicationDidFinishLaunchingNotification
-     object:nil];
+    _shouldInsertChangeMark = NO;
 
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self
-     selector:@selector(properSave)
-     name:@"Save properly"
-     object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(applicationDidFinishLaunching:)
+                                                 name:NSApplicationDidFinishLaunchingNotification
+                                               object:nil];
 
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self
-     selector:@selector(addChangeMarks:)
-     name:@"Add change mark"
-     object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(properSave)
+                                                 name:@"Save properly"
+                                               object:nil];
 
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self
-     selector:@selector(pasteChangeMark:)
-     name:@"Paste change mark"
-     object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(addChangeMarks:)
+                                                 name:@"Add change mark"
+                                               object:nil];
 
-    return self;
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(pasteChangeMark:)
+                                                 name:@"Paste change mark"
+                                               object:nil];
+
+return self;
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
@@ -472,6 +469,8 @@
 {
     if (notification.object && [notification.object isKindOfClass:[NSString class]]) {
         NSRange range = [self.xcodeManager.textView rangeForUserCompletion];
+
+        self.shouldInsertChangeMark = YES;
         [self insertChangeMark:range];
     }
 }
@@ -484,17 +483,21 @@
         NSInteger location  = self.xcodeManager.selectedRange.location - newString.length;
         NSRange range = NSMakeRange(location, length);
 
+        self.shouldInsertChangeMark = YES;
         [self insertChangeMark:range];
     }
 }
 
 - (void)insertChangeMark:(NSRange)range
 {
-    NSLayoutManager *layoutManager = [[self.xcodeManager textView] layoutManager];
-    NSColor *color = [NSColor colorWithRed:0.8 green:0.93 blue:0.34 alpha:0.5];
-    [layoutManager addTemporaryAttribute:NSBackgroundColorAttributeName
-                                   value:color
-                       forCharacterRange:range];
+    if (self.shouldInsertChangeMark) {
+        NSLayoutManager *layoutManager = [[self.xcodeManager textView] layoutManager];
+        NSColor *color = [NSColor colorWithRed:0.8 green:0.93 blue:0.34 alpha:0.5];
+        [layoutManager addTemporaryAttribute:NSBackgroundColorAttributeName
+                                       value:color
+                           forCharacterRange:range];
+        self.shouldInsertChangeMark = NO;
+    }
 }
 
 @end
