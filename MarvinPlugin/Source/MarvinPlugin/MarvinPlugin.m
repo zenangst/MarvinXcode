@@ -56,12 +56,6 @@
      name:@"Add change mark"
      object:nil];
 
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self
-     selector:@selector(insertChangeMark:)
-     name:@"Insert change mark"
-     object:nil];
-
     return self;
 }
 
@@ -461,6 +455,7 @@
 
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.xcodeManager needsDisplay];
+
         });
     });
 
@@ -469,26 +464,21 @@
 
 - (void)addChangeMarks:(NSNotification *)notification
 {
-    if (notification.object && [notification.object isKindOfClass:[NSDictionary class]]) {
-        NSDictionary *dictionary = notification.object;
-        NSLog(@"dictionary: %@", dictionary);
-        self.newChangeMark = NSMakeRange([dictionary[@"location"] integerValue], [dictionary[@"length"] integerValue]);
-    } else if (notification.object && [notification.object isKindOfClass:[NSString class]]) {
-        NSString *newString = notification.object;
-        NSLog(@"newString: %@", newString);
-
-
-        self.newChangeMark = NSMakeRange(self.xcodeManager.selectedRange.location - 1, newString.length);
-
+    if (notification.object && [notification.object isKindOfClass:[NSString class]]) {
+        NSString *newString = (NSString *)notification.object;
+        NSRange range = NSMakeRange(self.xcodeManager.selectedRange.location - newString.length,
+                                    newString.length);
+        [self insertChangeMark:range];
     }
 }
-- (void)insertChangeMark:(NSNotification *)notification
-{
-    NSTextView *textView = [self.xcodeManager textView];
-    NSColor *color = [NSColor colorWithRed:0.8 green:0.93 blue:0.34 alpha:0.5];
-    NSRange range = self.newChangeMark;
 
-    [textView.layoutManager addTemporaryAttribute:NSBackgroundColorAttributeName value:color forCharacterRange:range];
+- (void)insertChangeMark:(NSRange)range
+{
+    NSLayoutManager *layoutManager = [[self.xcodeManager textView] layoutManager];
+    NSColor *color = [NSColor colorWithRed:0.8 green:0.93 blue:0.34 alpha:0.5];
+    [layoutManager addTemporaryAttribute:NSBackgroundColorAttributeName
+                                   value:color
+                       forCharacterRange:range];
 }
 
 @end

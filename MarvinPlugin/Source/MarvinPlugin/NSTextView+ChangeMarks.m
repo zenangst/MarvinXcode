@@ -13,10 +13,13 @@
 
 - (BOOL)zen_readSelectionFromPasteboard:(NSPasteboard *)pboard
 {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"Add change mark" object:nil];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"Insert change mark" object:nil];
+    NSPasteboard *generalPasteboard  = [NSPasteboard generalPasteboard];
+    NSString *pastedString = [generalPasteboard  stringForType:NSPasteboardTypeString];
+
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"Add change mark" object:pastedString];
     });
+
 
     return [self zen_readSelectionFromPasteboard:pboard];
 }
@@ -24,9 +27,7 @@
 - (void)zen_insertText:(id)insertString
 {
     [self zen_insertText:insertString];
-
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"Add change mark" object:insertString];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"Insert change mark" object:nil];
+    NSLog(@"%d:%s -> %@", __LINE__, __FUNCTION__, insertString);
 }
 
 + (void)load

@@ -14,18 +14,14 @@
 
 - (BOOL)zen_handleTextViewShouldChangeTextInRange:(struct _NSRange)arg1 replacementString:(id)arg2
 {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"Add change mark" object:@{@"location":@(arg1.location), @"length":@(arg1.length)}];
-    });
+    NSLog(@"%s -> range(%ld,%ld) -> %@", __FUNCTION__, arg1.location, arg1.length, arg2);
 
     return [self zen_handleTextViewShouldChangeTextInRange:arg1 replacementString:arg2];
 }
 
 - (BOOL)zen_insertCurrentCompletion
 {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"Insert change mark" object:nil];
-    });
+    NSLog(@"%s : %d", __FUNCTION__, __LINE__);
 
     return [self zen_insertCurrentCompletion];
 }
