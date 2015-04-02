@@ -45,16 +45,6 @@
                                                  name:@"Save properly"
                                                object:nil];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(addChangeMarks:)
-                                                 name:@"Add change mark"
-                                               object:nil];
-
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(pasteChangeMark:)
-                                                 name:@"Paste change mark"
-                                               object:nil];
-
     return self;
 }
 
@@ -444,34 +434,6 @@
     CGEventSetFlags(event, 0);
     CGEventPost(kCGHIDEventTap, event);
     CFRelease(event);
-}
-
-- (void)addChangeMarks:(NSNotification *)notification
-{
-    if (notification.object && [notification.object isKindOfClass:[NSString class]]) {
-        [self insertChangeMark:[self.xcodeManager.textView rangeForUserCompletion]];
-    }
-}
-
-- (void)pasteChangeMark:(NSNotification *)notification
-{
-    if (notification.object && [notification.object isKindOfClass:[NSString class]]) {
-        NSString *newString = (NSString *)notification.object;
-        NSInteger length = newString.length;
-        NSInteger location  = self.xcodeManager.selectedRange.location - newString.length;
-        NSRange range = NSMakeRange(location, length);
-
-        [self insertChangeMark:range];
-    }
-}
-
-- (void)insertChangeMark:(NSRange)range
-{
-    NSLayoutManager *layoutManager = [[self.xcodeManager textView] layoutManager];
-    NSColor *color = [NSColor colorWithRed:0.8 green:0.93 blue:0.34 alpha:0.5];
-    [layoutManager addTemporaryAttribute:NSBackgroundColorAttributeName
-                                   value:color
-                       forCharacterRange:range];
 }
 
 @end
