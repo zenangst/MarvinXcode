@@ -8,11 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
+static NSString *const kMarvinValidSetWordString = @"0123456789ABCDEFGHIJKOLMNOPQRSTUVWXYZÅÄÆÖØabcdefghijkolmnopqrstuvwxyzåäæöø_";
+static NSString *const kMarvinSpaceSet = @"#-<>/(){}[],;:. \n`*\"'";
+static NSString *const kMarvinValidLineRange = @"0123456789ABCDEFGHIJKOLMNOPQRSTUVWXYZÅÄÆÖØabcdefghijkolmnopqrstuvwxyzåäæöø_!\"#€%&/()=?`<>@£$∞§|[]≈±´¡”¥¢‰¶\{}≠¿`~^*+-;";
+
 @interface XcodeManager : NSObject
 
 @property (nonatomic) NSRange selectedRange;
 
 - (id)currentEditor;
+- (NSTextView *)textView;
 - (IDESourceCodeDocument *)currentSourceCodeDocument;
 - (void)save;
 - (NSString *)contents;
@@ -24,8 +29,11 @@
 - (NSString *)contentsOfRange:(NSRange)range;
 - (NSRange)joinRange;
 - (NSString *)selectedText;
+- (NSLayoutManager *)layoutManager;
+- (void)needsDisplay;
 
 - (void)insertText:(NSString *)string;
-- (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)string;
+- (void)replaceCharactersInRange:(NSRange)range
+                      withString:(NSString *)string;
 
 @end

@@ -8,7 +8,7 @@
 
 #import "MarvinPlugin.h"
 #import "XcodeManager.h"
-#import "Document+ZENProperSave.h"
+#import "NSDocument+ZENProperSave.h"
 
 @interface MarvinPlugin ()
 
@@ -18,37 +18,38 @@
 
 @implementation MarvinPlugin
 
-+ (void)pluginDidLoad:(NSBundle *)plugin {
++ (void)pluginDidLoad:(NSBundle *)plugin
+{
     static id shared = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{ shared = [[self alloc] init]; });
 }
 
-- (void)dealloc {
+- (void)dealloc
+{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (instancetype)init {
+- (instancetype)init
+{
     self = [super init];
-
     if (!self) return nil;
 
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self
-     selector:@selector(applicationDidFinishLaunching:)
-     name:NSApplicationDidFinishLaunchingNotification
-     object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(applicationDidFinishLaunching:)
+                                                 name:NSApplicationDidFinishLaunchingNotification
+                                               object:nil];
 
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self
-     selector:@selector(properSave)
-     name:@"Save properly"
-     object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(properSave)
+                                                 name:@"Save properly"
+                                               object:nil];
 
     return self;
 }
 
-- (void)applicationDidFinishLaunching:(NSNotification *)notification {
+- (void)applicationDidFinishLaunching:(NSNotification *)notification
+{
     NSMenuItem *editMenuItem = [[NSApp mainMenu] itemWithTitle:@"Edit"];
 
     if (editMenuItem) {
@@ -187,103 +188,106 @@
 
 - (void)selectLineContentsAction
 {
-    if (![self validResponder]) return;
+    if ([self validResponder]) {
+        self.xcodeManager.selectedRange = self.xcodeManager.lineContentsRange;
+    }
 
-    self.xcodeManager.selectedRange = self.xcodeManager.lineContentsRange;
 }
 
-- (void)selectWordAction {
-    if (![self validResponder]) return;
-
-    NSRange range = self.xcodeManager.currentWordRange;
-    self.xcodeManager.selectedRange = range;
+- (void)selectWordAction
+{
+    if ([self validResponder]) {
+        self.xcodeManager.selectedRange = self.xcodeManager.currentWordRange;
+    }
 }
 
 - (void)selectWordAboveAction
 {
-    if (![self validResponder]) return;
+    if ([self validResponder]) {
+        NSCharacterSet *validSet = [NSCharacterSet characterSetWithCharactersInString:kMarvinValidSetWordString];
+        NSRange currentRange = [self.xcodeManager selectedRange];
+        unichar characterAtCursorStart = [[self.xcodeManager contents]
+                                          characterAtIndex:currentRange.location];
+        unichar characterAtCursorEnd = [[self.xcodeManager contents]
+                                        characterAtIndex:currentRange.location-1];
 
-    NSCharacterSet *validSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789ABCDEFGHIJKOLMNOPQRSTUVWXYZÅÄÆÖØabcdefghijkolmnopqrstuvwxyzåäæöø_"];
-    NSRange currentRange = [self.xcodeManager selectedRange];
-    unichar characterAtCursorStart = [[self.xcodeManager contents] characterAtIndex:currentRange.location];
-    unichar characterAtCursorEnd = [[self.xcodeManager contents] characterAtIndex:currentRange.location-1];
+        if (![self.xcodeManager selectedRange].length &&
+            [validSet characterIsMember:characterAtCursorStart]) {
+            [self selectWordAction];
+        } else if (![self.xcodeManager selectedRange].length &&
+                   [validSet characterIsMember:characterAtCursorEnd]) {
+            [self selectPreviousWordAction];
+        } else {
+            [self performKeyboardEvent:126];
 
-    if (![self.xcodeManager selectedRange].length && [validSet characterIsMember:characterAtCursorStart]) {
-        [self selectWordAction];
-    } else if (![self.xcodeManager selectedRange].length && [validSet characterIsMember:characterAtCursorEnd]) {
-        [self selectPreviousWordAction];
-    } else {
-        CGEventRef event = CGEventCreateKeyboardEvent(NULL, 126, true);
-        CGEventSetFlags(event, 0);
-        CGEventPost(kCGHIDEventTap, event);
-        CFRelease(event);
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.025 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.05 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                NSRange currentRange = [self.xcodeManager selectedRange];
+                unichar characterAtCursorStart = [[self.xcodeManager contents] characterAtIndex:currentRange.location];
 
-            NSRange currentRange = [self.xcodeManager selectedRange];
-            unichar characterAtCursorStart = [[self.xcodeManager contents] characterAtIndex:currentRange.location];
-
-            if ([validSet characterIsMember:characterAtCursorStart]) {
-                [self selectWordAction];
-            } else {
-                [self selectPreviousWordAction];
-            }
-        });
+                if ([validSet characterIsMember:characterAtCursorStart]) {
+                    [self selectWordAction];
+                } else {
+                    [self selectPreviousWordAction];
+                }
+            });
+        }
     }
 }
 
 - (void)selectWordBelowAction
 {
-    if (![self validResponder]) return;
+    if ([self validResponder]) {
+        [self performKeyboardEvent:125];
 
-    CGEventRef event = CGEventCreateKeyboardEvent(NULL, 125, true);
-    CGEventSetFlags(event, 0);
-    CGEventPost(kCGHIDEventTap, event);
-    CFRelease(event);
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.05 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self selectWordAction];
-    });
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.025 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self selectWordAction];
+        });
+    }
 }
 
 - (void)selectPreviousWordAction
 {
-    if (![self validResponder]) return;
-
-    self.xcodeManager.selectedRange = self.xcodeManager.previousWordRange;
-    self.xcodeManager.selectedRange = self.xcodeManager.currentWordRange;
+    if ([self validResponder]) {
+        self.xcodeManager.selectedRange = self.xcodeManager.previousWordRange;
+        self.xcodeManager.selectedRange = self.xcodeManager.currentWordRange;
+    }
 }
 
 - (void)selectNextWordAction
 {
-    if (![self validResponder]) return;
-
-    [self selectWordAction];
+    if ([self validResponder]) {
+        [self selectWordAction];
+    }
 }
 
 - (void)deleteLineAction
 {
-    if (![self validResponder]) return;
-
-    [self.xcodeManager replaceCharactersInRange:self.xcodeManager.lineRange withString:@""];
+    if ([self validResponder]) {
+        [self.xcodeManager replaceCharactersInRange:self.xcodeManager.lineRange
+                                         withString:@""];
+    }
 }
 
 - (void)duplicateLineAction
 {
-    if (![self validResponder]) return;
-
-    NSRange range = [self.xcodeManager lineRange];
-    NSString *string = [self.xcodeManager contentsOfRange:range];
-    NSRange duplicateRange = NSMakeRange(range.location+range.length, 0);
-    [self.xcodeManager replaceCharactersInRange:duplicateRange withString:string];
-    NSRange selectRange = NSMakeRange(duplicateRange.location + duplicateRange.length + string.length - 1, 0);
-    [self.xcodeManager setSelectedRange:selectRange];
+    if ([self validResponder]) {
+        NSRange range = [self.xcodeManager lineRange];
+        NSString *string = [self.xcodeManager contentsOfRange:range];
+        NSRange duplicateRange = NSMakeRange(range.location+range.length, 0);
+        [self.xcodeManager replaceCharactersInRange:duplicateRange
+                                         withString:string];
+        NSRange selectRange = NSMakeRange(duplicateRange.location + duplicateRange.length + string.length - 1, 0);
+        [self.xcodeManager setSelectedRange:selectRange];
+    }
 }
 
 - (void)joinLineAction
 {
-    if (![self validResponder]) return;
-
-    [self.xcodeManager replaceCharactersInRange:self.xcodeManager.joinRange withString:@""];
+    if ([self validResponder]) {
+        [self.xcodeManager replaceCharactersInRange:self.xcodeManager.joinRange
+                                         withString:@""];
+    }
 }
 
 - (void)moveToEOLAndInsertLFAction
@@ -295,7 +299,8 @@
         lineContentsRange.location = self.xcodeManager.contents.length;
         lineContentsRange.length = 0;
 
-        [self.xcodeManager replaceCharactersInRange:lineContentsRange withString:@"\n"];
+        [self.xcodeManager replaceCharactersInRange:lineContentsRange
+                                         withString:@"\n"];
         self.xcodeManager.selectedRange = NSMakeRange(lineContentsRange.location+1, 0);
 
         return;
@@ -308,14 +313,15 @@
     unichar lastCharacterInLine = [[self.xcodeManager contents] characterAtIndex:lineContentsRange.location+lineContentsRange.length-1];
     int ascii = lastCharacterInLine;
 
-    NSMutableString *additionalSpacing = [NSMutableString string];
+    NSMutableString *additionalSpacing = [NSMutableString new];
     if (ascii == 123) {
         for (int x = 0; x < 0; x++) {
             [additionalSpacing appendString:@" "];
         }
     }
 
-    [self.xcodeManager replaceCharactersInRange:NSMakeRange(endOfLine,0) withString:[NSString stringWithFormat:@"\n%@%@", spacing, [additionalSpacing copy]]];
+    [self.xcodeManager replaceCharactersInRange:NSMakeRange(endOfLine,0)
+                                     withString:[NSString stringWithFormat:@"\n%@%@", spacing, [additionalSpacing copy]]];
     [self.xcodeManager setSelectedRange:NSMakeRange(endOfLine+1+spacing.length+additionalSpacing.length, 0)];
 }
 
@@ -337,13 +343,16 @@
 
     BOOL shouldSortDescending = ([[selectedContent substringToIndex:selectedContent.length-1] isEqualToString:[sortedLinesString substringFromIndex:1]]);
     if (shouldSortDescending) {
-        NSSortDescriptor *sortOrder = [NSSortDescriptor sortDescriptorWithKey:@"self" ascending:NO];
+        NSSortDescriptor *sortOrder = [NSSortDescriptor sortDescriptorWithKey:@"self"
+                                                                    ascending:NO];
         sortedLinesArray = [sortedLinesArray sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortOrder]];
         sortedLinesString = [sortedLinesArray componentsJoinedByString:@"\n"];
-        [self.xcodeManager replaceCharactersInRange:lineRange withString:sortedLinesString];
+        [self.xcodeManager replaceCharactersInRange:lineRange
+                                         withString:sortedLinesString];
     } else {
         lineRange.location -= 1;
-        [self.xcodeManager replaceCharactersInRange:lineRange withString:sortedLinesString];
+        [self.xcodeManager replaceCharactersInRange:lineRange
+                                         withString:sortedLinesString];
     }
 }
 
@@ -351,26 +360,28 @@
 
 - (void)addNewlineAtEOF
 {
-    if (![self validResponder]) return;
+    if ([self validResponder]) {
 
-    NSString *documentText = self.xcodeManager.contents;
+        NSString *documentText = self.xcodeManager.contents;
 
-    if (self.xcodeManager.contents.length) {
-        int eof = [documentText characterAtIndex:[documentText length]-1];
-        int lastAscii = [documentText characterAtIndex:[documentText length]-2];
+        if (self.xcodeManager.contents.length) {
+            int eof = [documentText characterAtIndex:[documentText length]-1];
+            int lastASCII = [documentText characterAtIndex:[documentText length]-2];
 
-        if (lastAscii != 100 && eof != 10) {
-            NSRange selectedRange = self.xcodeManager.selectedRange;
-            NSRange replaceRange = NSMakeRange(self.xcodeManager.contents.length, 0);
-            NSString *replaceString = [NSString stringWithFormat:@"%c", 10];
+            if (lastASCII != 100 && eof != 10) {
+                NSRange selectedRange = self.xcodeManager.selectedRange;
+                NSRange replaceRange = NSMakeRange(self.xcodeManager.contents.length, 0);
+                NSString *replaceString = [NSString stringWithFormat:@"%c", 10];
 
-            [self.xcodeManager replaceCharactersInRange:replaceRange withString:replaceString];
-            self.xcodeManager.selectedRange = selectedRange;
+                [self.xcodeManager replaceCharactersInRange:replaceRange
+                                                 withString:replaceString];
+                self.xcodeManager.selectedRange = selectedRange;
+            }
         }
     }
 }
 
-- (void)removeTrailingWhitespace:(void (^)())block;
+- (void)removeTrailingWhitespace:(void (^)())block
 {
     if (![self validResponder]) {
         block();
@@ -378,7 +389,9 @@
     }
 
     NSError *error = nil;
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"([ \t]+)\r?\n" options:NSRegularExpressionCaseInsensitive error:&error];
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"([ \t]+)\r?\n"
+                                                                           options:NSRegularExpressionCaseInsensitive
+                                                                             error:&error];
 
     if (error) {
         NSLog(@"Couldn't create regex with given string and options");
@@ -386,16 +399,17 @@
 
     NSString *string = self.xcodeManager.contents;
     NSRange currentRange = self.xcodeManager.selectedRange;
-    NSMutableArray *ranges = [NSMutableArray array];
+    NSMutableArray *ranges = [NSMutableArray new];
 
-    [regex enumerateMatchesInString:string options:NSMatchingReportProgress range:NSMakeRange(0,[string length]) usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
+    [regex enumerateMatchesInString:string options:NSMatchingReportProgress
+                              range:NSMakeRange(0,[string length])
+                         usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
 
-        if (result) {
-            if (!NSLocationInRange(currentRange.location, result.range))
-                [ranges addObject:result];
-        }
+                             if (result && !NSLocationInRange(currentRange.location, result.range)) {
+                                 [ranges addObject:result];
+                             }
 
-    }];
+                         }];
 
     if (![ranges count]) {
         block();
@@ -412,6 +426,14 @@
         }
         block();
     });
+}
+
+- (void)performKeyboardEvent:(CGKeyCode)virtualKey
+{
+    CGEventRef event = CGEventCreateKeyboardEvent(NULL, virtualKey, true);
+    CGEventSetFlags(event, 0);
+    CGEventPost(kCGHIDEventTap, event);
+    CFRelease(event);
 }
 
 @end

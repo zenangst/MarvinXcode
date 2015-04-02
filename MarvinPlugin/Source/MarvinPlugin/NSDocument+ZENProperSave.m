@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Octalord Information Inc. All rights reserved.
 //
 
-#import "Document+ZENProperSave.h"
+#import "NSDocument+ZENProperSave.h"
 #import <objc/runtime.h>
 
 @implementation NSDocument (ZENProperSave)

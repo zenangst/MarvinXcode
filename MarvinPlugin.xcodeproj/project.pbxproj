@@ -11,7 +11,7 @@
 		BD5EBC6519C9F93200F2C8CD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BD5EBC6119C9F93200F2C8CD /* InfoPlist.strings */; };
 		BD5EBC6A19C9F94700F2C8CD /* MarvinPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = BD5EBC6919C9F94700F2C8CD /* MarvinPlugin.m */; };
 		BD9A8A3119CA09AD00321368 /* XcodeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BD9A8A3019CA09AD00321368 /* XcodeManager.m */; };
-		BDB698F61AB819B8001FC372 /* Document+ZENProperSave.m in Sources */ = {isa = PBXBuildFile; fileRef = BDB698F51AB819B8001FC372 /* Document+ZENProperSave.m */; };
+		BDB698F61AB819B8001FC372 /* NSDocument+ZENProperSave.m in Sources */ = {isa = PBXBuildFile; fileRef = BDB698F51AB819B8001FC372 /* NSDocument+ZENProperSave.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,8 +28,11 @@
 		BD5EBC6919C9F94700F2C8CD /* MarvinPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarvinPlugin.m; sourceTree = "<group>"; };
 		BD9A8A2F19CA09AD00321368 /* XcodeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XcodeManager.h; sourceTree = "<group>"; };
 		BD9A8A3019CA09AD00321368 /* XcodeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XcodeManager.m; sourceTree = "<group>"; };
-		BDB698F41AB819B8001FC372 /* Document+ZENProperSave.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Document+ZENProperSave.h"; path = "MarvinPlugin/Source/MarvinPlugin/Document+ZENProperSave.h"; sourceTree = SOURCE_ROOT; };
-		BDB698F51AB819B8001FC372 /* Document+ZENProperSave.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Document+ZENProperSave.m"; path = "MarvinPlugin/Source/MarvinPlugin/Document+ZENProperSave.m"; sourceTree = SOURCE_ROOT; };
+		BDB698F41AB819B8001FC372 /* NSDocument+ZENProperSave.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDocument+ZENProperSave.h"; path = "MarvinPlugin/Source/MarvinPlugin/NSDocument+ZENProperSave.h"; sourceTree = SOURCE_ROOT; };
+		BDB698F51AB819B8001FC372 /* NSDocument+ZENProperSave.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDocument+ZENProperSave.m"; path = "MarvinPlugin/Source/MarvinPlugin/NSDocument+ZENProperSave.m"; sourceTree = SOURCE_ROOT; };
+		BDBA8FA61AC9E04C00D6F948 /* DVTFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DVTFoundation.framework; path = ../../../../Applications/Xcode.app/Contents/SharedFrameworks/DVTFoundation.framework; sourceTree = "<group>"; };
+		BDBA8FA81AC9E06B00D6F948 /* IDEKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IDEKit.framework; path = ../../../../Applications/Xcode.app/Contents/Frameworks/IDEKit.framework; sourceTree = "<group>"; };
+		BDBA8FAA1AC9E08600D6F948 /* DVTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DVTKit.framework; path = ../../../../Applications/Xcode.app/Contents/SharedFrameworks/DVTKit.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +68,9 @@
 		6F44E9F417DD324B0064F1B7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BDBA8FAA1AC9E08600D6F948 /* DVTKit.framework */,
+				BDBA8FA81AC9E06B00D6F948 /* IDEKit.framework */,
+				BDBA8FA61AC9E04C00D6F948 /* DVTFoundation.framework */,
 				6F44E9F517DD324B0064F1B7 /* Cocoa.framework */,
 				6F44E9F717DD324B0064F1B7 /* Other Frameworks */,
 			);
@@ -109,8 +115,8 @@
 				BD9A8A2F19CA09AD00321368 /* XcodeManager.h */,
 				BD9A8A3019CA09AD00321368 /* XcodeManager.m */,
 				BD5351FA19CA1159006D3B78 /* XcodePrivate.h */,
-				BDB698F41AB819B8001FC372 /* Document+ZENProperSave.h */,
-				BDB698F51AB819B8001FC372 /* Document+ZENProperSave.m */,
+				BDB698F41AB819B8001FC372 /* NSDocument+ZENProperSave.h */,
+				BDB698F51AB819B8001FC372 /* NSDocument+ZENProperSave.m */,
 			);
 			name = MarvinPlugin;
 			path = MarvinPlugIn;
@@ -178,7 +184,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BDB698F61AB819B8001FC372 /* Document+ZENProperSave.m in Sources */,
+				BDB698F61AB819B8001FC372 /* NSDocument+ZENProperSave.m in Sources */,
 				BD5EBC6A19C9F94700F2C8CD /* MarvinPlugin.m in Sources */,
 				BD9A8A3119CA09AD00321368 /* XcodeManager.m in Sources */,
 			);
@@ -260,6 +266,11 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = "${HOME}";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/SharedFrameworks",
+					"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Frameworks",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MarvinPlugIn/Supporting Files/MarvinPlugIn-Prefix.pch";
 				INFOPLIST_FILE = "MarvinPlugIn/Supporting Files/MarvinPlugIn-Info.plist";
@@ -276,6 +287,11 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = "${HOME}";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/SharedFrameworks",
+					"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Frameworks",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MarvinPlugIn/Supporting Files/MarvinPlugIn-Prefix.pch";
 				INFOPLIST_FILE = "MarvinPlugIn/Supporting Files/MarvinPlugIn-Info.plist";
