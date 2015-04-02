@@ -12,9 +12,6 @@
 		BD5EBC6A19C9F94700F2C8CD /* MarvinPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = BD5EBC6919C9F94700F2C8CD /* MarvinPlugin.m */; };
 		BD9A8A3119CA09AD00321368 /* XcodeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BD9A8A3019CA09AD00321368 /* XcodeManager.m */; };
 		BDB698F61AB819B8001FC372 /* NSDocument+ZENProperSave.m in Sources */ = {isa = PBXBuildFile; fileRef = BDB698F51AB819B8001FC372 /* NSDocument+ZENProperSave.m */; };
-		BDBA8FA71AC9E04C00D6F948 /* DVTFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDBA8FA61AC9E04C00D6F948 /* DVTFoundation.framework */; };
-		BDBA8FA91AC9E06B00D6F948 /* IDEKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDBA8FA81AC9E06B00D6F948 /* IDEKit.framework */; };
-		BDBA8FAB1AC9E08600D6F948 /* DVTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDBA8FAA1AC9E08600D6F948 /* DVTKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,9 +41,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6F44E9F617DD324B0064F1B7 /* Cocoa.framework in Frameworks */,
-				BDBA8FA71AC9E04C00D6F948 /* DVTFoundation.framework in Frameworks */,
-				BDBA8FAB1AC9E08600D6F948 /* DVTKit.framework in Frameworks */,
-				BDBA8FA91AC9E06B00D6F948 /* IDEKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
