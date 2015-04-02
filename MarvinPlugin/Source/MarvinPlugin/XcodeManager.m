@@ -271,7 +271,8 @@
     }
 }
 
-- (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)string
+- (void)replaceCharactersInRange:(NSRange)range
+                      withString:(NSString *)string
 {
     if ((range.location + range.length) > self.contents.length) {
         range.length = self.contents.length - range.location;

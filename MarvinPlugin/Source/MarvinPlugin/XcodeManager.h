@@ -33,6 +33,7 @@ static NSString *const kMarvinValidLineRange = @"0123456789ABCDEFGHIJKOLMNOPQRST
 - (void)needsDisplay;
 
 - (void)insertText:(NSString *)string;
-- (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)string;
+- (void)replaceCharactersInRange:(NSRange)range
+                      withString:(NSString *)string;
 
 @end

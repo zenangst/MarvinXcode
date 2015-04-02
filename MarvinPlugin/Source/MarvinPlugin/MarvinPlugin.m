@@ -18,17 +18,20 @@
 
 @implementation MarvinPlugin
 
-+ (void)pluginDidLoad:(NSBundle *)plugin {
++ (void)pluginDidLoad:(NSBundle *)plugin
+{
     static id shared = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{ shared = [[self alloc] init]; });
 }
 
-- (void)dealloc {
+- (void)dealloc
+{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (instancetype)init {
+- (instancetype)init
+{
     self = [super init];
     if (!self) return nil;
 
@@ -55,7 +58,8 @@
     return self;
 }
 
-- (void)applicationDidFinishLaunching:(NSNotification *)notification {
+- (void)applicationDidFinishLaunching:(NSNotification *)notification
+{
     NSMenuItem *editMenuItem = [[NSApp mainMenu] itemWithTitle:@"Edit"];
 
     if (editMenuItem) {
@@ -200,10 +204,10 @@
 
 }
 
-- (void)selectWordAction {
+- (void)selectWordAction
+{
     if ([self validResponder]) {
-        NSRange range = self.xcodeManager.currentWordRange;
-        self.xcodeManager.selectedRange = range;
+        self.xcodeManager.selectedRange = self.xcodeManager.currentWordRange;
     }
 }
 
@@ -372,9 +376,9 @@
 
         if (self.xcodeManager.contents.length) {
             int eof = [documentText characterAtIndex:[documentText length]-1];
-            int lastAscii = [documentText characterAtIndex:[documentText length]-2];
+            int lastASCII = [documentText characterAtIndex:[documentText length]-2];
 
-            if (lastAscii != 100 && eof != 10) {
+            if (lastASCII != 100 && eof != 10) {
                 NSRange selectedRange = self.xcodeManager.selectedRange;
                 NSRange replaceRange = NSMakeRange(self.xcodeManager.contents.length, 0);
                 NSString *replaceString = [NSString stringWithFormat:@"%c", 10];
@@ -387,7 +391,7 @@
     }
 }
 
-- (void)removeTrailingWhitespace:(void (^)())block;
+- (void)removeTrailingWhitespace:(void (^)())block
 {
     if (![self validResponder]) {
         block();
@@ -405,7 +409,7 @@
 
     NSString *string = self.xcodeManager.contents;
     NSRange currentRange = self.xcodeManager.selectedRange;
-    NSMutableArray *ranges = [NSMutableArray array];
+    NSMutableArray *ranges = [NSMutableArray new];
 
     [regex enumerateMatchesInString:string options:NSMatchingReportProgress
                               range:NSMakeRange(0,[string length])
@@ -445,9 +449,7 @@
 - (void)addChangeMarks:(NSNotification *)notification
 {
     if (notification.object && [notification.object isKindOfClass:[NSString class]]) {
-        NSRange range = [self.xcodeManager.textView rangeForUserCompletion];
-
-        [self insertChangeMark:range];
+        [self insertChangeMark:[self.xcodeManager.textView rangeForUserCompletion]];
     }
 }
 
