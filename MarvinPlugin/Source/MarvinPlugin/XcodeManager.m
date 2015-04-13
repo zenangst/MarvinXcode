@@ -145,6 +145,10 @@
                                                                 options:NSBackwardsSearch
                                                                   range:NSMakeRange(0,length)].location +1);
 
+        if (length-location > self.documentLength) {
+            length = 0;
+        }
+
         return NSMakeRange(location,length-location);
     } else {
         return selectedRange;
