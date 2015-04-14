@@ -60,27 +60,24 @@
         [marvinMenu addItem:({
             NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Delete Line"
                                                               action:@selector(deleteLineAction)
-                                                       keyEquivalent:@"k"];
+                                                       keyEquivalent:@""];
             menuItem.target = self;
-            menuItem.keyEquivalentModifierMask = NSControlKeyMask | NSShiftKeyMask;
             menuItem;
         })];
 
         [marvinMenu addItem:({
             NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Duplicate Line"
                                                               action:@selector(duplicateLineAction)
-                                                       keyEquivalent:@"d"];
+                                                       keyEquivalent:@""];
             menuItem.target = self;
-            menuItem.keyEquivalentModifierMask = NSControlKeyMask | NSShiftKeyMask;
             menuItem;
         })];
 
         [marvinMenu addItem:({
             NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Join Line"
                                                               action:@selector(joinLineAction)
-                                                       keyEquivalent:@"j"];
+                                                       keyEquivalent:@""];
             menuItem.target = self;
-            menuItem.keyEquivalentModifierMask = NSControlKeyMask | NSShiftKeyMask;
             menuItem;
         })];
 
@@ -97,23 +94,21 @@
                                                               action:@selector(selectWordAction)
                                                        keyEquivalent:@""];
             menuItem.target = self;
-            menuItem.keyEquivalentModifierMask = NSControlKeyMask;
             menuItem;
         })];
 
         [marvinMenu addItem:({
             NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Select Line Contents"
                                                               action:@selector(selectLineContentsAction)
-                                                       keyEquivalent:@"l"];
+                                                       keyEquivalent:@""];
             menuItem.target = self;
-            menuItem.keyEquivalentModifierMask = NSCommandKeyMask | NSShiftKeyMask;
             menuItem;
         })];
 
         [marvinMenu addItem:({
             NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Select Next Word"
                                                               action:@selector(selectNextWordAction)
-                                                       keyEquivalent:@"d"];
+                                                       keyEquivalent:@""];
             menuItem.target = self;
             menuItem.keyEquivalentModifierMask = NSControlKeyMask;
             menuItem;
@@ -122,16 +117,15 @@
         [marvinMenu addItem:({
             NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Select Previous Word"
                                                               action:@selector(selectPreviousWordAction)
-                                                       keyEquivalent:@"a"];
+                                                       keyEquivalent:@""];
             menuItem.target = self;
-            menuItem.keyEquivalentModifierMask = NSControlKeyMask;
             menuItem;
         })];
 
         [marvinMenu addItem:({
             NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Select Word Above"
                                                               action:@selector(selectWordAboveAction)
-                                                       keyEquivalent:@"w"];
+                                                       keyEquivalent:@""];
             menuItem.target = self;
             menuItem.keyEquivalentModifierMask = NSControlKeyMask;
             menuItem;
@@ -140,7 +134,7 @@
         [marvinMenu addItem:({
             NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Select Word Below"
                                                               action:@selector(selectWordBelowAction)
-                                                       keyEquivalent:@"s"];
+                                                       keyEquivalent:@""];
             menuItem.target = self;
             menuItem.keyEquivalentModifierMask = NSControlKeyMask;
             menuItem;
