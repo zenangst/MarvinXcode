@@ -266,7 +266,7 @@
 
 - (void)setSelectedRange:(NSRange)range
 {
-    if (range.location != NSNotFound) {
+    if ((int)range.location > 0) {
         if ((range.location + range.length) > self.contents.length) {
             range.length = self.contents.length - range.location;
         }
