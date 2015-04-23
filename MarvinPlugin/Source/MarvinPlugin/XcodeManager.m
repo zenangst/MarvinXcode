@@ -19,8 +19,7 @@
 
 #pragma mark - Getters
 
-- (id)currentEditor
-{
+- (id)currentEditor {
     NSWindowController *currentWindowController = [[NSApp keyWindow] windowController];
 
     if ([currentWindowController isKindOfClass:NSClassFromString(@"IDEWorkspaceWindowController")]) {
@@ -33,8 +32,7 @@
     return nil;
 }
 
-- (NSTextView *)textView
-{
+- (NSTextView *)textView {
     if ([[self currentEditor] isKindOfClass:NSClassFromString(@"IDESourceCodeEditor")]) {
         IDESourceCodeEditor *editor = [self currentEditor];
         return editor.textView;
@@ -48,8 +46,7 @@
     return nil;
 }
 
-- (IDESourceCodeDocument *)currentSourceCodeDocument
-{
+- (IDESourceCodeDocument *)currentSourceCodeDocument {
     if ([[self currentEditor] isKindOfClass:NSClassFromString(@"IDESourceCodeEditor")]) {
         IDESourceCodeEditor *editor = [self currentEditor];
         return editor.sourceCodeDocument;
@@ -66,8 +63,7 @@
     return nil;
 }
 
-- (IDEEditorDocument *)currentDocument
-{
+- (IDEEditorDocument *)currentDocument {
     NSWindowController *currentWindowController = [[NSApp keyWindow] windowController];
 
     if ([currentWindowController isKindOfClass:NSClassFromString(@"IDEWorkspaceWindowController")]) {
@@ -79,8 +75,7 @@
     return nil;
 }
 
-- (void)save
-{
+- (void)save {
     if ([[self currentSourceCodeDocument] isEqualTo:[self currentDocument]]) {
         [[self currentDocument] saveDocument:nil];
     } else {
@@ -88,28 +83,23 @@
     }
 }
 
-- (void)needsDisplay
-{
+- (void)needsDisplay {
     [self.textView setNeedsDisplay:YES];
 }
 
-- (NSString *)contents
-{
+- (NSString *)contents {
     return [self.textView string];
 }
 
-- (NSUInteger)documentLength
-{
+- (NSUInteger)documentLength {
     return [[self contents] length];
 }
 
-- (NSRange)selectedRange
-{
+- (NSRange)selectedRange {
     return self.textView.selectedRange;
 }
 
-- (NSRange)currentWordRange
-{
+- (NSRange)currentWordRange {
     NSCharacterSet *validSet = [NSCharacterSet characterSetWithCharactersInString:kMarvinValidSetWordString];
     NSCharacterSet *spaceSet = [NSCharacterSet characterSetWithCharactersInString:kMarvinSpaceSet];
     NSRange selectedRange = [self selectedRange];
@@ -155,8 +145,7 @@
     }
 }
 
-- (NSRange)previousWordRange
-{
+- (NSRange)previousWordRange {
     NSRange selectedRange = [self selectedRange];
     NSCharacterSet *validSet = [NSCharacterSet characterSetWithCharactersInString:kMarvinValidSetWordString];
     NSUInteger location = ([[self contents] rangeOfCharacterFromSet:validSet
@@ -166,8 +155,7 @@
     return NSMakeRange(location,0);
 }
 
-- (NSRange)lineContentsRange
-{
+- (NSRange)lineContentsRange {
     NSRange selectedRange = [self selectedRange];
 
     NSCharacterSet *newlineSet = [NSCharacterSet characterSetWithCharactersInString:@"\n"];
@@ -194,8 +182,7 @@
     }
 }
 
-- (NSRange)lineRange
-{
+- (NSRange)lineRange {
     NSRange selectedRange = [self selectedRange];
     NSCharacterSet *newlineSet = [NSCharacterSet characterSetWithCharactersInString:@"\n"];
     NSUInteger location = ([[self contents] rangeOfCharacterFromSet:newlineSet
@@ -212,13 +199,11 @@
     return NSMakeRange(location, length);
 }
 
-- (NSString *)contentsOfRange:(NSRange)range
-{
+- (NSString *)contentsOfRange:(NSRange)range {
     return [[self contents] substringWithRange:range];
 }
 
-- (NSRange)joinRange
-{
+- (NSRange)joinRange {
     NSRange lineRange = [self lineRange];
     NSRange joinRange = (NSRange) { .location = lineRange.location + lineRange.length - 1 };
 
@@ -231,31 +216,26 @@
     return NSMakeRange(joinRange.location, length - joinRange.location);
 }
 
-- (NSString *)selectedText
-{
+- (NSString *)selectedText {
     NSString *text = [[self.textView string] substringWithRange:self.textView.selectedRange];
     return text;
 }
 
-- (BOOL)hasSelection
-{
+- (BOOL)hasSelection {
     return (self.textView.selectedRange.length) ? YES : NO;
 }
 
-- (BOOL)emptySelection
-{
+- (BOOL)emptySelection {
     return (![self hasSelection]);
 }
 
-- (NSLayoutManager *)layoutManager
-{
+- (NSLayoutManager *)layoutManager {
     return self.textView.layoutManager;
 }
 
 #pragma mark - Setters
 
-- (void)insertText:(NSString *)string
-{
+- (void)insertText:(NSString *)string {
     [self.textView insertText:string];
 
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -264,8 +244,7 @@
     });
 }
 
-- (void)setSelectedRange:(NSRange)range
-{
+- (void)setSelectedRange:(NSRange)range {
     if ((int)range.location > 0) {
         if ((range.location + range.length) > self.contents.length) {
             range.length = self.contents.length - range.location;
@@ -276,8 +255,7 @@
 }
 
 - (void)replaceCharactersInRange:(NSRange)range
-                      withString:(NSString *)string
-{
+                      withString:(NSString *)string {
     if ((range.location + range.length) > self.contents.length) {
         range.length = self.contents.length - range.location;
     }
