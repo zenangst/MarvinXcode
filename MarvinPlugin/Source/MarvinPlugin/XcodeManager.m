@@ -118,7 +118,7 @@
         }
 
         NSScanner *scanner = [NSScanner scannerWithString:[self contents]];
-        [scanner setScanLocation:selectedRange.location];
+        scanner.scanLocation = selectedRange.location;
 
         NSUInteger length = selectedRange.location;
 
@@ -133,13 +133,35 @@
 
         NSUInteger location = ([[self contents] rangeOfCharacterFromSet:spaceSet
                                                                 options:NSBackwardsSearch
-                                                                  range:NSMakeRange(0,length)].location +1);
+                                                                  range:NSMakeRange(0,length)].location + 1);
 
         if (length-location > self.documentLength) {
             length = 0;
         }
 
-        return NSMakeRange(location,length-location);
+        NSRange range;
+
+        if ((int)location > 0) {
+            range = NSMakeRange(location,length-location);
+        } else if ((int)location == 0 &&
+                   range.location != selectedRange.location &&
+                   range.length != selectedRange.length) {
+            NSUInteger location = 0;
+
+            scanner.scanLocation = location;
+            while (!scanner.isAtEnd) {
+                if ([scanner scanCharactersFromSet:validSet
+                                        intoString:nil]) {
+                    length = [scanner scanLocation];
+                    break;
+                }
+                [scanner setScanLocation:[scanner scanLocation] + 1];
+            }
+
+            range = NSMakeRange(location,length-location);
+        }
+
+        return range;
     } else {
         return selectedRange;
     }
@@ -245,7 +267,7 @@
 }
 
 - (void)setSelectedRange:(NSRange)range {
-    if ((int)range.location > 0) {
+    if (range.location != NSNotFound) {
         if ((range.location + range.length) > self.contents.length) {
             range.length = self.contents.length - range.location;
         }
