@@ -279,8 +279,13 @@
 - (void)joinLineAction
 {
     if ([self validResponder]) {
-        [self.xcodeManager replaceCharactersInRange:self.xcodeManager.joinRange
-                                         withString:@""];
+        if ([self.xcodeManager lineContentsRange].length > 0) {
+            [self.xcodeManager replaceCharactersInRange:self.xcodeManager.joinRange
+                                             withString:@" "];
+        } else {
+            [self.xcodeManager replaceCharactersInRange:self.xcodeManager.joinRange
+                                             withString:@""];
+        }
     }
 }
 
