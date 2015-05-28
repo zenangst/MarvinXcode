@@ -48,8 +48,7 @@
     return self;
 }
 
-- (void)applicationDidFinishLaunching:(NSNotification *)notification
-{
+- (void)applicationDidFinishLaunching:(NSNotification *)notification {
     NSMenuItem *editMenuItem = [[NSApp mainMenu] itemWithTitle:@"Edit"];
 
     if (editMenuItem) {
