@@ -18,20 +18,17 @@
 
 @implementation MarvinPlugin
 
-+ (void)pluginDidLoad:(NSBundle *)plugin
-{
++ (void)pluginDidLoad:(NSBundle *)plugin {
     static id shared = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{ shared = [[self alloc] init]; });
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (instancetype)init
-{
+- (instancetype)init {
     self = [super init];
     if (!self) return nil;
 
@@ -159,8 +156,7 @@
 
 #pragma mark - Getters
 
-- (XcodeManager *)xcodeManager
-{
+- (XcodeManager *)xcodeManager {
     if (_xcodeManager) return _xcodeManager;
 
     _xcodeManager = [[XcodeManager alloc] init];
@@ -168,8 +164,7 @@
     return _xcodeManager;
 }
 
-- (BOOL)validResponder
-{
+- (BOOL)validResponder {
     NSResponder *firstResponder = [[NSApp keyWindow] firstResponder];
     NSString *responderClass = NSStringFromClass(firstResponder.class);
     NSArray *validClasses = @[@"DVTSourceTextView", @"IDEPlaygroundTextView"];
@@ -179,23 +174,20 @@
 
 #pragma mark - Actions
 
-- (void)selectLineContentsAction
-{
+- (void)selectLineContentsAction {
     if ([self validResponder]) {
         self.xcodeManager.selectedRange = self.xcodeManager.lineContentsRange;
     }
 
 }
 
-- (void)selectWordAction
-{
+- (void)selectWordAction {
     if ([self validResponder]) {
         self.xcodeManager.selectedRange = self.xcodeManager.currentWordRange;
     }
 }
 
-- (void)selectWordAboveAction
-{
+- (void)selectWordAboveAction {
     if ([self validResponder]) {
         NSCharacterSet *validSet = [NSCharacterSet characterSetWithCharactersInString:kMarvinValidSetWordString];
         NSRange currentRange = [self.xcodeManager selectedRange];
@@ -228,8 +220,7 @@
     }
 }
 
-- (void)selectWordBelowAction
-{
+- (void)selectWordBelowAction {
     if ([self validResponder]) {
         [self performKeyboardEvent:125];
 
@@ -239,31 +230,27 @@
     }
 }
 
-- (void)selectPreviousWordAction
-{
+- (void)selectPreviousWordAction {
     if ([self validResponder]) {
         self.xcodeManager.selectedRange = self.xcodeManager.previousWordRange;
         self.xcodeManager.selectedRange = self.xcodeManager.currentWordRange;
     }
 }
 
-- (void)selectNextWordAction
-{
+- (void)selectNextWordAction {
     if ([self validResponder]) {
         [self selectWordAction];
     }
 }
 
-- (void)deleteLineAction
-{
+- (void)deleteLineAction {
     if ([self validResponder]) {
         [self.xcodeManager replaceCharactersInRange:self.xcodeManager.lineRange
                                          withString:@""];
     }
 }
 
-- (void)duplicateLineAction
-{
+- (void)duplicateLineAction {
     if ([self validResponder]) {
         NSRange range = [self.xcodeManager lineRange];
         NSString *string = [self.xcodeManager contentsOfRange:range];
@@ -275,8 +262,7 @@
     }
 }
 
-- (void)joinLineAction
-{
+- (void)joinLineAction {
     if ([self validResponder]) {
         if ([self.xcodeManager lineContentsRange].length > 0) {
             [self.xcodeManager replaceCharactersInRange:self.xcodeManager.joinRange
@@ -288,8 +274,7 @@
     }
 }
 
-- (void)moveToEOLAndInsertLFAction
-{
+- (void)moveToEOLAndInsertLFAction {
     NSRange lineContentsRange = self.xcodeManager.lineContentsRange;
     NSRange lineRange = [self.xcodeManager lineRange];
 
@@ -323,16 +308,14 @@
     [self.xcodeManager setSelectedRange:NSMakeRange(endOfLine+1+spacing.length+additionalSpacing.length, 0)];
 }
 
-- (void)properSave
-{
+- (void)properSave {
     [self removeTrailingWhitespace:^{
         [self addNewlineAtEOF];
         [self.xcodeManager save];
     }];
 }
 
-- (void)sortLines
-{
+- (void)sortLines {
     NSRange lineRange = [self.xcodeManager lineRange];
     NSString *selectedContent = [self.xcodeManager contentsOfRange:lineRange];
     NSArray *lines = [selectedContent componentsSeparatedByString:@"\n"];
@@ -356,8 +339,7 @@
 
 #pragma mark - Private methods
 
-- (void)addNewlineAtEOF
-{
+- (void)addNewlineAtEOF {
     if ([self validResponder]) {
 
         NSString *documentText = self.xcodeManager.contents;
@@ -379,8 +361,7 @@
     }
 }
 
-- (void)removeTrailingWhitespace:(void (^)())block
-{
+- (void)removeTrailingWhitespace:(void (^)())block {
     if (![self validResponder]) {
         block();
         return;
@@ -426,8 +407,7 @@
     });
 }
 
-- (void)performKeyboardEvent:(CGKeyCode)virtualKey
-{
+- (void)performKeyboardEvent:(CGKeyCode)virtualKey {
     CGEventRef event = CGEventCreateKeyboardEvent(NULL, virtualKey, true);
     CGEventSetFlags(event, 0);
     CGEventPost(kCGHIDEventTap, event);
