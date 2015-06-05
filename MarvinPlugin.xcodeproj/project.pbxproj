@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		524A06551B1F839600F0553A /* Settings.xib in Resources */ = {isa = PBXBuildFile; fileRef = 524A06541B1F839600F0553A /* Settings.xib */; };
+		524A06581B1F86B000F0553A /* MarvinSettingsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 524A06571B1F86B000F0553A /* MarvinSettingsWindowController.m */; };
+		524A065A1B1F8F1500F0553A /* Defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 524A06591B1F8F1500F0553A /* Defaults.plist */; };
 		6F44E9F617DD324B0064F1B7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F44E9F517DD324B0064F1B7 /* Cocoa.framework */; };
 		BD5EBC6519C9F93200F2C8CD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BD5EBC6119C9F93200F2C8CD /* InfoPlist.strings */; };
 		BD5EBC6A19C9F94700F2C8CD /* MarvinPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = BD5EBC6919C9F94700F2C8CD /* MarvinPlugin.m */; };
@@ -15,6 +18,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		524A06541B1F839600F0553A /* Settings.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Settings.xib; path = MarvinPlugin/Source/MarvinPlugin/Settings.xib; sourceTree = SOURCE_ROOT; };
+		524A06561B1F86B000F0553A /* MarvinSettingsWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarvinSettingsWindowController.h; path = MarvinPlugin/Source/MarvinPlugin/MarvinSettingsWindowController.h; sourceTree = SOURCE_ROOT; };
+		524A06571B1F86B000F0553A /* MarvinSettingsWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MarvinSettingsWindowController.m; path = MarvinPlugin/Source/MarvinPlugin/MarvinSettingsWindowController.m; sourceTree = SOURCE_ROOT; };
+		524A06591B1F8F1500F0553A /* Defaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Defaults.plist; path = MarvinPlugin/Source/MarvinPlugin/Defaults.plist; sourceTree = SOURCE_ROOT; };
 		6F44E9F217DD324B0064F1B7 /* MarvinPlugin.xcplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MarvinPlugin.xcplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F44E9F517DD324B0064F1B7 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		6F44E9F817DD324B0064F1B7 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -113,6 +120,10 @@
 				BD5EBC6819C9F94700F2C8CD /* MarvinPlugin.h */,
 				BD5EBC6919C9F94700F2C8CD /* MarvinPlugin.m */,
 				BD9A8A2F19CA09AD00321368 /* XcodeManager.h */,
+				524A06541B1F839600F0553A /* Settings.xib */,
+				524A06561B1F86B000F0553A /* MarvinSettingsWindowController.h */,
+				524A06571B1F86B000F0553A /* MarvinSettingsWindowController.m */,
+				524A06591B1F8F1500F0553A /* Defaults.plist */,
 				BD9A8A3019CA09AD00321368 /* XcodeManager.m */,
 				BD5351FA19CA1159006D3B78 /* XcodePrivate.h */,
 				BDB698F41AB819B8001FC372 /* NSDocument+ZENProperSave.h */,
@@ -173,7 +184,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				524A06551B1F839600F0553A /* Settings.xib in Resources */,
 				BD5EBC6519C9F93200F2C8CD /* InfoPlist.strings in Resources */,
+				524A065A1B1F8F1500F0553A /* Defaults.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -186,6 +199,7 @@
 			files = (
 				BDB698F61AB819B8001FC372 /* NSDocument+ZENProperSave.m in Sources */,
 				BD5EBC6A19C9F94700F2C8CD /* MarvinPlugin.m in Sources */,
+				524A06581B1F86B000F0553A /* MarvinSettingsWindowController.m in Sources */,
 				BD9A8A3119CA09AD00321368 /* XcodeManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
