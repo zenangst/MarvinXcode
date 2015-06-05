@@ -23,8 +23,7 @@ static MarvinPlugin *marvinPlugin;
 
 @implementation MarvinPlugin
 
-+ (void)pluginDidLoad:(NSBundle *)plugin
-{
++ (void)pluginDidLoad:(NSBundle *)plugin {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         marvinPlugin = [[self alloc] init];
@@ -35,13 +34,11 @@ static MarvinPlugin *marvinPlugin;
     });
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (instancetype)init
-{
+- (instancetype)init {
     self = [super init];
     if (!self) return nil;
 
@@ -58,8 +55,7 @@ static MarvinPlugin *marvinPlugin;
     return self;
 }
 
-- (void)applicationDidFinishLaunching:(NSNotification *)notification
-{
+- (void)applicationDidFinishLaunching:(NSNotification *)notification {
     NSMenuItem *editMenuItem = [[NSApp mainMenu] itemWithTitle:@"Edit"];
 
     if (editMenuItem) {
@@ -180,8 +176,7 @@ static MarvinPlugin *marvinPlugin;
 
 #pragma mark - Getters
 
-- (XcodeManager *)xcodeManager
-{
+- (XcodeManager *)xcodeManager {
     if (_xcodeManager) return _xcodeManager;
 
     _xcodeManager = [[XcodeManager alloc] init];
@@ -189,8 +184,7 @@ static MarvinPlugin *marvinPlugin;
     return _xcodeManager;
 }
 
-- (BOOL)validResponder
-{
+- (BOOL)validResponder {
     NSResponder *firstResponder = [[NSApp keyWindow] firstResponder];
     NSString *responderClass = NSStringFromClass(firstResponder.class);
     NSArray *validClasses = @[@"DVTSourceTextView", @"IDEPlaygroundTextView"];
@@ -200,28 +194,24 @@ static MarvinPlugin *marvinPlugin;
 
 #pragma mark - Actions
 
-- (void)settingsMenuItemSelected:(id)sender
-{
+- (void)settingsMenuItemSelected:(id)sender {
     [marvinPlugin.settingsWindowController showWindow:self];
 }
 
-- (void)selectLineContentsAction
-{
+- (void)selectLineContentsAction {
     if ([self validResponder]) {
         self.xcodeManager.selectedRange = self.xcodeManager.lineContentsRange;
     }
 
 }
 
-- (void)selectWordAction
-{
+- (void)selectWordAction {
     if ([self validResponder]) {
         self.xcodeManager.selectedRange = self.xcodeManager.currentWordRange;
     }
 }
 
-- (void)selectWordAboveAction
-{
+- (void)selectWordAboveAction {
     if ([self validResponder]) {
         NSCharacterSet *validSet = [NSCharacterSet characterSetWithCharactersInString:kMarvinValidSetWordString];
         NSRange currentRange = [self.xcodeManager selectedRange];
@@ -254,8 +244,7 @@ static MarvinPlugin *marvinPlugin;
     }
 }
 
-- (void)selectWordBelowAction
-{
+- (void)selectWordBelowAction {
     if ([self validResponder]) {
         [self performKeyboardEvent:125];
 
@@ -265,31 +254,27 @@ static MarvinPlugin *marvinPlugin;
     }
 }
 
-- (void)selectPreviousWordAction
-{
+- (void)selectPreviousWordAction {
     if ([self validResponder]) {
         self.xcodeManager.selectedRange = self.xcodeManager.previousWordRange;
         self.xcodeManager.selectedRange = self.xcodeManager.currentWordRange;
     }
 }
 
-- (void)selectNextWordAction
-{
+- (void)selectNextWordAction {
     if ([self validResponder]) {
         [self selectWordAction];
     }
 }
 
-- (void)deleteLineAction
-{
+- (void)deleteLineAction {
     if ([self validResponder]) {
         [self.xcodeManager replaceCharactersInRange:self.xcodeManager.lineRange
                                          withString:@""];
     }
 }
 
-- (void)duplicateLineAction
-{
+- (void)duplicateLineAction {
     if ([self validResponder]) {
         NSRange range = [self.xcodeManager lineRange];
         NSString *string = [self.xcodeManager contentsOfRange:range];
@@ -301,8 +286,7 @@ static MarvinPlugin *marvinPlugin;
     }
 }
 
-- (void)joinLineAction
-{
+- (void)joinLineAction {
     if ([self validResponder]) {
         if ([self.xcodeManager lineContentsRange].length > 0) {
             [self.xcodeManager replaceCharactersInRange:self.xcodeManager.joinRange
@@ -314,8 +298,7 @@ static MarvinPlugin *marvinPlugin;
     }
 }
 
-- (void)moveToEOLAndInsertLFAction
-{
+- (void)moveToEOLAndInsertLFAction {
     NSRange lineContentsRange = self.xcodeManager.lineContentsRange;
     NSRange lineRange = [self.xcodeManager lineRange];
 
@@ -349,16 +332,14 @@ static MarvinPlugin *marvinPlugin;
     [self.xcodeManager setSelectedRange:NSMakeRange(endOfLine+1+spacing.length+additionalSpacing.length, 0)];
 }
 
-- (void)properSave
-{
+- (void)properSave {
     [self removeTrailingWhitespace:^{
         [self addNewlineAtEOF];
         [self.xcodeManager save];
     }];
 }
 
-- (void)sortLines
-{
+- (void)sortLines {
     NSRange lineRange = [self.xcodeManager lineRange];
     NSString *selectedContent = [self.xcodeManager contentsOfRange:lineRange];
     NSArray *lines = [selectedContent componentsSeparatedByString:@"\n"];
@@ -382,8 +363,7 @@ static MarvinPlugin *marvinPlugin;
 
 #pragma mark - Private methods
 
-- (void)addNewlineAtEOF
-{
+- (void)addNewlineAtEOF {
     if ([self validResponder]) {
 
         NSString *documentText = self.xcodeManager.contents;
@@ -405,8 +385,7 @@ static MarvinPlugin *marvinPlugin;
     }
 }
 
-- (void)removeTrailingWhitespace:(void (^)())block
-{
+- (void)removeTrailingWhitespace:(void (^)())block {
     if (![self validResponder]) {
         block();
         return;
@@ -457,8 +436,7 @@ static MarvinPlugin *marvinPlugin;
     });
 }
 
-- (void)performKeyboardEvent:(CGKeyCode)virtualKey
-{
+- (void)performKeyboardEvent:(CGKeyCode)virtualKey {
     CGEventRef event = CGEventCreateKeyboardEvent(NULL, virtualKey, true);
     CGEventSetFlags(event, 0);
     CGEventPost(kCGHIDEventTap, event);
