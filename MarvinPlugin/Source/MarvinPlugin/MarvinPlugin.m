@@ -9,19 +9,29 @@
 #import "MarvinPlugin.h"
 #import "XcodeManager.h"
 #import "NSDocument+ZENProperSave.h"
+#import "MarvinSettingsWindowController.h"
+
+static MarvinPlugin *marvinPlugin;
 
 @interface MarvinPlugin ()
 
 @property (nonatomic, strong) XcodeManager *xcodeManager;
+@property MarvinSettingsWindowController *settingsWindowController;
+
 
 @end
 
 @implementation MarvinPlugin
 
 + (void)pluginDidLoad:(NSBundle *)plugin {
-    static id shared = nil;
     static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{ shared = [[self alloc] init]; });
+    dispatch_once(&onceToken, ^{
+        marvinPlugin = [[self alloc] init];
+        if ( !(marvinPlugin.settingsWindowController = [[MarvinSettingsWindowController alloc] initWithBundle:plugin]) ) {
+            NSLog( @"MarvinPlugin: nib not loaded exiting" );
+            return;
+        }
+    });
 }
 
 - (void)dealloc {
@@ -52,6 +62,16 @@
         NSMenu *marvinMenu = [[NSMenu alloc] initWithTitle:@"Marvin"];
 
         [[editMenuItem submenu] addItem:[NSMenuItem separatorItem]];
+
+        [marvinMenu addItem:({
+            NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Settings"
+                                                              action:@selector(settingsMenuItemSelected:)
+                                                       keyEquivalent:@""];
+            menuItem.target = self;
+            menuItem;
+        })];
+
+        [marvinMenu addItem:[NSMenuItem separatorItem]];
 
         [marvinMenu addItem:({
             NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:@"Delete Line"
@@ -173,6 +193,10 @@
 }
 
 #pragma mark - Actions
+
+- (void)settingsMenuItemSelected:(id)sender {
+    [marvinPlugin.settingsWindowController showWindow:self];
+}
 
 - (void)selectLineContentsAction {
     if ([self validResponder]) {
@@ -363,6 +387,11 @@
 
 - (void)removeTrailingWhitespace:(void (^)())block {
     if (![self validResponder]) {
+        block();
+        return;
+    }
+
+    if (!marvinPlugin.settingsWindowController.shouldRemoveWhitespace.state) {
         block();
         return;
     }
