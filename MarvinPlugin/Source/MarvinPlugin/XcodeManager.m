@@ -214,9 +214,12 @@
     NSUInteger length = ([[self contents] rangeOfCharacterFromSet:newlineSet
                                                           options:NSCaseInsensitiveSearch
                                                             range:NSMakeRange(selectedRange.location+selectedRange.length,[self contents].length-(selectedRange.location+selectedRange.length))].location);
-
     location = (location == NSNotFound) ? 0 : location + 1;
     length   = (location == 0) ? length+1   : (length+1) - location;
+
+    if (length > [[self contents] length]) {
+        length = [[self contents] length] - 1;
+    }
 
     return NSMakeRange(location, length);
 }
