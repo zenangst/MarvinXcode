@@ -104,7 +104,7 @@
     NSCharacterSet *spaceSet = [NSCharacterSet characterSetWithCharactersInString:kMarvinSpaceSet];
     NSRange selectedRange = [self selectedRange];
 
-    BOOL isOutOfBounds = (selectedRange.location >= self.contents.length);
+    BOOL isOutOfBounds = (selectedRange.location + selectedRange.length >= self.contents.length);
     if (!isOutOfBounds) {
         char character;
         if ([self hasSelection]) {
