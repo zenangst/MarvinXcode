@@ -62,7 +62,10 @@
 				6F44E9F417DD324B0064F1B7 /* Frameworks */,
 				6F44E9F317DD324B0064F1B7 /* Products */,
 			);
+			indentWidth = 4;
 			sourceTree = "<group>";
+			tabWidth = 4;
+			usesTabs = 0;
 		};
 		6F44E9F317DD324B0064F1B7 /* Products */ = {
 			isa = PBXGroup;
@@ -276,6 +279,7 @@
 		6F44EA0517DD324B0064F1B7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEPLOYMENT_LOCATION = YES;
@@ -289,7 +293,9 @@
 				GCC_PREFIX_HEADER = "MarvinPlugIn/Supporting Files/MarvinPlugIn-Prefix.pch";
 				INFOPLIST_FILE = "MarvinPlugIn/Supporting Files/MarvinPlugIn-Info.plist";
 				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = MarvinPlugin;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = xcplugin;
 			};
 			name = Debug;
@@ -297,6 +303,7 @@
 		6F44EA0617DD324B0064F1B7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEPLOYMENT_LOCATION = YES;
@@ -310,6 +317,7 @@
 				GCC_PREFIX_HEADER = "MarvinPlugIn/Supporting Files/MarvinPlugIn-Prefix.pch";
 				INFOPLIST_FILE = "MarvinPlugIn/Supporting Files/MarvinPlugIn-Info.plist";
 				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = MarvinPlugin;
 				WRAPPER_EXTENSION = xcplugin;
 			};

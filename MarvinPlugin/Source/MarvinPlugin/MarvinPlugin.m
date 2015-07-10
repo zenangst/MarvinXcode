@@ -202,7 +202,6 @@ static MarvinPlugin *marvinPlugin;
     if ([self validResponder]) {
         self.xcodeManager.selectedRange = self.xcodeManager.lineContentsRange;
     }
-
 }
 
 - (void)selectWordAction {
@@ -355,7 +354,7 @@ static MarvinPlugin *marvinPlugin;
         [self.xcodeManager replaceCharactersInRange:lineRange
                                          withString:sortedLinesString];
     } else {
-        lineRange.location -= 1;
+        if (lineRange.location > 0) { lineRange.location -= 1; }
         [self.xcodeManager replaceCharactersInRange:lineRange
                                          withString:sortedLinesString];
     }
