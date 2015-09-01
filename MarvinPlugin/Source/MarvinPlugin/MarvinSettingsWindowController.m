@@ -8,11 +8,7 @@
 
 #import "MarvinSettingsWindowController.h"
 
-@interface MarvinSettingsWindowController ()
-{
-    NSDictionary   *_defaults;
-    NSUserDefaults *_userDefaults;
-}
+@interface MarvinSettingsWindowController () {}
 
 @end
 
@@ -22,12 +18,6 @@
 {
     NSString *nibPath = [bundle pathForResource:@"Settings" ofType:@"nib"];
     self = [super initWithWindowNibPath:nibPath owner:self];
-    if (self)
-    {
-        NSString *defaultsFilePath = [bundle pathForResource:@"Defaults" ofType:@"plist"];
-        _defaults = [NSDictionary dictionaryWithContentsOfFile:defaultsFilePath];
-        _userDefaults = [NSUserDefaults standardUserDefaults];
-    }
     return self;
 }
 

@@ -390,6 +390,15 @@ static MarvinPlugin *marvinPlugin;
         return;
     }
 
+    NSString *key = @"MarvinRemoveWhitespace";
+    BOOL shouldRemoveWhitespace = [[NSUserDefaults standardUserDefaults] boolForKey:key];
+
+    if (shouldRemoveWhitespace) {
+        block();
+        return;
+    }
+
+
     if (!marvinPlugin.settingsWindowController.shouldRemoveWhitespace.state) {
         block();
         return;
