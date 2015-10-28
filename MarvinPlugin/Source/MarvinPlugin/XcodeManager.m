@@ -92,7 +92,7 @@
 }
 
 - (NSUInteger)documentLength {
-    return [[self contents] length];
+    return [[self contents] length] - 1;
 }
 
 - (NSRange)selectedRange {

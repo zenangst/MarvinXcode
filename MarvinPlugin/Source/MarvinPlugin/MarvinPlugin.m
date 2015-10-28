@@ -355,6 +355,9 @@ static MarvinPlugin *marvinPlugin;
                                          withString:sortedLinesString];
     } else {
         if (lineRange.location > 0) { lineRange.location -= 1; }
+        if ((lineRange.location + lineRange.length) >= [[self.xcodeManager contents] length]) {
+            lineRange = NSMakeRange(0, [[self.xcodeManager contents] length]);
+        }
         [self.xcodeManager replaceCharactersInRange:lineRange
                                          withString:sortedLinesString];
     }
