@@ -218,7 +218,7 @@
     length   = (location == 0) ? length+1   : (length+1) - location;
 
     if (length > [[self contents] length]) {
-        length = [[self contents] length] - 1;
+        length = [[self contents] length] - location;
     }
 
     return NSMakeRange(location, length);
