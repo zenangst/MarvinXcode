@@ -280,7 +280,7 @@ static MarvinPlugin *marvinPlugin;
         NSRange duplicateRange = NSMakeRange(range.location+range.length, 0);
         NSUInteger offset = 0;
 
-        if (duplicateRange.location >= [[self.xcodeManager contents] length]) {
+        if (duplicateRange.location >= [[self.xcodeManager contents] length] && self.xcodeManager.selectedRange.location == [self.xcodeManager contents].length) {
             [string insertString:@"\n" atIndex:0];
             offset += 1;
         }
