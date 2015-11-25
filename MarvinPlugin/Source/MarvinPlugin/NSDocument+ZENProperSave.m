@@ -36,7 +36,7 @@
 }
 
 - (BOOL)zen_shouldFormat {
-    return [[NSSet setWithObjects:@"c", @"h", @"cpp", @"cc", @"hpp", @"ipp", @"m", @"mm", @"swift", @"rb", @"", nil] containsObject:[[[self fileURL] pathExtension] lowercaseString]];
+    return [[NSSet setWithObjects:@"c", @"h", @"cpp", @"cc", @"hpp", @"ipp", @"m", @"mm", @"swift", @"rb", @"", @"plist", @"strings", nil] containsObject:[[[self fileURL] pathExtension] lowercaseString]];
 }
 
 @end
