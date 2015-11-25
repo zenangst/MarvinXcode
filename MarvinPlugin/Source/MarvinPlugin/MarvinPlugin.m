@@ -276,11 +276,18 @@ static MarvinPlugin *marvinPlugin;
 - (void)duplicateLineAction {
     if ([self validResponder]) {
         NSRange range = [self.xcodeManager lineRange];
-        NSString *string = [self.xcodeManager contentsOfRange:range];
+        NSMutableString *string = [[self.xcodeManager contentsOfRange:range] mutableCopy];
         NSRange duplicateRange = NSMakeRange(range.location+range.length, 0);
+        NSUInteger offset = 0;
+
+        if (duplicateRange.location >= string.length) {
+            [string insertString:@"\n" atIndex:0];
+            offset += 1;
+        }
+
         [self.xcodeManager replaceCharactersInRange:duplicateRange
-                                         withString:string];
-        NSRange selectRange = NSMakeRange(duplicateRange.location + duplicateRange.length + string.length - 1, 0);
+                                         withString:[string copy]];
+        NSRange selectRange = NSMakeRange(duplicateRange.location + duplicateRange.length + string.length - 1 + offset, 0);
         [self.xcodeManager setSelectedRange:selectRange];
     }
 }
