@@ -197,11 +197,11 @@
                                                           options:NSCaseInsensitiveSearch
                                                             range:NSMakeRange(selectedRange.location+selectedRange.length,[self contents].length-(selectedRange.location+selectedRange.length))].location);
 
-    if (length-location < [self documentLength]) {
-        return NSMakeRange(location, length-location);
-    } else {
-        return NSMakeRange(selectedRange.location, 0);
+    if (length > [self documentLength]) {
+        length = [self documentLength] - length - location;
     }
+
+    return NSMakeRange(location, length-location);
 }
 
 - (NSRange)lineRange {
