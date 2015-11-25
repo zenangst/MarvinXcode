@@ -408,12 +408,6 @@ static MarvinPlugin *marvinPlugin;
         return;
     }
 
-
-    if (!marvinPlugin.settingsWindowController.shouldRemoveWhitespace.state) {
-        block();
-        return;
-    }
-
     NSError *error = nil;
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"([ \t]+)\r?\n"
                                                                            options:NSRegularExpressionCaseInsensitive
