@@ -282,6 +282,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1.5.2;
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = "${HOME}";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -296,6 +297,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = MarvinPlugin;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				VERSIONING_SYSTEM = "apple-generic";
 				WRAPPER_EXTENSION = xcplugin;
 			};
 			name = Debug;
@@ -306,6 +308,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1.5.2;
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = "${HOME}";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -319,6 +322,7 @@
 				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = MarvinPlugin;
+				VERSIONING_SYSTEM = "apple-generic";
 				WRAPPER_EXTENSION = xcplugin;
 			};
 			name = Release;
