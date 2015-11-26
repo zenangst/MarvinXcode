@@ -105,6 +105,7 @@
     NSRange selectedRange = [self selectedRange];
 
     BOOL isOutOfBounds = (selectedRange.location + selectedRange.length >= self.contents.length);
+
     if (!isOutOfBounds) {
         char character;
         if ([self hasSelection]) {
@@ -161,6 +162,12 @@
             range = NSMakeRange(location,length-location);
         }
 
+        if (range.location == NSNotFound) { range.location = 0; }
+        
+        if (range.length > [[self contents] length]) {
+            range.length = [[self contents] length];
+        }
+
         return range;
     } else {
         return selectedRange;
@@ -173,6 +180,10 @@
     NSUInteger location = ([[self contents] rangeOfCharacterFromSet:validSet
                                                             options:NSBackwardsSearch
                                                               range:NSMakeRange(0,selectedRange.location)].location);
+
+    if (location == NSNotFound) {
+        location = 0;
+    }
 
     return NSMakeRange(location,0);
 }
