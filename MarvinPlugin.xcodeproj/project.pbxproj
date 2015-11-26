@@ -162,7 +162,7 @@
 		6F44E9EA17DD324B0064F1B7 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Octalord Information Inc.";
 			};
 			buildConfigurationList = 6F44E9ED17DD324B0064F1B7 /* Build configuration list for PBXProject "MarvinPlugin" */;
@@ -233,6 +233,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -295,6 +296,7 @@
 				INFOPLIST_FILE = "MarvinPlugIn/Supporting Files/MarvinPlugIn-Info.plist";
 				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.zenangst.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = MarvinPlugin;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -321,6 +323,7 @@
 				INFOPLIST_FILE = "MarvinPlugIn/Supporting Files/MarvinPlugIn-Info.plist";
 				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.zenangst.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = MarvinPlugin;
 				VERSIONING_SYSTEM = "apple-generic";
 				WRAPPER_EXTENSION = xcplugin;
