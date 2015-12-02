@@ -189,30 +189,13 @@
 }
 
 - (NSRange)lineContentsRange {
-    NSRange selectedRange = [self selectedRange];
+    NSRange lineRange = [self lineRange];
 
-    NSCharacterSet *newlineSet = [NSCharacterSet characterSetWithCharactersInString:@"\n"];
-    NSUInteger startOfLine = ([[self contents] rangeOfCharacterFromSet:newlineSet
-                                                               options:NSBackwardsSearch
-                                                                 range:NSMakeRange(0,selectedRange.location)].location);
+    NSString *currentLine = [[self contents] substringWithRange:lineRange];
+    NSString *trimmedString = [currentLine stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    NSString *spacing = [currentLine stringByReplacingOccurrencesOfString:trimmedString withString:@""];
 
-    NSCharacterSet *validSet = [NSCharacterSet characterSetWithCharactersInString:kMarvinValidLineRange];
-
-    if (startOfLine == NSNotFound) startOfLine = 0;
-
-    NSUInteger location = ([[self contents] rangeOfCharacterFromSet:validSet
-                                                            options:NSCaseInsensitiveSearch
-                                                              range:NSMakeRange(startOfLine,[self documentLength]-startOfLine)].location);
-
-    NSUInteger length = ([[self contents] rangeOfCharacterFromSet:newlineSet
-                                                          options:NSCaseInsensitiveSearch
-                                                            range:NSMakeRange(selectedRange.location+selectedRange.length,[self contents].length-(selectedRange.location+selectedRange.length))].location);
-
-    if (length > [self documentLength]) {
-        length = [self documentLength] - length - location;
-    }
-
-    return NSMakeRange(location, length-location);
+    return NSMakeRange(lineRange.location + spacing.length, lineRange.length - spacing.length - 1);
 }
 
 - (NSRange)lineRange {
