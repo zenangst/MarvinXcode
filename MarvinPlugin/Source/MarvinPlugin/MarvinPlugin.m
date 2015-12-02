@@ -305,37 +305,17 @@ static MarvinPlugin *marvinPlugin;
 }
 
 - (void)moveToEOLAndInsertLFAction {
-    NSRange lineContentsRange = self.xcodeManager.lineContentsRange;
     NSRange lineRange = [self.xcodeManager lineRange];
 
-    if (lineContentsRange.location == NSNotFound) {
-        lineContentsRange.location = self.xcodeManager.contents.length;
-        lineContentsRange.length = 0;
+    unsigned long endOfLine = (unsigned long)lineRange.location+(unsigned long)lineRange.length - 1;
 
-        [self.xcodeManager replaceCharactersInRange:lineContentsRange
-                                         withString:@"\n"];
-        self.xcodeManager.selectedRange = NSMakeRange(lineContentsRange.location+1, 0);
-
-        return;
-    }
-
-    unsigned long endOfLine = (unsigned long)lineContentsRange.location+(unsigned long)lineContentsRange.length;
-
-    NSString *spacing = [[self.xcodeManager contents] substringWithRange:NSMakeRange(lineRange.location, lineContentsRange.location - lineRange.location)];
-
-    unichar lastCharacterInLine = [[self.xcodeManager contents] characterAtIndex:lineContentsRange.location+lineContentsRange.length-1];
-    int ascii = lastCharacterInLine;
-
-    NSMutableString *additionalSpacing = [NSMutableString new];
-    if (ascii == 123) {
-        for (int x = 0; x < 0; x++) {
-            [additionalSpacing appendString:@" "];
-        }
-    }
+    NSString *currentLine = [[self.xcodeManager contents] substringWithRange:lineRange];
+    NSString *trimmedString = [currentLine stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    NSString *spacing = [currentLine stringByReplacingOccurrencesOfString:trimmedString withString:@""];
 
     [self.xcodeManager replaceCharactersInRange:NSMakeRange(endOfLine,0)
-                                     withString:[NSString stringWithFormat:@"\n%@%@", spacing, [additionalSpacing copy]]];
-    [self.xcodeManager setSelectedRange:NSMakeRange(endOfLine+1+spacing.length+additionalSpacing.length, 0)];
+                                     withString:[NSString stringWithFormat:@"\n%@", spacing]];
+    [self.xcodeManager setSelectedRange:NSMakeRange(endOfLine+spacing.length+1, 0)];
 }
 
 - (void)properSave {
