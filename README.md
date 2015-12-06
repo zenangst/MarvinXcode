@@ -2,6 +2,8 @@
 
 ####Marvin is a plugin for Xcode, it adds a large collection of text selections, duplication and deletion commands.
 
+Accessible via `Xcode -> Edit -> Marvin`
+
 It includes the following commands (some might seem obvious but some need a little more detail to describe its function and value).
 
 - Delete Line
@@ -16,8 +18,11 @@ It includes the following commands (some might seem obvious but some need a litt
 - Select Word Above
 - Select Word Below
 - Sort lines
- 
-As an added bonus, Marvin also magically cleans up whitespace on save.
+
+As an added bonus, on save, Marvin also
+
+- Magically cleans up whitespace on save.
+- Adds a LF at the end of the document
 
 #### Install via Alcatraz
 
@@ -33,7 +38,7 @@ To uninstall, just remove the plugin from `~/Library/Application Support/Develop
 
 ### Customize
 
-You can configure Marvin's keyboard shortcuts by adding them to System Preferences > Keyboard > Shortcuts
+You can configure Marvin's keyboard shortcuts by adding them to `System Preferences > Keyboard > Shortcuts`. Note that the `Menu Title` needs to match Marvin commands
 
 <img src="https://raw.githubusercontent.com/zenangst/MarvinXcode/master/keyboard-shortcuts.png" alt="Keyboard Shortcuts"/>
 
