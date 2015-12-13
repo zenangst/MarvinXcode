@@ -383,7 +383,7 @@ static MarvinPlugin *marvinPlugin;
     NSString *key = @"MarvinRemoveWhitespace";
     BOOL shouldRemoveWhitespace = [[NSUserDefaults standardUserDefaults] boolForKey:key];
 
-    if (shouldRemoveWhitespace) {
+    if (!shouldRemoveWhitespace) {
         block();
         return;
     }
