@@ -1,11 +1,3 @@
-//
-//  MarvinSettingsWindowController.m
-//  MarvinPlugin
-//
-//  Created by David Peak on 6/3/15.
-//  Copyright (c) 2015 Octalord Information Inc. All rights reserved.
-//
-
 #import "MarvinSettingsWindowController.h"
 
 @interface MarvinSettingsWindowController () {}

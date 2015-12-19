@@ -1,15 +1,7 @@
-//
-// MarvinPlugin.m
-// Marvin for Xcode
-//
-// Created by Christoffer Winterkvist on 17/10/14.
-// Copyright (c) 2014 zenangst The MIT License.
-//
-
 #import "MarvinPlugin.h"
 #import "XcodeManager.h"
-#import "NSDocument+ZENProperSave.h"
 #import "MarvinSettingsWindowController.h"
+#import "MarvinPlugin-Swift.h"
 
 static MarvinPlugin *marvinPlugin;
 

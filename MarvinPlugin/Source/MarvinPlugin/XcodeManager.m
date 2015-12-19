@@ -1,12 +1,3 @@
-//
-//  XcodeManager.m
-//  MarvinPlugin
-//
-//  Created by Christoffer Winterkvist on 17/09/14.
-//  Based on implementations by Benoît Bourdon
-//  Copyright (c) 2014 zenangst. All rights reserved.
-//
-
 #import "XcodeManager.h"
 
 @interface XcodeManager ()

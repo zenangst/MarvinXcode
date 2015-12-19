@@ -11,10 +11,10 @@
 		524A06581B1F86B000F0553A /* MarvinSettingsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 524A06571B1F86B000F0553A /* MarvinSettingsWindowController.m */; };
 		524A065A1B1F8F1500F0553A /* Defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 524A06591B1F8F1500F0553A /* Defaults.plist */; };
 		6F44E9F617DD324B0064F1B7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F44E9F517DD324B0064F1B7 /* Cocoa.framework */; };
+		BD4F5BFF1C258B2A00424FE1 /* NSDocument+Propersave.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4F5BFE1C258B2A00424FE1 /* NSDocument+Propersave.swift */; };
 		BD5EBC6519C9F93200F2C8CD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BD5EBC6119C9F93200F2C8CD /* InfoPlist.strings */; };
 		BD5EBC6A19C9F94700F2C8CD /* MarvinPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = BD5EBC6919C9F94700F2C8CD /* MarvinPlugin.m */; };
 		BD9A8A3119CA09AD00321368 /* XcodeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BD9A8A3019CA09AD00321368 /* XcodeManager.m */; };
-		BDB698F61AB819B8001FC372 /* NSDocument+ZENProperSave.m in Sources */ = {isa = PBXBuildFile; fileRef = BDB698F51AB819B8001FC372 /* NSDocument+ZENProperSave.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +27,8 @@
 		6F44E9F817DD324B0064F1B7 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		6F44E9F917DD324B0064F1B7 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		6F44E9FA17DD324B0064F1B7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		BD4F5BFD1C258B2A00424FE1 /* MarvinPlugin-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MarvinPlugin-Bridging-Header.h"; sourceTree = "<group>"; };
+		BD4F5BFE1C258B2A00424FE1 /* NSDocument+Propersave.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.swift; name = "NSDocument+Propersave.swift"; path = "MarvinPlugin/Source/MarvinPlugin/NSDocument+Propersave.swift"; sourceTree = SOURCE_ROOT; tabWidth = 2; };
 		BD5351FA19CA1159006D3B78 /* XcodePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XcodePrivate.h; sourceTree = "<group>"; };
 		BD5EBC6219C9F93200F2C8CD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BD5EBC6319C9F93200F2C8CD /* MarvinPlugIn-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MarvinPlugIn-Info.plist"; sourceTree = "<group>"; };
@@ -35,8 +37,6 @@
 		BD5EBC6919C9F94700F2C8CD /* MarvinPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarvinPlugin.m; sourceTree = "<group>"; };
 		BD9A8A2F19CA09AD00321368 /* XcodeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XcodeManager.h; sourceTree = "<group>"; };
 		BD9A8A3019CA09AD00321368 /* XcodeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XcodeManager.m; sourceTree = "<group>"; };
-		BDB698F41AB819B8001FC372 /* NSDocument+ZENProperSave.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDocument+ZENProperSave.h"; path = "MarvinPlugin/Source/MarvinPlugin/NSDocument+ZENProperSave.h"; sourceTree = SOURCE_ROOT; };
-		BDB698F51AB819B8001FC372 /* NSDocument+ZENProperSave.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDocument+ZENProperSave.m"; path = "MarvinPlugin/Source/MarvinPlugin/NSDocument+ZENProperSave.m"; sourceTree = SOURCE_ROOT; };
 		BDBA8FA61AC9E04C00D6F948 /* DVTFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DVTFoundation.framework; path = ../../../../Applications/Xcode.app/Contents/SharedFrameworks/DVTFoundation.framework; sourceTree = "<group>"; };
 		BDBA8FA81AC9E06B00D6F948 /* IDEKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IDEKit.framework; path = ../../../../Applications/Xcode.app/Contents/Frameworks/IDEKit.framework; sourceTree = "<group>"; };
 		BDBA8FAA1AC9E08600D6F948 /* DVTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DVTKit.framework; path = ../../../../Applications/Xcode.app/Contents/SharedFrameworks/DVTKit.framework; sourceTree = "<group>"; };
@@ -125,12 +125,12 @@
 				BD5EBC6919C9F94700F2C8CD /* MarvinPlugin.m */,
 				524A06561B1F86B000F0553A /* MarvinSettingsWindowController.h */,
 				524A06571B1F86B000F0553A /* MarvinSettingsWindowController.m */,
-				BDB698F41AB819B8001FC372 /* NSDocument+ZENProperSave.h */,
-				BDB698F51AB819B8001FC372 /* NSDocument+ZENProperSave.m */,
 				524A06541B1F839600F0553A /* Settings.xib */,
 				BD9A8A2F19CA09AD00321368 /* XcodeManager.h */,
 				BD9A8A3019CA09AD00321368 /* XcodeManager.m */,
 				BD5351FA19CA1159006D3B78 /* XcodePrivate.h */,
+				BD4F5BFE1C258B2A00424FE1 /* NSDocument+Propersave.swift */,
+				BD4F5BFD1C258B2A00424FE1 /* MarvinPlugin-Bridging-Header.h */,
 			);
 			name = MarvinPlugin;
 			path = MarvinPlugIn;
@@ -162,6 +162,7 @@
 		6F44E9EA17DD324B0064F1B7 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Octalord Information Inc.";
 			};
@@ -200,8 +201,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BDB698F61AB819B8001FC372 /* NSDocument+ZENProperSave.m in Sources */,
 				BD5EBC6A19C9F94700F2C8CD /* MarvinPlugin.m in Sources */,
+				BD4F5BFF1C258B2A00424FE1 /* NSDocument+Propersave.swift in Sources */,
 				524A06581B1F86B000F0553A /* MarvinSettingsWindowController.m in Sources */,
 				BD9A8A3119CA09AD00321368 /* XcodeManager.m in Sources */,
 			);
@@ -247,7 +248,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -272,7 +273,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -295,9 +296,10 @@
 				GCC_PREFIX_HEADER = "MarvinPlugIn/Supporting Files/MarvinPlugIn-Prefix.pch";
 				INFOPLIST_FILE = "MarvinPlugIn/Supporting Files/MarvinPlugIn-Info.plist";
 				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks $(DT_TOOLCHAIN_DIR)/usr/lib/swift/macosx";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.zenangst.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = MarvinPlugin;
+				SWIFT_OBJC_BRIDGING_HEADER = "MarvinPlugIn/Source/MarvinPlugIn/MarvinPlugin-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				VERSIONING_SYSTEM = "apple-generic";
 				WRAPPER_EXTENSION = xcplugin;
@@ -322,9 +324,10 @@
 				GCC_PREFIX_HEADER = "MarvinPlugIn/Supporting Files/MarvinPlugIn-Prefix.pch";
 				INFOPLIST_FILE = "MarvinPlugIn/Supporting Files/MarvinPlugIn-Info.plist";
 				INSTALL_PATH = "/Library/Application Support/Developer/Shared/Xcode/Plug-ins";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks $(DT_TOOLCHAIN_DIR)/usr/lib/swift/macosx";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.zenangst.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = MarvinPlugin;
+				SWIFT_OBJC_BRIDGING_HEADER = "MarvinPlugIn/Source/MarvinPlugIn/MarvinPlugin-Bridging-Header.h";
 				VERSIONING_SYSTEM = "apple-generic";
 				WRAPPER_EXTENSION = xcplugin;
 			};
