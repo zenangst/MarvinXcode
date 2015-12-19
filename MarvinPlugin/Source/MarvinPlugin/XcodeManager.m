@@ -163,7 +163,7 @@
         }
 
         if (range.location == NSNotFound) { range.location = 0; }
-        
+
         if (range.length > [[self contents] length]) {
             range.length = [[self contents] length];
         }
