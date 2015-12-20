@@ -17,7 +17,7 @@ extension NSObject {
 
 class MarvinPlugin: NSObject {
 
-  lazy var xcode = XcodeManager()
+  lazy var xcode = XcodeManagerSwift()
   var settingsController: MarvinSettingsWindowController?
 
   deinit {
@@ -90,10 +90,15 @@ class MarvinPlugin: NSObject {
   }
 
   func selectWordAboveAction() {
-    guard validResponder() else { return }
+    guard validResponder() && xcode.selectedRange.location > 0 else { return }
 
     let validSet = NSCharacterSet(charactersInString: "0123456789ABCDEFGHIJKOLMNOPQRSTUVWXYZÅÄÆÖØabcdefghijkolmnopqrstuvwxyzåäæöø_")
-    let currentRange = xcode.selectedRange
+    var currentRange = xcode.selectedRange
+
+    if currentRange.location >= xcode.contents().characters.count {
+      currentRange.location -= 1
+    }
+
     let characterAtCursorStart: Character = xcode.contents()[xcode.contents().startIndex.advancedBy(currentRange.location)]
     let characterAtCursorEnd: Character = xcode.contents()[xcode.contents().startIndex.advancedBy(currentRange.location-1)]
 
@@ -107,6 +112,7 @@ class MarvinPlugin: NSObject {
       let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.025 * Double(NSEC_PER_SEC)))
       dispatch_after(delayTime, dispatch_get_main_queue()) { [unowned self] in
         let currentRange = self.xcode.selectedRange
+
         let characterAtCursorStart: Character = self.xcode.contents()[self.xcode.contents().startIndex.advancedBy(currentRange.location)]
 
         if self.isChar(characterAtCursorStart, inSet: validSet) {
@@ -142,6 +148,7 @@ class MarvinPlugin: NSObject {
 
   func deleteLineAction() {
     guard validResponder() else { return }
+    NSLog("xcode.lineRange(): \(xcode.lineRange())")
     xcode.replaceCharactersInRange(xcode.lineRange(), withString: "")
   }
 
@@ -166,11 +173,8 @@ class MarvinPlugin: NSObject {
   func joinLineAction() {
     guard validResponder() else { return }
 
-    if xcode.lineContentsRange().length > 0 {
-      xcode.replaceCharactersInRange(xcode.joinRange(), withString: " ")
-    } else {
-      xcode.replaceCharactersInRange(xcode.joinRange(), withString: "")
-    }
+    xcode.replaceCharactersInRange(xcode.joinRange(),
+      withString: xcode.lineContentsRange().length > 0 ? " " : "")
   }
 
   func moveToEOLAndInsertLFAction() {
