@@ -2,8 +2,6 @@
 
 @interface XcodeManager : NSObject
 
-@property (nonatomic) NSRange selectedRange;
-
 - (id)currentEditor;
 - (IDESourceCodeDocument *)currentSourceCodeDocument;
 - (IDEEditorDocument *)currentDocument;
