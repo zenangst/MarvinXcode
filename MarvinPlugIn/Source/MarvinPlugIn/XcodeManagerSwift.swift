@@ -144,7 +144,12 @@ class XcodeManagerSwift: NSObject {
   }
 
   func lineRange() -> NSRange {
-    let selectedRange = self.selectedRange
+    var selectedRange = self.selectedRange
+
+    if selectedRange.location == self.contents().characters.count {
+      selectedRange.location -= 1
+    }
+
     let newLineSet = NSCharacterSet(charactersInString: "\n")
 
     var location = (self.contents() as NSString).rangeOfCharacterFromSet(newLineSet, options: .BackwardsSearch, range: NSRange(location: 0, length: selectedRange.location)).location
