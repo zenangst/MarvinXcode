@@ -76,7 +76,7 @@ class MarvinPlugin: NSObject {
   }
 
   func settingsMenuItemSelected() {
-    marvinPlugin?.settingsController?.showWindow(self)
+    marvinPlugin?.settingsController?.openWindow()
   }
 
   func selectLineContentsAction() {
