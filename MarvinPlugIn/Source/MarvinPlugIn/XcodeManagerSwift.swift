@@ -153,7 +153,12 @@ class XcodeManagerSwift: NSObject {
     let newLineSet = NSCharacterSet(charactersInString: "\n")
 
     var location = (self.contents() as NSString).rangeOfCharacterFromSet(newLineSet, options: .BackwardsSearch, range: NSRange(location: 0, length: selectedRange.location)).location
-    var length = (self.contents() as NSString).rangeOfCharacterFromSet(newLineSet, options: .CaseInsensitiveSearch, range: NSRange(location: selectedRange.location+selectedRange.length, length: self.contents().characters.count - selectedRange.location - selectedRange.length)).location
+    var length = (self.contents() as NSString)
+      .rangeOfCharacterFromSet(newLineSet,
+        options: .CaseInsensitiveSearch,
+        range: NSRange(location: selectedRange.location + selectedRange.length,
+          length: self.contents().characters.count - (selectedRange.location + selectedRange.length)))
+      .location
 
     location = location == NSNotFound ? 0 : location + 1
     length = location == 0 ? length + 1 : length + 1 - location
