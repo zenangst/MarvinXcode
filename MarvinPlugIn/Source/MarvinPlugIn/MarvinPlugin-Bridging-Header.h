@@ -1,3 +1,3 @@
 #import "XcodePrivate.h"
-#import "XcodeManager.h"
+#import "LegacyXcodeManager.h"
 #import "MarvinSettingsWindowController.h"

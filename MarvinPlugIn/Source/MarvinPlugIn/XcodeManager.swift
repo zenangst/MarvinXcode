@@ -1,16 +1,16 @@
 import Foundation
 
-class XcodeManagerSwift: NSObject {
+class XcodeManager: NSObject {
 
   var textView: NSTextView? {
     get {
-      if let currentEditor = XcodeManager().currentEditor(),
+      if let currentEditor = LegacyXcodeManager().currentEditor(),
         className = NSClassFromString("IDESourceCodeEditor")
         where currentEditor.isKindOfClass(className) {
           return currentEditor.textView
       }
 
-      if let currentEditor = XcodeManager().currentEditor(),
+      if let currentEditor = LegacyXcodeManager().currentEditor(),
         className = NSClassFromString("IDESourceCodeComparisonEditor")
         where currentEditor.isKindOfClass(className) {
           return currentEditor.keyTextView
@@ -37,7 +37,7 @@ class XcodeManagerSwift: NSObject {
   }
 
   func save() {
-    XcodeManager().save()
+    LegacyXcodeManager().save()
   }
   func needsDisplay() {
     textView?.needsDisplay = true
@@ -216,7 +216,7 @@ class XcodeManagerSwift: NSObject {
       range.length = self.contents().characters.count - range.location
     }
 
-    let document = XcodeManager().currentSourceCodeDocument()
+    let document = LegacyXcodeManager().currentSourceCodeDocument()
     let textStorage = document.textStorage()
 
     textStorage.replaceCharactersInRange(range, withString: string, withUndoManager: document.undoManager)

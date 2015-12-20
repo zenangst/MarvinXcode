@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
 
-@interface XcodeManager : NSObject
+@interface LegacyXcodeManager : NSObject
 
 - (id)currentEditor;
 - (IDESourceCodeDocument *)currentSourceCodeDocument;

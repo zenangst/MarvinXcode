@@ -17,7 +17,7 @@ extension NSObject {
 
 class MarvinPlugin: NSObject {
 
-  lazy var xcode = XcodeManagerSwift()
+  lazy var xcode = XcodeManager()
   var settingsController: MarvinSettingsWindowController?
 
   deinit {

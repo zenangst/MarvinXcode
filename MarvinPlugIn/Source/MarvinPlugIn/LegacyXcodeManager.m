@@ -1,6 +1,6 @@
-#import "XcodeManager.h"
+#import "LegacyXcodeManager.h"
 
-@implementation XcodeManager
+@implementation LegacyXcodeManager
 
 #pragma mark - Getters
 
