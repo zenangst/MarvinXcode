@@ -1,3 +1,0 @@
-@interface MarvinPlugin : NSObject
-
-@end
