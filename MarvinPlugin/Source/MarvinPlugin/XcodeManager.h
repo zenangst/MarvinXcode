@@ -9,23 +9,8 @@ static NSString *const kMarvinValidLineRange = @"0123456789ABCDEFGHIJKOLMNOPQRST
 @property (nonatomic) NSRange selectedRange;
 
 - (id)currentEditor;
-- (NSTextView *)textView;
 - (IDESourceCodeDocument *)currentSourceCodeDocument;
+- (IDEEditorDocument *)currentDocument;
 - (void)save;
-- (NSString *)contents;
-- (NSUInteger)documentLength;
-- (NSRange)currentWordRange;
-- (NSRange)previousWordRange;
-- (NSRange)lineContentsRange;
-- (NSRange)lineRange;
-- (NSString *)contentsOfRange:(NSRange)range;
-- (NSRange)joinRange;
-- (NSString *)selectedText;
-- (NSLayoutManager *)layoutManager;
-- (void)needsDisplay;
-
-- (void)insertText:(NSString *)string;
-- (void)replaceCharactersInRange:(NSRange)range
-                      withString:(NSString *)string;
 
 @end
