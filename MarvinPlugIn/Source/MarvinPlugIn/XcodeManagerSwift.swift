@@ -2,21 +2,23 @@ import Foundation
 
 class XcodeManagerSwift: NSObject {
 
-  var textView: NSTextView? = {
-    if let currentEditor = XcodeManager().currentEditor(),
-      className = NSClassFromString("IDESourceCodeEditor")
-      where currentEditor.isKindOfClass(className) {
-        return currentEditor.textView
-    }
+  var textView: NSTextView? {
+    get {
+      if let currentEditor = XcodeManager().currentEditor(),
+        className = NSClassFromString("IDESourceCodeEditor")
+        where currentEditor.isKindOfClass(className) {
+          return currentEditor.textView
+      }
 
-    if let currentEditor = XcodeManager().currentEditor(),
-      className = NSClassFromString("IDESourceCodeComparisonEditor")
-      where currentEditor.isKindOfClass(className) {
-        return currentEditor.keyTextView
-    }
+      if let currentEditor = XcodeManager().currentEditor(),
+        className = NSClassFromString("IDESourceCodeComparisonEditor")
+        where currentEditor.isKindOfClass(className) {
+          return currentEditor.keyTextView
+      }
 
-    return nil
-  }()
+      return nil
+    }
+  }
 
   var selectedRange: NSRange {
     set(value) {
