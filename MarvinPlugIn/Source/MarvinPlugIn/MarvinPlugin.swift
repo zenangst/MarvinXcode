@@ -175,7 +175,9 @@ class MarvinPlugin: NSObject {
 
     let range = xcode.joinRange()
 
-    guard range.location != NSNotFound else { return }
+    guard range.location != NSNotFound &&
+      range.location + range.length < xcode.contents().characters.count
+      else { return }
 
     xcode.replaceCharactersInRange(range,
       withString: xcode.lineContentsRange().length > 0 ? " " : "")
