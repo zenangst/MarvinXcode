@@ -178,7 +178,7 @@ class XcodeManager: NSObject {
   func joinRange() -> NSRange {
     let lineRange = self.lineRange()
     let joinRange = NSRange(location: lineRange.location + lineRange.length - 1, length: 0)
-    let validSet = NSCharacterSet(charactersInString: "0123456789ABCDEFGHIJKOLMNOPQRSTUVWXYZÅÄÆÖØabcdefghijkolmnopqrstuvwxyzåäæöø_")
+    let validSet = NSCharacterSet(charactersInString: "0123456789ABCDEFGHIJKOLMNOPQRSTUVWXYZÅÄÆÖØabcdefghijkolmnopqrstuvwxyzåäæöø_{}().")
     let length = (self.contents() as NSString).rangeOfCharacterFromSet(validSet, options: .CaseInsensitiveSearch, range: NSRange(location: joinRange.location, length: self.contents().characters.count - joinRange.location)).location
 
     return NSRange(location: joinRange.location, length: length - joinRange.location)

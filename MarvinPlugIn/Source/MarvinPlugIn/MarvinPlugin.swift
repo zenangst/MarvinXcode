@@ -173,7 +173,13 @@ class MarvinPlugin: NSObject {
   func joinLineAction() {
     guard validResponder() else { return }
 
-    xcode.replaceCharactersInRange(xcode.joinRange(),
+    let range = xcode.joinRange()
+
+    guard range.location != NSNotFound &&
+      range.location + range.length < xcode.contents().characters.count
+      else { return }
+
+    xcode.replaceCharactersInRange(range,
       withString: xcode.lineContentsRange().length > 0 ? " " : "")
   }
 
