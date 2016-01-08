@@ -199,21 +199,23 @@ class MarvinPlugin: NSObject {
   func sortLines() {
     guard validResponder() else { return }
 
-    let lineRange = xcode.lineRange()
+    var lineRange = xcode.lineRange()
+    lineRange.length--
     let selectedContent = xcode.contentsOfRange(lineRange)
     let lines = selectedContent.componentsSeparatedByString("\n")
+
     var sortedLines = lines.sort { $0 > $1 }
     var sortedLinesString = (sortedLines as NSArray).componentsJoinedByString("\n")
 
-    let shouldSortDescending = (selectedContent as NSString).substringToIndex(selectedContent.characters.count - 1) == (sortedLinesString as NSString).substringFromIndex(1)
+    let shouldSortDescending = (selectedContent as NSString).stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()) == (sortedLinesString as NSString).substringFromIndex(1).stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
 
     if shouldSortDescending {
       sortedLines = lines.sort { $0 < $1 }
       sortedLinesString = (sortedLines as NSArray).componentsJoinedByString("\n")
-      xcode.replaceCharactersInRange(lineRange, withString: sortedLinesString)
-    } else {
-      xcode.replaceCharactersInRange(lineRange, withString: sortedLinesString)
     }
+
+    xcode.replaceCharactersInRange(lineRange, withString: sortedLinesString)
+    xcode.selectedRange = lineRange
   }
 
   func properSave() {
