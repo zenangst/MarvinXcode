@@ -49,7 +49,9 @@ extension NSDocument {
       "plist",
       "rb",
       "strings",
-      "swift"
+      "swift",
+      "playground",
+      "md"
       ]
       .contains(pathExtension.lowercaseString)
   }
