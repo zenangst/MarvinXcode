@@ -148,7 +148,6 @@ class MarvinPlugin: NSObject {
 
   func deleteLineAction() {
     guard validResponder() else { return }
-    NSLog("xcode.lineRange(): \(xcode.lineRange())")
     xcode.replaceCharactersInRange(xcode.lineRange(), withString: "")
   }
 
