@@ -160,6 +160,11 @@ class XcodeManager: NSObject {
           length: self.contents().characters.count - (selectedRange.location + selectedRange.length)))
       .location
 
+    if length == NSNotFound {
+      length = self.contents().characters.count - location
+      return NSRange(location: location, length: length)
+    }
+
     location = location == NSNotFound ? 0 : location + 1
     length = location == 0 ? length + 1 : length + 1 - location
 
