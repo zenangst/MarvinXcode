@@ -73,7 +73,7 @@ class MarvinPlugin: NSObject {
     let firstResponder = window.firstResponder
     let responderClass = NSStringFromClass(firstResponder.dynamicType)
 
-    return ["NSKVONotifying_DVTSourceTextView", "NSKVONotifying_IDEPlaygroundTextView"].contains(responderClass)
+    return ["NSKVONotifying_DVTSourceTextView", "NSKVONotifying_IDEPlaygroundTextView"].contains(responderClass) && xcode.documentLength() > 1
   }
 
   func settingsMenuItemSelected() {
