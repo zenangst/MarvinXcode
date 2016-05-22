@@ -12,6 +12,7 @@ extension NSObject {
 
     marvinPlugin = MarvinPlugin()
     marvinPlugin?.settingsController = MarvinSettingsWindowController(bundle: bundle)
+    SaveSwizzler.swizzle()
   }
 }
 
@@ -27,9 +28,9 @@ class MarvinPlugin: NSObject {
   override init() {
     super.init()
 
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationDidFinishLaunching:", name: NSApplicationDidFinishLaunchingNotification, object: nil)
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NSApplicationDelegate.applicationDidFinishLaunching(_:)), name: NSApplicationDidFinishLaunchingNotification, object: nil)
 
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: "properSave", name: "Save properly", object: nil)
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MarvinPlugin.properSave), name: "Save properly", object: nil)
   }
 
   func applicationDidFinishLaunching(notification: NSNotification) {
@@ -40,19 +41,19 @@ class MarvinPlugin: NSObject {
       let marvinMenu = NSMenu.init(title: "Marvin")
       var items = [NSMenuItem]()
 
-      items.append(NSMenuItem.init(title: "Settings", action: "settingsMenuItemSelected", keyEquivalent: ""))
+      items.append(NSMenuItem.init(title: "Settings", action: #selector(MarvinPlugin.settingsMenuItemSelected), keyEquivalent: ""))
       items.append(NSMenuItem.separatorItem())
-      items.append(NSMenuItem.init(title: "Delete Line", action: "deleteLineAction", keyEquivalent: ""))
-      items.append(NSMenuItem.init(title: "Duplicate Line", action: "duplicateLineAction", keyEquivalent: ""))
-      items.append(NSMenuItem.init(title: "Join Line", action: "joinLineAction", keyEquivalent: ""))
-      items.append(NSMenuItem.init(title: "Move To EOL and Insert LF", action: "moveToEOLAndInsertLFAction", keyEquivalent: ""))
-      items.append(NSMenuItem.init(title: "Select Current Word", action: "selectWordAction", keyEquivalent: ""))
-      items.append(NSMenuItem.init(title: "Select Line Contents", action: "selectLineContentsAction", keyEquivalent: ""))
-      items.append(NSMenuItem.init(title: "Select Next Word", action: "selectNextWordAction", keyEquivalent: ""))
-      items.append(NSMenuItem.init(title: "Select Previous Word", action: "selectPreviousWordAction", keyEquivalent: ""))
-      items.append(NSMenuItem.init(title: "Select Word Above", action: "selectWordAboveAction", keyEquivalent: ""))
-      items.append(NSMenuItem.init(title: "Select Word Below", action: "selectWordBelowAction", keyEquivalent: ""))
-      items.append(NSMenuItem.init(title: "Sort Lines", action: "sortLines", keyEquivalent: ""))
+      items.append(NSMenuItem.init(title: "Delete Line", action: #selector(MarvinPlugin.deleteLineAction), keyEquivalent: ""))
+      items.append(NSMenuItem.init(title: "Duplicate Line", action: #selector(MarvinPlugin.duplicateLineAction), keyEquivalent: ""))
+      items.append(NSMenuItem.init(title: "Join Line", action: #selector(MarvinPlugin.joinLineAction), keyEquivalent: ""))
+      items.append(NSMenuItem.init(title: "Move To EOL and Insert LF", action: #selector(MarvinPlugin.moveToEOLAndInsertLFAction), keyEquivalent: ""))
+      items.append(NSMenuItem.init(title: "Select Current Word", action: #selector(MarvinPlugin.selectWordAction), keyEquivalent: ""))
+      items.append(NSMenuItem.init(title: "Select Line Contents", action: #selector(MarvinPlugin.selectLineContentsAction), keyEquivalent: ""))
+      items.append(NSMenuItem.init(title: "Select Next Word", action: #selector(MarvinPlugin.selectNextWordAction), keyEquivalent: ""))
+      items.append(NSMenuItem.init(title: "Select Previous Word", action: #selector(MarvinPlugin.selectPreviousWordAction), keyEquivalent: ""))
+      items.append(NSMenuItem.init(title: "Select Word Above", action: #selector(MarvinPlugin.selectWordAboveAction), keyEquivalent: ""))
+      items.append(NSMenuItem.init(title: "Select Word Below", action: #selector(MarvinPlugin.selectWordBelowAction), keyEquivalent: ""))
+      items.append(NSMenuItem.init(title: "Sort Lines", action: #selector(MarvinPlugin.sortLines), keyEquivalent: ""))
 
       items.forEach { $0.target = self; marvinMenu.addItem($0) }
 
@@ -199,7 +200,7 @@ class MarvinPlugin: NSObject {
     guard validResponder() else { return }
 
     var lineRange = xcode.lineRange()
-    lineRange.length--
+    lineRange.length -= 1
     let selectedContent = xcode.contentsOfRange(lineRange)
     let lines = selectedContent.componentsSeparatedByString("\n")
 
