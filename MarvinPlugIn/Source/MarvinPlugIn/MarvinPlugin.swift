@@ -12,6 +12,7 @@ extension NSObject {
 
     marvinPlugin = MarvinPlugin()
     marvinPlugin?.settingsController = MarvinSettingsWindowController(bundle: bundle)
+    SaveSwizzler.swizzle()
   }
 }
 
