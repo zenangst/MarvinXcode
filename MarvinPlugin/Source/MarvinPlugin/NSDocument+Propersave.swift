@@ -3,9 +3,9 @@ import Cocoa
 
 final class SaveSwizzler {
 
-  private static var swizzled = false
+  fileprivate static var swizzled = false
 
-  private init() {
+  fileprivate init() {
     fatalError()
   }
 
@@ -15,7 +15,7 @@ final class SaveSwizzler {
 
     var original, swizzle: Method
 
-    original = class_getInstanceMethod(NSDocument.self, #selector(NSDocument.saveDocumentWithDelegate(_:didSaveSelector:contextInfo:)))
+    original = class_getInstanceMethod(NSDocument.self, #selector(NSDocument.save(withDelegate:didSave:contextInfo:)))
     swizzle = class_getInstanceMethod(NSDocument.self, #selector(NSDocument.zen_saveDocumentWithDelegate(_:didSaveSelector:contextInfo:)))
 
     method_exchangeImplementations(original, swizzle)
@@ -24,21 +24,22 @@ final class SaveSwizzler {
 
 extension NSDocument {
 
-  dynamic func zen_saveDocumentWithDelegate(delegate: AnyObject?, didSaveSelector: Selector, contextInfo: UnsafeMutablePointer<Void>) {
+  dynamic func zen_saveDocumentWithDelegate(_ delegate: AnyObject?, didSaveSelector: Selector, contextInfo: UnsafeMutableRawPointer) {
     if shouldFormat() {
-      NSNotificationCenter.defaultCenter().postNotificationName("Save properly", object: nil)
+      NotificationCenter.default.post(name: Notification.Name(rawValue: "Save properly"), object: nil)
     }
 
-    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.25 * Double(NSEC_PER_SEC)))
-    dispatch_after(delayTime, dispatch_get_main_queue()) {
+    let delayTime = DispatchTime.now() + Double(Int64(0.25 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+    DispatchQueue.main.asyncAfter(deadline: delayTime) {
       self.zen_saveDocumentWithDelegate(delegate, didSaveSelector: didSaveSelector, contextInfo: contextInfo)
     }
   }
 
   func shouldFormat() -> Bool {
-    guard let fileURL = fileURL,
-      pathExtension = fileURL.pathExtension
+    guard let fileURL = fileURL
       else { return false }
+
+    let pathExtension = fileURL.pathExtension
 
     return [
       "",
@@ -57,6 +58,6 @@ extension NSDocument {
       "md",
       "yml"
       ]
-      .contains(pathExtension.lowercaseString)
+      .contains(pathExtension.lowercased())
   }
 }

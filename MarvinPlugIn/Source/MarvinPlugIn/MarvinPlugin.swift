@@ -4,9 +4,9 @@ var marvinPlugin: MarvinPlugin? = nil
 
 extension NSObject {
 
-  class func pluginDidLoad(bundle: NSBundle) {
-    guard let appName = NSBundle.mainBundle().infoDictionary?["CFBundleName"] as? String
-      where marvinPlugin == nil && appName == "Xcode" else {
+  class func pluginDidLoad(_ bundle: Bundle) {
+    guard let appName = Bundle.main.infoDictionary?["CFBundleName"] as? String
+      , marvinPlugin == nil && appName == "Xcode" else {
         return
     }
 
@@ -22,27 +22,27 @@ class MarvinPlugin: NSObject {
   var settingsController: MarvinSettingsWindowController?
 
   deinit {
-    NSNotificationCenter.defaultCenter().removeObserver(self)
+    NotificationCenter.default.removeObserver(self)
   }
 
   override init() {
     super.init()
 
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NSApplicationDelegate.applicationDidFinishLaunching(_:)), name: NSApplicationDidFinishLaunchingNotification, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(NSApplicationDelegate.applicationDidFinishLaunching(_:)), name: NSNotification.Name.NSApplicationDidFinishLaunching, object: nil)
 
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MarvinPlugin.properSave), name: "Save properly", object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(MarvinPlugin.properSave), name: NSNotification.Name(rawValue: "Save properly"), object: nil)
   }
 
-  func applicationDidFinishLaunching(notification: NSNotification) {
+  func applicationDidFinishLaunching(_ notification: Notification) {
     guard let mainMenu = NSApp.mainMenu else { return }
-    let editMenuItem = mainMenu.itemWithTitle("Edit")
+    let editMenuItem = mainMenu.item(withTitle: "Edit")
 
-    if let editMenuItem = editMenuItem, submenu = editMenuItem.submenu {
+    if let editMenuItem = editMenuItem, let submenu = editMenuItem.submenu {
       let marvinMenu = NSMenu.init(title: "Marvin")
       var items = [NSMenuItem]()
 
       items.append(NSMenuItem.init(title: "Settings", action: #selector(MarvinPlugin.settingsMenuItemSelected), keyEquivalent: ""))
-      items.append(NSMenuItem.separatorItem())
+      items.append(NSMenuItem.separator())
       items.append(NSMenuItem.init(title: "Delete Line", action: #selector(MarvinPlugin.deleteLineAction), keyEquivalent: ""))
       items.append(NSMenuItem.init(title: "Duplicate Line", action: #selector(MarvinPlugin.duplicateLineAction), keyEquivalent: ""))
       items.append(NSMenuItem.init(title: "Join Line", action: #selector(MarvinPlugin.joinLineAction), keyEquivalent: ""))
@@ -57,12 +57,12 @@ class MarvinPlugin: NSObject {
 
       items.forEach { $0.target = self; marvinMenu.addItem($0) }
 
-      if let infoDictionary = NSBundle(forClass: self.dynamicType).infoDictionary,
-        version = infoDictionary["CFBundleVersion"] {
+      if let infoDictionary = Bundle(for: type(of: self)).infoDictionary,
+        let version = infoDictionary["CFBundleVersion"] {
           let marvinMenuItem = NSMenuItem.init(title: "Marvin \(version)", action: nil, keyEquivalent: "")
           marvinMenuItem.submenu = marvinMenu
 
-          submenu.addItem(NSMenuItem.separatorItem())
+          submenu.addItem(NSMenuItem.separator())
           submenu.addItem(marvinMenuItem)
       }
     }
@@ -71,7 +71,7 @@ class MarvinPlugin: NSObject {
   func validResponder() -> Bool {
     guard let window = NSApp.keyWindow else { return false }
     let firstResponder = window.firstResponder
-    let responderClass = NSStringFromClass(firstResponder.dynamicType)
+    let responderClass = NSStringFromClass(type(of: firstResponder))
 
     return ["NSKVONotifying_DVTSourceTextView", "NSKVONotifying_IDEPlaygroundTextView"].contains(responderClass) && xcode.documentLength() > 1
   }
@@ -93,15 +93,15 @@ class MarvinPlugin: NSObject {
   func selectWordAboveAction() {
     guard validResponder() && xcode.selectedRange.location > 0 else { return }
 
-    let validSet = NSCharacterSet(charactersInString: "0123456789ABCDEFGHIJKOLMNOPQRSTUVWXYZÅÄÆÖØabcdefghijkolmnopqrstuvwxyzåäæöø_")
+    let validSet = CharacterSet(charactersIn: "0123456789ABCDEFGHIJKOLMNOPQRSTUVWXYZÅÄÆÖØabcdefghijkolmnopqrstuvwxyzåäæöø_")
     var currentRange = xcode.selectedRange
 
     if currentRange.location >= xcode.contents().characters.count {
       currentRange.location -= 1
     }
 
-    let characterAtCursorStart: Character = xcode.contents()[xcode.contents().startIndex.advancedBy(currentRange.location)]
-    let characterAtCursorEnd: Character = xcode.contents()[xcode.contents().startIndex.advancedBy(currentRange.location-1)]
+    let characterAtCursorStart: Character = xcode.contents()[xcode.contents().characters.index(xcode.contents().startIndex, offsetBy: currentRange.location)]
+    let characterAtCursorEnd: Character = xcode.contents()[xcode.contents().characters.index(xcode.contents().startIndex, offsetBy: currentRange.location-1)]
 
     if xcode.selectedRange.length == 0 && isChar(characterAtCursorStart, inSet: validSet) {
       selectWordAction()
@@ -110,11 +110,11 @@ class MarvinPlugin: NSObject {
     } else {
       perform(keyboardEvent: 126)
 
-      let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.025 * Double(NSEC_PER_SEC)))
-      dispatch_after(delayTime, dispatch_get_main_queue()) { [unowned self] in
+      let delayTime = DispatchTime.now() + Double(Int64(0.025 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+      DispatchQueue.main.asyncAfter(deadline: delayTime) { [unowned self] in
         let currentRange = self.xcode.selectedRange
 
-        let characterAtCursorStart: Character = self.xcode.contents()[self.xcode.contents().startIndex.advancedBy(currentRange.location)]
+        let characterAtCursorStart: Character = self.xcode.contents()[self.xcode.contents().characters.index(self.xcode.contents().startIndex, offsetBy: currentRange.location)]
 
         if self.isChar(characterAtCursorStart, inSet: validSet) {
           self.selectWordAction()
@@ -130,8 +130,8 @@ class MarvinPlugin: NSObject {
 
     perform(keyboardEvent: 125)
 
-    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.025 * Double(NSEC_PER_SEC)))
-    dispatch_after(delayTime, dispatch_get_main_queue()) { [unowned self] in
+    let delayTime = DispatchTime.now() + Double(Int64(0.025 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+    DispatchQueue.main.asyncAfter(deadline: delayTime) { [unowned self] in
       self.selectWordAction()
     }
   }
@@ -188,9 +188,9 @@ class MarvinPlugin: NSObject {
 
     let lineRange = xcode.lineRange()
     let endOfLine = lineRange.location + lineRange.length - 1
-    let currentLine = (xcode.contents() as NSString).substringWithRange(lineRange)
-    let trimmedString = currentLine.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
-    let spacing = currentLine.stringByReplacingOccurrencesOfString(trimmedString, withString: "")
+    let currentLine = (xcode.contents() as NSString).substring(with: lineRange)
+    let trimmedString = currentLine.trimmingCharacters(in: CharacterSet.whitespaces)
+    let spacing = currentLine.replacingOccurrences(of: trimmedString, with: "")
 
     xcode.replaceCharactersInRange(NSMakeRange(endOfLine, 0), withString: "\n\(spacing)")
     xcode.selectedRange = NSMakeRange(endOfLine + spacing.characters.count + 1, 0)
@@ -202,16 +202,16 @@ class MarvinPlugin: NSObject {
     var lineRange = xcode.lineRange()
     lineRange.length -= 1
     let selectedContent = xcode.contentsOfRange(lineRange)
-    let lines = selectedContent.componentsSeparatedByString("\n")
+    let lines = selectedContent.components(separatedBy: "\n")
 
-    var sortedLines = lines.sort { $0 > $1 }
-    var sortedLinesString = (sortedLines as NSArray).componentsJoinedByString("\n")
+    var sortedLines = lines.sorted { $0 > $1 }
+    var sortedLinesString = (sortedLines as NSArray).componentsJoined(by: "\n")
 
-    let shouldSortDescending = (selectedContent as NSString).stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()) == (sortedLinesString as NSString).substringFromIndex(1).stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+    let shouldSortDescending = (selectedContent as NSString).trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) == (sortedLinesString as NSString).substring(from: 1).trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 
     if shouldSortDescending {
-      sortedLines = lines.sort { $0 < $1 }
-      sortedLinesString = (sortedLines as NSArray).componentsJoinedByString("\n")
+      sortedLines = lines.sorted { $0 < $1 }
+      sortedLinesString = (sortedLines as NSArray).componentsJoined(by: "\n")
     }
 
     xcode.replaceCharactersInRange(lineRange, withString: sortedLinesString)
@@ -227,11 +227,11 @@ class MarvinPlugin: NSObject {
 
   // MARK: - Private methods
 
-  private func addNewlineAtEOF() {
+  fileprivate func addNewlineAtEOF() {
     guard validResponder() else { return }
 
     if let eof = xcode.contents().characters.last
-      where eof != "\n" {
+      , eof != "\n" {
         let selectedRange = xcode.selectedRange
         let replaceRange = NSMakeRange(xcode.contents().characters.count, 0)
         let replaceString = "\n"
@@ -241,34 +241,34 @@ class MarvinPlugin: NSObject {
     }
   }
 
-  private func removeTrailingWhitespace(closure: () -> Void) {
+  fileprivate func removeTrailingWhitespace(_ closure: @escaping () -> Void) {
     guard validResponder() else { closure(); return }
 
     let key = "MarvinRemoveWhitespace"
-    let shouldRemoveWhitespace = NSUserDefaults.standardUserDefaults().boolForKey(key)
+    let shouldRemoveWhitespace = UserDefaults.standard.bool(forKey: key)
 
     if !shouldRemoveWhitespace {
       closure()
       return
     }
 
-    let regex = try! NSRegularExpression(pattern: "([ \t]+)\r?\n", options: .CaseInsensitive)
+    let regex = try! NSRegularExpression(pattern: "([ \t]+)\r?\n", options: .caseInsensitive)
     let currentRange = xcode.selectedRange
     let string = xcode.contents()
 
     var results = [NSTextCheckingResult]()
 
-    regex.enumerateMatchesInString(string, options: .ReportProgress, range: NSMakeRange(0, string.characters.count)) { (result, flags, stop) -> Void in
-      if let result = result where !NSLocationInRange(currentRange.location, result.range) {
+    regex.enumerateMatches(in: string, options: .reportProgress, range: NSMakeRange(0, string.characters.count)) { (result, flags, stop) -> Void in
+      if let result = result , !NSLocationInRange(currentRange.location, result.range) {
         results.append(result)
       }
     }
 
     if results.isEmpty { closure(); return }
 
-    let enumerator = results.reverse()
+    let enumerator = results.reversed()
 
-    dispatch_async(dispatch_get_main_queue()) { [unowned self] in
+    DispatchQueue.main.async { [unowned self] in
       enumerator.forEach { textResult in
         var range = textResult.range
         range.length -= 1
@@ -278,16 +278,16 @@ class MarvinPlugin: NSObject {
     }
   }
 
-  private func perform(keyboardEvent virtualKey: CGKeyCode) {
-    let event = CGEventCreateKeyboardEvent(nil, virtualKey, true)
-    CGEventSetFlags(event, CGEventFlags(rawValue: 0)!)
-    CGEventPost(.CGHIDEventTap, event)
+  fileprivate func perform(keyboardEvent virtualKey: CGKeyCode) {
+    let event = CGEvent(keyboardEventSource: nil, virtualKey: virtualKey, keyDown: true)
+    event?.flags = CGEventFlags(rawValue: 0)
+    event?.post(tap: .cghidEventTap)
   }
 
-  private func isChar(char: Character, inSet set: NSCharacterSet) -> Bool {
+  fileprivate func isChar(_ char: Character, inSet set: CharacterSet) -> Bool {
     var found = false
     for ch in String(char).utf16 {
-      if set.characterIsMember(ch) { found = true; break }
+      if set.contains(UnicodeScalar(ch)!) { found = true; break }
     }
     return found
   }

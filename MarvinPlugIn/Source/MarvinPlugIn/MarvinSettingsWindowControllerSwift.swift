@@ -2,10 +2,10 @@ import Foundation
 
 class MarvinSettingsWindowController: NSWindowController {
 
-  var bundle: NSBundle?
+  var bundle: Bundle?
   @IBOutlet weak var shouldRemoveWhitespace: NSButton?
 
-  convenience init(bundle: NSBundle) {
+  convenience init(bundle: Bundle) {
     self.init(window: nil)
     self.bundle = bundle
   }

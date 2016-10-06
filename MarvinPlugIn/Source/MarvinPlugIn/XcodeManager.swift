@@ -5,15 +5,15 @@ class XcodeManager: NSObject {
   var textView: NSTextView? {
     get {
       if let currentEditor = LegacyXcodeManager().currentEditor(),
-        className = NSClassFromString("IDESourceCodeEditor")
-        where currentEditor.isKindOfClass(className) {
-          return currentEditor.textView
+        let className = NSClassFromString("IDESourceCodeEditor")
+        , (currentEditor as AnyObject).isKind(of: className) {
+          return (currentEditor as AnyObject).textView
       }
 
       if let currentEditor = LegacyXcodeManager().currentEditor(),
-        className = NSClassFromString("IDESourceCodeComparisonEditor")
-        where currentEditor.isKindOfClass(className) {
-          return currentEditor.keyTextView
+        let className = NSClassFromString("IDESourceCodeComparisonEditor")
+        , (currentEditor as AnyObject).isKind(of: className) {
+          return (currentEditor as AnyObject).keyTextView
       }
 
       return nil
@@ -52,30 +52,30 @@ class XcodeManager: NSObject {
   }
 
   func currentWordRange() -> NSRange {
-    let validSet = NSCharacterSet(charactersInString: "0123456789ABCDEFGHIJKOLMNOPQRSTUVWXYZÅÄÆÖØabcdefghijkolmnopqrstuvwxyzåäæöø_")
-    let spaceSet = NSCharacterSet(charactersInString: "#-<>/(){}[],;:. \n`*\"' ")
+    let validSet = CharacterSet(charactersIn: "0123456789ABCDEFGHIJKOLMNOPQRSTUVWXYZÅÄÆÖØabcdefghijkolmnopqrstuvwxyzåäæöø_")
+    let spaceSet = CharacterSet(charactersIn: "#-<>/(){}[],;:. \n`*\"' ")
     var selectedRange = self.selectedRange
 
     guard selectedRange.location + selectedRange.length < contents().characters.count else { return selectedRange }
 
     var character: Character
     if self.hasSelection() {
-      character = self.contents()[self.contents().startIndex.advancedBy(selectedRange.location+selectedRange.length)]
+      character = self.contents()[self.contents().characters.index(self.contents().startIndex, offsetBy: selectedRange.location+selectedRange.length)]
     } else {
-      character = self.contents()[self.contents().startIndex.advancedBy(selectedRange.location)]
+      character = self.contents()[self.contents().characters.index(self.contents().startIndex, offsetBy: selectedRange.location)]
     }
 
     if !isChar(character, inSet:validSet) {
       selectedRange.location = selectedRange.location + selectedRange.length
     }
 
-    let scanner = NSScanner(string: self.contents())
+    let scanner = Scanner(string: self.contents())
     scanner.scanLocation = selectedRange.location
 
     var length = selectedRange.location
 
-    while !scanner.atEnd {
-      if scanner.scanCharactersFromSet(validSet, intoString: nil) {
+    while !scanner.isAtEnd {
+      if scanner.scanCharacters(from: validSet, into: nil) {
         length = scanner.scanLocation
         break
       }
@@ -83,8 +83,8 @@ class XcodeManager: NSObject {
       scanner.scanLocation = scanner.scanLocation + 1
     }
 
-    let whitespaceRange = (self.contents() as NSString).rangeOfCharacterFromSet(spaceSet,
-      options: .BackwardsSearch,
+    let whitespaceRange = (self.contents() as NSString).rangeOfCharacter(from: spaceSet,
+      options: .backwards,
       range: NSRange(location: 0, length: length))
 
     let location = whitespaceRange.location != NSNotFound ? whitespaceRange.location + 1 : 0
@@ -99,8 +99,8 @@ class XcodeManager: NSObject {
       return range
     } else if location == 0 && range.location != selectedRange.location && range.length != selectedRange.length {
       scanner.scanLocation = 0
-      while !scanner.atEnd {
-        if scanner.scanCharactersFromSet(validSet, intoString: nil) {
+      while !scanner.isAtEnd {
+        if scanner.scanCharacters(from: validSet, into: nil) {
           length = scanner.scanLocation
           break
         }
@@ -124,8 +124,8 @@ class XcodeManager: NSObject {
 
   func previousWordRange() -> NSRange {
     let selectedRange = self.selectedRange
-    let validSet = NSCharacterSet(charactersInString: "0123456789ABCDEFGHIJKOLMNOPQRSTUVWXYZÅÄÆÖØabcdefghijkolmnopqrstuvwxyzåäæöø_")
-    var location = (self.contents() as NSString).rangeOfCharacterFromSet(validSet, options: .BackwardsSearch, range: NSMakeRange(0,selectedRange.location)).location
+    let validSet = CharacterSet(charactersIn: "0123456789ABCDEFGHIJKOLMNOPQRSTUVWXYZÅÄÆÖØabcdefghijkolmnopqrstuvwxyzåäæöø_")
+    var location = (self.contents() as NSString).rangeOfCharacter(from: validSet, options: .backwards, range: NSMakeRange(0,selectedRange.location)).location
 
     if location == NSNotFound {
       location = 0
@@ -136,9 +136,9 @@ class XcodeManager: NSObject {
 
   func lineContentsRange() -> NSRange {
     let lineRange = self.lineRange()
-    let currentLine = (self.contents() as NSString).substringWithRange(lineRange)
-    let trimmedString = currentLine.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
-    let spacing = currentLine.stringByReplacingOccurrencesOfString(trimmedString, withString: "")
+    let currentLine = (self.contents() as NSString).substring(with: lineRange)
+    let trimmedString = currentLine.trimmingCharacters(in: CharacterSet.whitespaces)
+    let spacing = currentLine.replacingOccurrences(of: trimmedString, with: "")
 
     return NSRange(location: lineRange.location + spacing.characters.count, length: lineRange.length - spacing.characters.count - 1)
   }
@@ -150,12 +150,12 @@ class XcodeManager: NSObject {
       selectedRange.location -= 1
     }
 
-    let newLineSet = NSCharacterSet(charactersInString: "\n")
+    let newLineSet = CharacterSet(charactersIn: "\n")
 
-    var location = (self.contents() as NSString).rangeOfCharacterFromSet(newLineSet, options: .BackwardsSearch, range: NSRange(location: 0, length: selectedRange.location)).location
+    var location = (self.contents() as NSString).rangeOfCharacter(from: newLineSet, options: .backwards, range: NSRange(location: 0, length: selectedRange.location)).location
     var length = (self.contents() as NSString)
-      .rangeOfCharacterFromSet(newLineSet,
-        options: .CaseInsensitiveSearch,
+      .rangeOfCharacter(from: newLineSet,
+        options: .caseInsensitive,
         range: NSRange(location: selectedRange.location + selectedRange.length,
           length: self.contents().characters.count - (selectedRange.location + selectedRange.length)))
       .location
@@ -175,16 +175,16 @@ class XcodeManager: NSObject {
     return NSRange(location: location, length: length)
   }
 
-  func contentsOfRange(range: NSRange) -> String {
-    guard let textView = self.textView, contents = textView.string else { return "" }
-    return (contents as NSString).substringWithRange(range)
+  func contentsOfRange(_ range: NSRange) -> String {
+    guard let textView = self.textView, let contents = textView.string else { return "" }
+    return (contents as NSString).substring(with: range)
   }
 
   func joinRange() -> NSRange {
     let lineRange = self.lineRange()
     let joinRange = NSRange(location: lineRange.location + lineRange.length - 1, length: 0)
-    let validSet = NSCharacterSet(charactersInString: "0123456789ABCDEFGHIJKOLMNOPQRSTUVWXYZÅÄÆÖØabcdefghijkolmnopqrstuvwxyzåäæöø_{}().$[]")
-    let length = (self.contents() as NSString).rangeOfCharacterFromSet(validSet, options: .CaseInsensitiveSearch, range: NSRange(location: joinRange.location, length: self.contents().characters.count - joinRange.location)).location
+    let validSet = CharacterSet(charactersIn: "0123456789ABCDEFGHIJKOLMNOPQRSTUVWXYZÅÄÆÖØabcdefghijkolmnopqrstuvwxyzåäæöø_{}().$[]")
+    let length = (self.contents() as NSString).rangeOfCharacter(from: validSet, options: .caseInsensitive, range: NSRange(location: joinRange.location, length: self.contents().characters.count - joinRange.location)).location
 
     return NSRange(location: joinRange.location, length: length - joinRange.location)
   }
@@ -206,36 +206,36 @@ class XcodeManager: NSObject {
     return self.textView?.layoutManager
   }
 
-  func insertText(string: String) {
+  func insertText(_ string: String) {
     self.textView?.insertText(string)
 
-    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.025 * Double(NSEC_PER_SEC)))
-    dispatch_after(delayTime, dispatch_get_main_queue()) {
-      NSNotificationCenter.defaultCenter().postNotificationName("Add change mark", object: string)
+    let delayTime = DispatchTime.now() + Double(Int64(0.025 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+    DispatchQueue.main.asyncAfter(deadline: delayTime) {
+      NotificationCenter.default.post(name: Notification.Name(rawValue: "Add change mark"), object: string)
     }
   }
 
-  func replaceCharactersInRange(range: NSRange, withString string: String) {
+  func replaceCharactersInRange(_ range: NSRange, withString string: String) {
     if range.location + range.length > self.contents().characters.count {
       var range = range
       range.length = self.contents().characters.count - range.location
     }
 
     let document = LegacyXcodeManager().currentSourceCodeDocument()
-    let textStorage = document.textStorage()
+    let textStorage = document?.textStorage()
 
-    textStorage.replaceCharactersInRange(range, withString: string, withUndoManager: document.undoManager)
+    textStorage?.replaceCharacters(in: range, with: string, withUndoManager: document?.undoManager)
 
-    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.025 * Double(NSEC_PER_SEC)))
-    dispatch_after(delayTime, dispatch_get_main_queue()) {
-      NSNotificationCenter.defaultCenter().postNotificationName("Add change mark", object: string)
+    let delayTime = DispatchTime.now() + Double(Int64(0.025 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+    DispatchQueue.main.asyncAfter(deadline: delayTime) {
+      NotificationCenter.default.post(name: Notification.Name(rawValue: "Add change mark"), object: string)
     }
   }
 
-  private func isChar(char: Character, inSet set: NSCharacterSet) -> Bool {
+  fileprivate func isChar(_ char: Character, inSet set: CharacterSet) -> Bool {
     var found = false
     for ch in String(char).utf16 {
-      if set.characterIsMember(ch) { found = true; break }
+      if set.contains(UnicodeScalar(ch)!) { found = true; break }
     }
     return found
   }
