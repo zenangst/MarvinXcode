@@ -209,7 +209,7 @@ class XcodeManager: NSObject {
   func insertText(_ string: String) {
     self.textView?.insertText(string)
 
-    let delayTime = DispatchTime.now() + Double(Int64(0.025 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+    let delayTime = DispatchTime.now() + 0.025
     DispatchQueue.main.asyncAfter(deadline: delayTime) {
       NotificationCenter.default.post(name: Notification.Name(rawValue: "Add change mark"), object: string)
     }
@@ -226,7 +226,7 @@ class XcodeManager: NSObject {
 
     textStorage?.replaceCharacters(in: range, with: string, withUndoManager: document?.undoManager)
 
-    let delayTime = DispatchTime.now() + Double(Int64(0.025 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+    let delayTime = DispatchTime.now() + 0.025
     DispatchQueue.main.asyncAfter(deadline: delayTime) {
       NotificationCenter.default.post(name: Notification.Name(rawValue: "Add change mark"), object: string)
     }
