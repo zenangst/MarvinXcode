@@ -29,7 +29,7 @@ extension NSDocument {
       NotificationCenter.default.post(name: Notification.Name(rawValue: "Save properly"), object: nil)
     }
 
-    let delayTime = DispatchTime.now() + Double(Int64(0.25 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+    let delayTime = DispatchTime.now() + 0.25
     DispatchQueue.main.asyncAfter(deadline: delayTime) {
       self.zen_saveDocumentWithDelegate(delegate, didSaveSelector: didSaveSelector, contextInfo: contextInfo)
     }

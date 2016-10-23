@@ -110,7 +110,7 @@ class MarvinPlugin: NSObject {
     } else {
       perform(keyboardEvent: 126)
 
-      let delayTime = DispatchTime.now() + Double(Int64(0.025 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+      let delayTime = DispatchTime.now() + 0.025
       DispatchQueue.main.asyncAfter(deadline: delayTime) { [unowned self] in
         let currentRange = self.xcode.selectedRange
 
@@ -130,7 +130,7 @@ class MarvinPlugin: NSObject {
 
     perform(keyboardEvent: 125)
 
-    let delayTime = DispatchTime.now() + Double(Int64(0.025 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+    let delayTime = DispatchTime.now() + 0.025
     DispatchQueue.main.asyncAfter(deadline: delayTime) { [unowned self] in
       self.selectWordAction()
     }
